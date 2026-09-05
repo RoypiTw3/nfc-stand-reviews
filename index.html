@@ -237,6 +237,33 @@
 
   </div>
 
-  <script src="script.js?v=10.0"></script>
+  <script>
+    // Conexión directa e inmediata con WhatsApp (+57 315 185 6554)
+    document.addEventListener('DOMContentLoaded', () => {
+      const orderForm = document.getElementById('order-form');
+      if (orderForm) {
+        orderForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+
+          const localName = document.getElementById('local-name')?.value.trim() || '';
+          const productType = document.getElementById('product-type')?.value || '';
+          const quantity = document.getElementById('quantity')?.value.trim() || '1';
+          const clientName = document.getElementById('client-name')?.value.trim() || '';
+
+          const phone = '573151856554';
+          const text = `¡Hola STAND·REVIEW! 👋 Quiero pedir una propuesta para mi negocio:\n\n` +
+                       `📍 *Local / Negocio:* ${localName}\n` +
+                       `📦 *Modelo:* ${productType}\n` +
+                       `🔢 *Cantidad de mesas/soportes:* ${quantity}\n` +
+                       `👤 *Mi Nombre:* ${clientName}\n\n` +
+                       `¿Podrían indicarme precios y tiempos de entrega?`;
+
+          const whatsappURL = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+          window.open(whatsappURL, '_blank');
+        });
+      }
+    });
+  </script>
+  <script src="script.js?v=20260905_1248"></script>
 </body>
 </html>
