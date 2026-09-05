@@ -678,8 +678,8 @@ body {
     width: calc(100% + 3rem);
     margin-left: -1.5rem;
     margin-right: -1.5rem;
-    height: 380px;
-    min-height: 45vh;
+    height: 320px;
+    max-height: 42vh;
     margin-top: 1rem;
     margin-bottom: 0;
     border-radius: 0;
@@ -688,22 +688,23 @@ body {
     border: none;
     box-shadow: none;
     pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  /* Fundido superior ultra suave hacia el color de fondo */
+  /* Fundido superior suave que no tapa el soporte */
   .video-container::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 50%;
+    height: 70px;
     background: linear-gradient(
       to bottom,
       #0D0F12 0%,
-      rgba(13, 15, 18, 0.95) 15%,
-      rgba(13, 15, 18, 0.65) 45%,
-      rgba(13, 15, 18, 0.2) 75%,
+      rgba(13, 15, 18, 0.8) 40%,
       transparent 100%
     );
     z-index: 4;
@@ -717,12 +718,11 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 45%;
+    height: 60px;
     background: linear-gradient(
       to top,
       #0D0F12 0%,
-      rgba(13, 15, 18, 0.9) 20%,
-      rgba(13, 15, 18, 0.4) 60%,
+      rgba(13, 15, 18, 0.8) 40%,
       transparent 100%
     );
     z-index: 4;
@@ -736,8 +736,8 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 68% 42%;
-    transform: scale(1.05);
+    object-position: 90% 50%;
+    transform: scale(1.02);
     background: #0D0F12;
     display: block;
   }

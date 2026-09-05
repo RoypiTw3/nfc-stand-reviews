@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   if (video) {
-    // Configuración estricta para iOS WebKit autoplay
     video.muted = true;
     video.defaultMuted = true;
     video.volume = 0;
@@ -12,63 +11,58 @@ document.addEventListener('DOMContentLoaded', () => {
     video.setAttribute('webkit-playsinline', '');
     video.setAttribute('muted', '');
 
-    const playVideoSafely = () => {
+    const tryPlay = () => {
       if (!prefersReducedMotion.matches) {
-        const playPromise = video.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(() => {
-            // Autoplay silencioso fallback
-          });
+        const p = video.play();
+        if (p !== undefined) {
+          p.catch(() => {});
         }
       }
     };
 
-    // Intentos inmediatos y en eventos de carga de medios
-    playVideoSafely();
-    video.addEventListener('loadedmetadata', playVideoSafely);
-    video.addEventListener('canplay', playVideoSafely);
-    video.addEventListener('loadeddata', playVideoSafely);
+    // Intentos inmediatos en carga
+    tryPlay();
+    video.addEventListener('loadedmetadata', tryPlay);
+    video.addEventListener('loadeddata', tryPlay);
+    video.addEventListener('canplay', tryPlay);
 
-    // Desbloqueo garantizado en el primer toque o scroll del usuario (políticas estrictas de Safari/Brave)
-    const unlockAutoplay = () => {
-      playVideoSafely();
-      window.removeEventListener('touchstart', unlockAutoplay);
-      window.removeEventListener('scroll', unlockAutoplay);
-      window.removeEventListener('click', unlockAutoplay);
+    // Desbloqueo universal con cualquier interacción de pantalla en iOS/Android
+    const unlockOnTouch = () => {
+      tryPlay();
+      ['touchstart', 'touchend', 'scroll', 'click'].forEach(evt => {
+        window.removeEventListener(evt, unlockOnTouch);
+      });
     };
-    window.addEventListener('touchstart', unlockAutoplay, { passive: true });
-    window.addEventListener('scroll', unlockAutoplay, { passive: true });
-    window.addEventListener('click', unlockAutoplay, { passive: true });
-
-    // Loop sin fisuras
-    video.addEventListener('ended', () => {
-      video.currentTime = 0;
-      playVideoSafely();
+    ['touchstart', 'touchend', 'scroll', 'click'].forEach(evt => {
+      window.addEventListener(evt, unlockOnTouch, { passive: true });
     });
 
-    // Pausar solo cuando se sale completamente de la pantalla para ahorrar batería
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting && !prefersReducedMotion.matches) {
-              playVideoSafely();
-            } else if (!entry.isIntersecting) {
-              video.pause();
-            }
-          });
-        },
-        { threshold: 0.05 }
-      );
-      const heroScreen = document.querySelector('.hero-screen');
-      if (heroScreen) observer.observe(heroScreen);
-    }
+    // Bucle continuo sin pausas
+    video.addEventListener('ended', () => {
+      video.currentTime = 0;
+      tryPlay();
+    });
+
+    // Pausar solo si el usuario ha hecho scroll profundo fuera del hero
+    let isDeepScrolled = false;
+    window.addEventListener('scroll', () => {
+      const scrollPos = window.scrollY || window.pageYOffset;
+      const shouldPause = scrollPos > (window.innerHeight * 1.5);
+      
+      if (shouldPause && !isDeepScrolled) {
+        isDeepScrolled = true;
+        video.pause();
+      } else if (!shouldPause && isDeepScrolled) {
+        isDeepScrolled = false;
+        tryPlay();
+      }
+    }, { passive: true });
 
     prefersReducedMotion.addEventListener('change', () => {
       if (prefersReducedMotion.matches) {
         video.pause();
       } else {
-        playVideoSafely();
+        tryPlay();
       }
     });
   }
