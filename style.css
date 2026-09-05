@@ -251,6 +251,7 @@ body {
   gap: 0.4rem;
   font-size: 0.8125rem;
   color: var(--color-text-muted);
+  white-space: nowrap;
 }
 
 .badge-score {
@@ -258,15 +259,19 @@ body {
   color: #FFFFFF;
   font-family: var(--font-mono);
   font-size: 0.8rem;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .badge-dot-sep {
   opacity: 0.4;
+  white-space: nowrap;
 }
 
 .badge-text {
   font-size: 0.8125rem;
   color: var(--color-text-muted);
+  white-space: nowrap;
 }
 
 .badge-text strong {
@@ -1191,10 +1196,38 @@ body {
   }
 
   .live-reviews-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
     width: fit-content;
     max-width: 100%;
-    padding: 0.55rem 1rem;
+    padding: 0.45rem 0.85rem;
     margin-top: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .stars-row {
+    flex-shrink: 0;
+  }
+
+  .badge-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .badge-score {
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-size: 0.8125rem;
+  }
+
+  .badge-text {
+    white-space: nowrap;
+    font-size: 0.75rem;
   }
 
   /* Video Fluyendo Orgánicamente en la Parte Inferior (Unificado como una sola pieza) */
