@@ -70,7 +70,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,600&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
   
-  <link rel="stylesheet" href="style.css?v=20.0">
+  <link rel="stylesheet" href="style.css?v=21.0">
 </head>
 <body>
 
@@ -89,11 +89,11 @@
         </a>
 
         <div class="nav-links">
-          <a href="#proceso" class="nav-link">Cómo funciona</a>
-          <a href="#comparativa" class="nav-link">NFC vs QR</a>
-          <a href="#productos" class="nav-link">Colección</a>
-          <a href="#faq" class="nav-link">FAQ</a>
-          <a href="#contacto" class="nav-link">Contacto</a>
+          <a href="#proceso" class="nav-link nav-link-desktop">Cómo funciona</a>
+          <a href="#comparativa" class="nav-link nav-link-desktop">NFC vs QR</a>
+          <a href="#productos" class="nav-link nav-link-primary">Colección</a>
+          <a href="#faq" class="nav-link nav-link-desktop">FAQ</a>
+          <a href="#contacto" class="nav-link nav-link-cta">Pedir propuesta →</a>
         </div>
       </nav>
 
@@ -215,6 +215,7 @@
         </p>
       </div>
 
+      <!-- Tabla para Desktop / Tablet -->
       <div class="comparison-table-wrapper reveal-on-scroll">
         <table class="comparison-table">
           <thead>
@@ -253,8 +254,80 @@
           </tbody>
         </table>
       </div>
-    </section>
 
+      <!-- Tarjetas Directas Comparativas para Móvil (Sin scroll lateral) -->
+      <div class="comparison-cards-mobile">
+        <div class="comp-card-item reveal-on-scroll" style="--reveal-delay: 0.05s;">
+          <div class="comp-card-feature">Tiempo de interacción</div>
+          <div class="comp-vs-grid">
+            <div class="comp-vs-box old-qr">
+              <span class="comp-label">Código QR</span>
+              <span class="comp-value"><span class="badge-cross">✕</span> 8 a 15 seg</span>
+            </div>
+            <div class="comp-vs-box new-nfc">
+              <span class="comp-label">TapNFC</span>
+              <span class="comp-value"><span class="badge-check">✓</span> 2 a 3 seg (Instantáneo)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="comp-card-item reveal-on-scroll" style="--reveal-delay: 0.1s;">
+          <div class="comp-card-feature">Fricción para el cliente</div>
+          <div class="comp-vs-grid">
+            <div class="comp-vs-box old-qr">
+              <span class="comp-label">Código QR</span>
+              <span class="comp-value"><span class="badge-cross">✕</span> Abrir cámara y enfocar</span>
+            </div>
+            <div class="comp-vs-box new-nfc">
+              <span class="comp-label">TapNFC</span>
+              <span class="comp-value"><span class="badge-check">✓</span> 1 solo tap contactless</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="comp-card-item reveal-on-scroll" style="--reveal-delay: 0.15s;">
+          <div class="comp-card-feature">En ambientes con poca luz</div>
+          <div class="comp-vs-grid">
+            <div class="comp-vs-box old-qr">
+              <span class="comp-label">Código QR</span>
+              <span class="comp-value"><span class="badge-cross">✕</span> Falla frecuentemente</span>
+            </div>
+            <div class="comp-vs-box new-nfc">
+              <span class="comp-label">TapNFC</span>
+              <span class="comp-value"><span class="badge-check">✓</span> 100% efectivo siempre</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="comp-card-item reveal-on-scroll" style="--reveal-delay: 0.2s;">
+          <div class="comp-card-feature">Percepción del local</div>
+          <div class="comp-vs-grid">
+            <div class="comp-vs-box old-qr">
+              <span class="comp-label">Código QR</span>
+              <span class="comp-value"><span class="badge-cross">✕</span> Papel / Sticker</span>
+            </div>
+            <div class="comp-vs-box new-nfc">
+              <span class="comp-label">TapNFC</span>
+              <span class="comp-value"><span class="badge-check">✓</span> Hardware de diseño</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="comp-card-item reveal-on-scroll" style="--reveal-delay: 0.25s;">
+          <div class="comp-card-feature">Mantenimiento &amp; Durabilidad</div>
+          <div class="comp-vs-grid">
+            <div class="comp-vs-box old-qr">
+              <span class="comp-label">Código QR</span>
+              <span class="comp-value"><span class="badge-cross">✕</span> Reimpresión constante</span>
+            </div>
+            <div class="comp-vs-box new-nfc">
+              <span class="comp-label">TapNFC</span>
+              <span class="comp-value"><span class="badge-check">✓</span> Sin batería, vida eterna</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- ==========================================
          PANTALLA 2: COLECCIÓN DE PRODUCTOS NFC
@@ -535,6 +608,6 @@
     </a>
   </div>
 
-  <script src="script.js?v=20.0"></script>
+  <script src="script.js?v=21.0"></script>
 </body>
 </html>
