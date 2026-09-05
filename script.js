@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const clientName = document.getElementById('client-name')?.value.trim() || '';
 
       const phone = '573151856554';
-      const text = `Hola STAND·REVIEW, quiero solicitar una propuesta para mi negocio:\n\n` +
+      const text = `Hola TapNFC, quiero solicitar una propuesta para mi negocio:\n\n` +
                    `• Local / Negocio: ${localName}\n` +
                    `• Modelo: ${productType}\n` +
                    `• Cantidad de soportes: ${quantity}\n` +
