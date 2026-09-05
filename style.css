@@ -611,6 +611,29 @@ body {
   font-size: 0.9rem;
   line-height: 1.5;
   color: var(--color-text-muted);
+  margin-bottom: 1.25rem;
+}
+
+.card-action-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-coral);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  margin-top: auto;
+}
+
+.editorial-card:hover .action-arrow {
+  transform: translateX(4px);
+}
+
+.action-arrow {
+  transition: transform 0.2s ease;
 }
 
 /* ==========================================================================
@@ -1115,6 +1138,68 @@ body {
     align-items: flex-start;
     padding-top: 1.5rem;
   }
+}
+
+/* ==========================================================================
+   FLOATING WHATSAPP BUTTON (CONVERSIÓN DIRECTA)
+   ========================================================================== */
+.floating-wa-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 99;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1.25rem;
+  background: rgba(18, 22, 28, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+  color: #FFFFFF;
+  text-decoration: none;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px) scale(0.95);
+  transition: opacity 0.3s var(--transition-smooth), transform 0.3s var(--transition-smooth), visibility 0.3s, background-color 0.2s;
+  touch-action: manipulation;
+}
+
+.floating-wa-btn svg {
+  color: #25D366;
+}
+
+.floating-wa-btn.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.floating-wa-btn:hover {
+  background: rgba(26, 32, 40, 0.95);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px) scale(1.02);
+}
+
+@media (max-width: 1024px) {
+  .floating-wa-btn {
+    bottom: 1.25rem;
+    right: 1.25rem;
+    padding: 0.65rem 1rem;
+    font-size: 0.8125rem;
+  }
+}
+
+/* ==========================================================================
+   OPTIMIZACIÓN DE TOQUE MÓVIL (INP < 50MS)
+   ========================================================================== */
+a, button, input, select, .editorial-card, .faq-question {
+  touch-action: manipulation;
 }
 
 /* ==========================================================================

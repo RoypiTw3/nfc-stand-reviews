@@ -3,15 +3,77 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>TapNFC | Placas & Stands NFC para Google Reviews</title>
   
-  <!-- Carga inmediata de tipografías con display=swap -->
+  <!-- SEO & Meta Tags Primarios -->
+  <title>TapNFC | Placas & Stands Contactless para Google Reviews Colombia</title>
+  <meta name="description" content="Multiplica tus reseñas de 5 estrellas en Google al instante. Placas y soportes NFC premium para restaurantes, hoteles y locales en Colombia. Sin códigos QR ni apps.">
+  <meta name="keywords" content="TapNFC, placas NFC, soporte google reviews, reseñas google maps colombia, stand contactless hosteleria, codigo qr vs nfc">
+  <meta name="author" content="TapNFC Colombia">
+  <link rel="canonical" href="https://roypitw3.github.io/nfc-stand-reviews/">
+  <meta name="theme-color" content="#070809">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <!-- Open Graph / Facebook / WhatsApp Preview (1200x630) -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://roypitw3.github.io/nfc-stand-reviews/">
+  <meta property="og:site_name" content="TapNFC">
+  <meta property="og:title" content="TapNFC | Placas & Stands Contactless para Google Reviews">
+  <meta property="og:description" content="Tus clientes acercan su teléfono a la placa NFC y abren al instante tu ficha de Google Reviews con 5 estrellas listas.">
+  <meta property="og:image" content="https://roypitw3.github.io/nfc-stand-reviews/media/glassline-poster.png">
+  <meta property="og:locale" content="es_CO">
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TapNFC | Placas & Stands NFC para Google Reviews">
+  <meta name="twitter:description" content="Multiplica tus reseñas de 5 estrellas en segundos sin códigos QR ni apps. Hardware de lujo para hostelería y comercios.">
+  <meta name="twitter:image" content="https://roypitw3.github.io/nfc-stand-reviews/media/glassline-poster.png">
+
+  <!-- Schema.org JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://roypitw3.github.io/nfc-stand-reviews/#organization",
+        "name": "TapNFC Colombia",
+        "url": "https://roypitw3.github.io/nfc-stand-reviews/",
+        "logo": "https://roypitw3.github.io/nfc-stand-reviews/media/glassline-poster.png",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+57-315-185-6554",
+          "contactType": "sales",
+          "areaServed": "CO",
+          "availableLanguage": "Spanish"
+        }
+      },
+      {
+        "@type": "Product",
+        "@id": "https://roypitw3.github.io/nfc-stand-reviews/#product",
+        "name": "Placas y Soportes TapNFC para Google Reviews",
+        "description": "Hardware NFC contactless para captura instantánea de opiniones de 5 estrellas en Google Maps para comercios y gastronomía.",
+        "brand": {
+          "@type": "Brand",
+          "name": "TapNFC"
+        },
+        "offers": {
+          "@type": "AggregateOffer",
+          "priceCurrency": "COP",
+          "lowPrice": "49000",
+          "highPrice": "250000",
+          "offerCount": "3"
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Rendimiento & Resource Hints de Tipografías -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,600&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,600&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,600&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
   
-  <link rel="stylesheet" href="style.css?v=13.0">
+  <link rel="stylesheet" href="style.css?v=14.0">
 </head>
 <body>
 
@@ -68,13 +130,14 @@
             id="hero-video"
             class="hero-video"
             src="media/nfc-hero-loop.mp4"
+            poster="media/glassline-poster.png"
             autoplay
             muted
             loop
             playsinline
             webkit-playsinline
             x5-playsinline
-            preload="auto"
+            preload="metadata"
             tabindex="-1"
             aria-hidden="true"
           >
@@ -195,13 +258,15 @@
 
       <div class="products-editorial-grid">
         <!-- Producto 1: Mesa Acrílico -->
-        <article class="editorial-card">
+        <article class="editorial-card" data-product="Stand de Mesa Acrílico">
           <div class="card-visual">
             <div class="img-container">
               <img 
                 src="media/producto-mesa-acrilico.png" 
                 alt="Stand de Mesa NFC" 
                 class="prod-image"
+                loading="lazy"
+                decoding="async"
                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
               >
               <div class="prod-placeholder">
@@ -214,17 +279,23 @@
             <h3 class="card-name">Stand de Mesa</h3>
             <span class="card-type">Acrílico Cristal</span>
             <p class="card-text">Formato vertical compacto para situar en cada mesa o barra sin ocupar espacio.</p>
+            <div class="card-action-link">
+              <span>Configurar pedido</span>
+              <span class="action-arrow">→</span>
+            </div>
           </div>
         </article>
 
         <!-- Producto 2: Tótem Roble & Metal -->
-        <article class="editorial-card">
+        <article class="editorial-card" data-product="Tótem Vanguard Roble & Metal">
           <div class="card-visual">
             <div class="img-container">
               <img 
                 src="media/producto-totem-madera.png" 
                 alt="Tótem Vanguard NFC" 
                 class="prod-image"
+                loading="lazy"
+                decoding="async"
                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
               >
               <div class="prod-placeholder ph-wood">
@@ -237,17 +308,23 @@
             <h3 class="card-name">Tótem Vanguard</h3>
             <span class="card-type">Roble &amp; Aluminio</span>
             <p class="card-text">Base pesada con ángulo ergonómico para mostradores de pago y recepciones.</p>
+            <div class="card-action-link">
+              <span>Configurar pedido</span>
+              <span class="action-arrow">→</span>
+            </div>
           </div>
         </article>
 
         <!-- Producto 3: Tarjeta Staff -->
-        <article class="editorial-card">
+        <article class="editorial-card" data-product="Tarjeta Staff Contactless">
           <div class="card-visual">
             <div class="img-container">
               <img 
                 src="media/producto-tarjeta-staff.png" 
                 alt="Tarjeta Staff NFC" 
                 class="prod-image"
+                loading="lazy"
+                decoding="async"
                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
               >
               <div class="prod-placeholder ph-card">
@@ -260,6 +337,10 @@
             <h3 class="card-name">Tarjeta Staff</h3>
             <span class="card-type">Policarbonato Soft-Touch</span>
             <p class="card-text">Para que el personal de sala la acerque al momento de entregar la cuenta.</p>
+            <div class="card-action-link">
+              <span>Configurar pedido</span>
+              <span class="action-arrow">→</span>
+            </div>
           </div>
         </article>
       </div>
@@ -411,52 +492,21 @@
 
   </div>
 
-  <script>
-    // Conexión directa e inmediata con WhatsApp (+57 315 185 6554)
-    document.addEventListener('DOMContentLoaded', () => {
-      const orderForm = document.getElementById('order-form');
-      const googleSelect = document.getElementById('google-status');
-      const googleNotice = document.getElementById('google-notice');
+  <!-- Botón Flotante Minimalista de WhatsApp (Aparece al hacer scroll) -->
+  <a 
+    href="https://wa.me/573151856554?text=Hola%20TapNFC%2C%20quisiera%20recibir%20informaci%C3%B3n%20sobre%20las%20placas%20NFC%20para%20mi%20negocio" 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    class="floating-wa-btn" 
+    id="floating-wa"
+    aria-label="Contactar por WhatsApp a TapNFC"
+  >
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+    </svg>
+    <span>WhatsApp</span>
+  </a>
 
-      // Mostrar/ocultar aviso de creación de ficha
-      if (googleSelect && googleNotice) {
-        googleSelect.addEventListener('change', () => {
-          if (googleSelect.value === 'no') {
-            googleNotice.style.display = 'flex';
-          } else {
-            googleNotice.style.display = 'none';
-          }
-        });
-      }
-
-      if (orderForm) {
-        orderForm.addEventListener('submit', (e) => {
-          e.preventDefault();
-
-          const localName = document.getElementById('local-name')?.value.trim() || '';
-          const googleStatus = document.getElementById('google-status')?.value || 'si';
-          const isNewGoogle = googleStatus === 'no';
-          const productType = document.getElementById('product-type')?.value || '';
-          const quantity = document.getElementById('quantity')?.value.trim() || '1';
-          const clientName = document.getElementById('client-name')?.value.trim() || '';
-
-          const phone = '573151856554';
-          const text = `Hola TapNFC, quiero solicitar una propuesta para mi negocio:\n\n` +
-                       `• Local / Negocio: ${localName}\n` +
-                       `• Ficha en Google Maps: ${isNewGoogle ? 'No (Deseo el servicio de creación de ficha)' : 'Sí, ya registrada'}\n` +
-                       `• Modelo: ${productType}\n` +
-                       `• Cantidad de soportes: ${quantity}\n` +
-                       `• Nombre: ${clientName}\n\n` +
-                       (isNewGoogle 
-                         ? '¿Podrían incluir la cotización para crearnos la ficha en Google Maps y los soportes?' 
-                         : '¿Podrían indicarme precios y tiempos de entrega?');
-
-          const whatsappURL = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
-          window.open(whatsappURL, '_blank');
-        });
-      }
-    });
-  </script>
-  <script src="script.js?v=13.0"></script>
+  <script src="script.js?v=14.0"></script>
 </body>
 </html>
