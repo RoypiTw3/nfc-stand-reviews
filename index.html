@@ -11,7 +11,7 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,600&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,600&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=10.0">
+  <link rel="stylesheet" href="style.css?v=11.0">
 </head>
 <body>
 
@@ -191,8 +191,24 @@
           <div class="form-box">
             <form class="clean-form" id="order-form">
               <div class="input-group">
-                <label for="local-name">Nombre de tu local en Google</label>
+                <label for="local-name">Nombre de tu negocio o local</label>
                 <input type="text" id="local-name" placeholder="Ej. Restaurante Bistro, Medellín" required>
+              </div>
+
+              <div class="input-group">
+                <label for="google-status">¿Tu negocio ya está en Google Maps?</label>
+                <select id="google-status">
+                  <option value="si">Sí, ya tenemos ficha en Google</option>
+                  <option value="no">No, necesito que me creen la ficha en Google</option>
+                </select>
+              </div>
+
+              <!-- Aviso de Servicio de Alta en Google Maps -->
+              <div id="google-notice" class="google-notice-box" style="display: none;">
+                <span class="notice-badge">Servicio de Creación &amp; Verificación</span>
+                <p class="notice-text">
+                  ¡No te preocupes! Creamos y optimizamos el perfil oficial de tu negocio en Google Maps para que tus clientes puedan encontrarte y empezar a dejar reseñas de inmediato.
+                </p>
               </div>
 
               <div class="input-group">
@@ -241,11 +257,27 @@
     // Conexión directa e inmediata con WhatsApp (+57 315 185 6554)
     document.addEventListener('DOMContentLoaded', () => {
       const orderForm = document.getElementById('order-form');
+      const googleSelect = document.getElementById('google-status');
+      const googleNotice = document.getElementById('google-notice');
+
+      // Mostrar/ocultar aviso de creación de ficha
+      if (googleSelect && googleNotice) {
+        googleSelect.addEventListener('change', () => {
+          if (googleSelect.value === 'no') {
+            googleNotice.style.display = 'flex';
+          } else {
+            googleNotice.style.display = 'none';
+          }
+        });
+      }
+
       if (orderForm) {
         orderForm.addEventListener('submit', (e) => {
           e.preventDefault();
 
           const localName = document.getElementById('local-name')?.value.trim() || '';
+          const googleStatus = document.getElementById('google-status')?.value || 'si';
+          const isNewGoogle = googleStatus === 'no';
           const productType = document.getElementById('product-type')?.value || '';
           const quantity = document.getElementById('quantity')?.value.trim() || '1';
           const clientName = document.getElementById('client-name')?.value.trim() || '';
@@ -253,10 +285,13 @@
           const phone = '573151856554';
           const text = `Hola TapNFC, quiero solicitar una propuesta para mi negocio:\n\n` +
                        `• Local / Negocio: ${localName}\n` +
+                       `• Ficha en Google Maps: ${isNewGoogle ? 'No (Deseo el servicio de creación de ficha)' : 'Sí, ya registrada'}\n` +
                        `• Modelo: ${productType}\n` +
                        `• Cantidad de soportes: ${quantity}\n` +
                        `• Nombre: ${clientName}\n\n` +
-                       `¿Podrían indicarme precios y tiempos de entrega?`;
+                       (isNewGoogle 
+                         ? '¿Podrían incluir la cotización para crearnos la ficha en Google Maps y los soportes?' 
+                         : '¿Podrían indicarme precios y tiempos de entrega?');
 
           const whatsappURL = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
           window.open(whatsappURL, '_blank');
@@ -264,6 +299,6 @@
       }
     });
   </script>
-  <script src="script.js?v=20260905_1248"></script>
+  <script src="script.js?v=20260905_1312"></script>
 </body>
 </html>

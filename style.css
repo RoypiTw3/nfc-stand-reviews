@@ -529,6 +529,38 @@ body {
   border-color: var(--color-coral);
 }
 
+.google-notice-box {
+  background: rgba(235, 94, 65, 0.08);
+  border: 1px solid rgba(235, 94, 65, 0.3);
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  animation: fadeInNotice 0.3s ease-out;
+}
+
+@keyframes fadeInNotice {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.notice-badge {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--color-coral);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.notice-text {
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--color-text-main);
+  opacity: 0.9;
+}
+
 .btn-primary-form {
   width: 100%;
   display: flex;
