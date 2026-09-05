@@ -209,6 +209,67 @@ body {
   transform: translateY(4px);
 }
 
+/* Badge de Calificaciones en Vivo (Social Proof de Lujo) */
+.live-reviews-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  margin-top: 0.5rem;
+  width: fit-content;
+  transition: border-color 0.25s ease;
+}
+
+.live-reviews-badge:hover {
+  border-color: rgba(255, 110, 84, 0.35);
+}
+
+.stars-row {
+  display: flex;
+  gap: 2px;
+  color: #FBBC04; /* Google Star Gold */
+  font-size: 0.95rem;
+  letter-spacing: -0.05em;
+}
+
+.star-g {
+  filter: drop-shadow(0 0 4px rgba(251, 188, 4, 0.45));
+}
+
+.badge-content {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+.badge-score {
+  font-weight: 700;
+  color: #FFFFFF;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+.badge-dot-sep {
+  opacity: 0.4;
+}
+
+.badge-text {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+.badge-text strong {
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
 /* Contenedor de Video Desktop (Fondo a pantalla completa a la derecha) */
 .video-container {
   position: absolute;
@@ -1195,6 +1256,56 @@ body {
 }
 
 /* ==========================================================================
+   SCROLL REVEAL ANIMATIONS (INTERSECTION OBSERVER)
+   ========================================================================== */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0s);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   SPOTLIGHT CARD GLOW (INTERACCIÓN DINÁMICA DE LUZ)
+   ========================================================================== */
+.editorial-card,
+.step-card,
+.form-box {
+  position: relative;
+  overflow: hidden;
+}
+
+.editorial-card::before,
+.step-card::before,
+.form-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 110, 84, 0.12),
+    transparent 65%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+  z-index: 1;
+}
+
+.editorial-card:hover::before,
+.step-card:hover::before,
+.form-box:hover::before {
+  opacity: 1;
+}
+
+/* ==========================================================================
    OPTIMIZACIÓN DE TOQUE MÓVIL (INP < 50MS)
    ========================================================================== */
 a, button, input, select, .editorial-card, .faq-question {
@@ -1210,6 +1321,12 @@ a, button, input, select, .editorial-card, .faq-question {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .reveal-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 
   .hero-video {
