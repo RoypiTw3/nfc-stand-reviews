@@ -81,80 +81,70 @@
   <div class="main-canvas">
 
     <!-- ==========================================
-         PANTALLA 1: HERO
+         PANTALLA 1: HERO CON SCROLLYTELLING ANIMATION
          ========================================== -->
-    <header class="hero-screen" id="hero">
-      
-      <!-- Navegación sobria -->
-      <nav class="top-nav">
-        <a href="#hero" class="brand">
-          <span class="brand-title">TAP<span class="brand-dot">·</span>NFC</span>
-        </a>
+    <div class="hero-scroll-track" id="hero-track">
+      <header class="hero-screen" id="hero">
+        
+        <!-- Navegación sobria -->
+        <nav class="top-nav">
+          <a href="#hero-track" class="brand">
+            <span class="brand-title">TAP<span class="brand-dot">·</span>NFC</span>
+          </a>
 
-        <div class="nav-links">
-          <a href="#proceso" class="nav-link">Cómo funciona</a>
-          <a href="#comparativa" class="nav-link">NFC vs QR</a>
-          <a href="#productos" class="nav-link">Colección</a>
-          <a href="#faq" class="nav-link">FAQ</a>
-          <a href="#contacto" class="nav-link">Contacto</a>
-        </div>
-      </nav>
+          <div class="nav-links">
+            <a href="#proceso" class="nav-link">Cómo funciona</a>
+            <a href="#comparativa" class="nav-link">NFC vs QR</a>
+            <a href="#productos" class="nav-link">Colección</a>
+            <a href="#faq" class="nav-link">FAQ</a>
+            <a href="#contacto" class="nav-link">Contacto</a>
+          </div>
+        </nav>
 
-      <!-- Escenario Principal del Hero -->
-      <div class="hero-stage">
-        <!-- Bloque de Texto -->
-        <div class="hero-copy">
-          <h1 class="hero-title">
-            TUS 5 ESTRELLAS<br>
-            <span class="serif-italic">en un solo tap</span>
-          </h1>
+        <!-- Escenario Principal del Hero -->
+        <div class="hero-stage">
+          <!-- Bloque de Texto -->
+          <div class="hero-copy">
+            <h1 class="hero-title">
+              TUS 5 ESTRELLAS<br>
+              <span class="serif-italic">en un solo tap</span>
+            </h1>
 
-          <p class="hero-subtitle">
-            Tus clientes acercan el teléfono a la placa NFC en mesa o barra y abren al instante tu perfil de Google Reviews. Sin códigos QR ni aplicaciones.
-          </p>
+            <p class="hero-subtitle">
+              Tus clientes acercan el teléfono a la placa NFC en mesa o barra y abren al instante tu perfil de Google Reviews. Sin códigos QR ni aplicaciones.
+            </p>
 
-          <div class="cta-group">
-            <a href="#productos" class="btn-primary">
-              <span>Ver colección</span>
-              <svg class="btn-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8 3.33337V12.6667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M3.33334 8L8 12.6667L12.6667 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
+            <div class="cta-group">
+              <a href="#productos" class="btn-primary">
+                <span>Ver colección</span>
+                <svg class="btn-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 3.33337V12.6667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M3.33334 8L8 12.6667L12.6667 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Contenedor del Canvas Interactivo (Scrollytelling Frame Scrubbing) -->
+          <div class="canvas-container">
+            <canvas id="hero-canvas" class="hero-canvas" width="960" height="540"></canvas>
+            <div class="localized-dark-fade" aria-hidden="true"></div>
+            <div class="grain-overlay" aria-hidden="true"></div>
           </div>
         </div>
 
-        <!-- Contenedor del Video -->
-        <div class="video-container">
-          <video
-            id="hero-video"
-            class="hero-video"
-            src="media/nfc-hero-loop.mp4"
-            poster="media/glassline-poster.png"
-            autoplay
-            muted
-            loop
-            playsinline
-            webkit-playsinline
-            x5-playsinline
-            preload="metadata"
-            tabindex="-1"
-            aria-hidden="true"
-          >
-            <source src="media/nfc-hero-loop.mp4" type="video/mp4">
-          </video>
-          <div class="localized-dark-fade" aria-hidden="true"></div>
-          <div class="grain-overlay" aria-hidden="true"></div>
+        <!-- Pie sutil del hero con indicador de scroll interactivo -->
+        <div class="hero-bottom-bar">
+          <span class="meta-note">NFC Contactless para hostelería y comercios</span>
+          <div class="scroll-interactive-pill">
+            <span class="pulse-dot"></span>
+            <span>Haz scroll para interactuar</span>
+          </div>
+          <a href="#productos" class="meta-scroll">Explorar soportes ↓</a>
         </div>
-      </div>
 
-      <!-- Pie sutil del hero -->
-      <div class="hero-bottom-bar">
-        <span class="meta-note">NFC Contactless para hostelería y comercios</span>
-        <a href="#productos" class="meta-scroll">Explorar soportes ↓</a>
-      </div>
-
-    </header>
+      </header>
+    </div>
 
 
     <!-- ==========================================
