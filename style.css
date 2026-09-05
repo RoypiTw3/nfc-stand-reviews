@@ -601,7 +601,7 @@ body {
 }
 
 /* ==========================================================================
-   RESPONSIVE DESIGN (MÓVIL Y TABLET)
+   RESPONSIVE DESIGN (MÓVIL Y TABLET OPTIMIZADO)
    ========================================================================== */
 @media (max-width: 1024px) {
   .hero-layer, .products-screen, .checkout-screen {
@@ -610,6 +610,7 @@ body {
 
   .products-editorial-grid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 
   .checkout-grid {
@@ -620,55 +621,161 @@ body {
 
 @media (max-width: 768px) {
   :root {
-    --frame-margin: 8px;
-    --frame-radius: 18px;
+    --frame-margin: 6px;
+    --frame-radius: 16px;
   }
 
+  .main-canvas {
+    margin: var(--frame-margin);
+    width: calc(100% - (var(--frame-margin) * 2));
+    border-radius: var(--frame-radius);
+  }
+
+  /* Hero en Móvil */
   .hero-screen {
+    min-height: calc(100dvh - (var(--frame-margin) * 2));
     height: auto;
-    min-height: calc(100dvh - 16px);
   }
 
   .hero-layer {
-    padding: 1.5rem 1.25rem;
+    padding: 1.5rem 1.25rem 1.75rem 1.25rem;
+    padding-top: max(1.5rem, env(safe-area-inset-top));
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+    min-height: calc(100dvh - (var(--frame-margin) * 2));
     gap: 2.5rem;
   }
 
-  .products-screen, .checkout-screen {
-    padding: 3rem 1.25rem;
+  .top-nav {
+    padding-bottom: 1rem;
+  }
+
+  .brand-title {
+    font-size: 0.9375rem;
+  }
+
+  .nav-links {
+    gap: 1.25rem;
+  }
+
+  .nav-link {
+    font-size: 0.8125rem;
   }
 
   .hero-body {
-    padding: 1rem 0;
+    padding: 1.5rem 0 2rem 0;
+    max-width: 100%;
   }
 
-  .hero-video {
-    transform: scale(1.1) translateX(0);
-    object-position: center 30%;
+  .text-block {
+    gap: 1.25rem;
   }
 
   .hero-title {
-    font-size: clamp(2.15rem, 8vw, 3.2rem);
+    font-size: clamp(2.2rem, 9vw, 3.1rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  .hero-subtitle {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+  }
+
+  .hero-video {
+    transform: scale(1.16);
+    object-position: 70% 65%;
   }
 
   .localized-dark-fade {
     background: linear-gradient(
       180deg,
-      rgba(13, 15, 18, 0.94) 0%,
-      rgba(13, 15, 18, 0.85) 60%,
-      rgba(13, 15, 18, 0.4) 100%
+      rgba(13, 15, 18, 0.96) 0%,
+      rgba(13, 15, 18, 0.88) 45%,
+      rgba(13, 15, 18, 0.40) 75%,
+      rgba(13, 15, 18, 0.85) 100%
     );
   }
 
-  .btn-primary {
-    justify-content: center;
+  .cta-group {
     width: 100%;
+    margin-top: 0.75rem;
+  }
+
+  .btn-primary {
+    width: 100%;
+    justify-content: center;
+    padding: 1rem 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .hero-bottom-bar {
+    padding-top: 1rem;
+    font-size: 0.75rem;
+  }
+
+  /* Sección de Productos en Móvil */
+  .products-screen {
+    padding: 3.5rem 1.25rem 4rem 1.25rem;
+  }
+
+  .section-intro {
+    margin-bottom: 2.5rem;
+  }
+
+  .section-heading {
+    font-size: clamp(1.85rem, 8vw, 2.4rem);
+  }
+
+  .intro-desc {
+    font-size: 0.95rem;
+  }
+
+  .card-visual {
+    height: 220px;
+  }
+
+  .card-body {
+    padding: 1.5rem 1.25rem;
+  }
+
+  /* Sección de Solicitud en Móvil */
+  .checkout-screen {
+    padding: 3.5rem 1.25rem 2.5rem 1.25rem;
+    gap: 3rem;
+  }
+
+  .checkout-title {
+    font-size: clamp(1.85rem, 8vw, 2.4rem);
+  }
+
+  .checkout-desc {
+    font-size: 0.95rem;
+  }
+
+  .form-box {
+    padding: 1.75rem 1.25rem;
+    border-radius: 14px;
+  }
+
+  /* Prevenir zoom automático en iOS al hacer tap en inputs */
+  .input-group input,
+  .input-group select {
+    font-size: 16px;
+    padding: 0.85rem;
+  }
+
+  .btn-primary-form {
+    padding: 1rem;
+    font-size: 0.95rem;
   }
 
   .bottom-footer {
     flex-direction: column;
     gap: 1rem;
     align-items: flex-start;
+    padding-top: 1.5rem;
+    font-size: 0.75rem;
   }
 }
 
