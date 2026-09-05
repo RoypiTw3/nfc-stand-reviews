@@ -991,6 +991,7 @@ body {
     margin: var(--frame-margin);
     width: calc(100% - (var(--frame-margin) * 2));
     border-radius: var(--frame-radius);
+    overflow-x: clip;
   }
 
   /* Hero en Móvil / Tablet Vertical */
@@ -998,8 +999,8 @@ body {
     position: relative;
     height: auto;
     min-height: calc(100dvh - (var(--frame-margin) * 2));
-    padding: 1.75rem 1.5rem 0 1.5rem;
-    padding-top: max(1.75rem, env(safe-area-inset-top));
+    padding: 1.5rem 1.25rem 0 1.25rem;
+    padding-top: max(1.5rem, env(safe-area-inset-top));
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -1007,15 +1008,40 @@ body {
   }
 
   .top-nav {
-    padding-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.75rem;
+    width: 100%;
+    gap: 0.5rem;
   }
 
   .brand-title {
     font-size: 1rem;
+    white-space: nowrap;
   }
 
   .nav-links {
-    gap: 1.5rem;
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0.25rem 0;
+    max-width: 70%;
+  }
+
+  .nav-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-link {
+    font-size: 0.72rem;
+    white-space: nowrap;
+    padding: 0.35rem 0.65rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .hero-stage {
@@ -1024,49 +1050,59 @@ body {
     justify-content: space-between;
     width: 100%;
     flex-grow: 1;
+    gap: 1rem;
   }
 
   .hero-copy {
     width: 100%;
     max-width: 100%;
-    padding: 0.5rem 0 1.5rem 0;
+    padding: 0.5rem 0 0.5rem 0;
     text-align: left;
-    gap: 1.25rem;
+    gap: 1rem;
   }
 
   .hero-title {
-    font-size: clamp(2.3rem, 8.5vw, 3.2rem);
-    line-height: 1.05;
+    font-size: clamp(2rem, 8.5vw, 3rem);
+    line-height: 1.08;
+    word-break: break-word;
   }
 
   .hero-subtitle {
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     line-height: 1.55;
     max-width: 100%;
   }
 
   .cta-group {
     width: 100%;
-    margin-top: 0.75rem;
+    margin-top: 0.5rem;
   }
 
   .btn-primary {
     width: 100%;
     justify-content: center;
-    padding: 1rem 1.5rem;
-    font-size: 0.95rem;
+    padding: 0.95rem 1.25rem;
+    font-size: 0.92rem;
+  }
+
+  .live-reviews-badge {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 0.5rem 0.85rem;
+    font-size: 0.75rem;
+    flex-wrap: wrap;
   }
 
   /* Video Fluyendo Orgánicamente en la Parte Inferior */
   .video-container {
     position: relative;
     inset: auto;
-    width: calc(100% + 3rem);
-    margin-left: -1.5rem;
-    margin-right: -1.5rem;
-    height: 390px;
+    width: calc(100% + 2.5rem);
+    margin-left: -1.25rem;
+    margin-right: -1.25rem;
+    height: clamp(240px, 55vw, 340px);
     margin-top: 0.5rem;
-    margin-bottom: -0.5rem;
+    margin-bottom: 0;
     border-radius: 0;
     overflow: hidden;
     background: transparent;
@@ -1128,106 +1164,139 @@ body {
     display: none;
   }
 
-  /* Secciones nuevas en móvil */
+  /* Secciones en móvil vertical */
   .process-screen,
   .comparison-screen,
   .products-screen,
   .faq-screen {
-    padding: 3.5rem 1.5rem;
+    padding: 3rem 1.25rem;
+  }
+
+  .section-intro {
+    margin-bottom: 2rem;
+  }
+
+  .section-heading {
+    font-size: clamp(1.75rem, 8vw, 2.35rem);
+    line-height: 1.12;
+    word-break: break-word;
+  }
+
+  .intro-desc {
+    font-size: 0.92rem;
+    line-height: 1.55;
   }
 
   .steps-grid {
     grid-template-columns: 1fr;
-    gap: 1.25rem;
+    gap: 1.15rem;
   }
 
   .step-card {
-    padding: 1.75rem 1.5rem;
+    padding: 1.5rem 1.25rem;
+    border-radius: 14px;
   }
 
   .comparison-table-wrapper {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    border-radius: 14px;
+    border-radius: 12px;
+    margin: 0 -0.25rem;
+    padding: 0 0.25rem;
   }
 
   .comparison-table {
-    min-width: 540px;
+    min-width: 480px;
   }
 
   .comparison-table th,
   .comparison-table td {
-    padding: 1rem 1.15rem;
-    font-size: 0.85rem;
+    padding: 0.85rem 1rem;
+    font-size: 0.8125rem;
   }
 
   .faq-question {
-    padding: 1.15rem 1.25rem;
-    font-size: 0.95rem;
+    padding: 1rem 1.15rem;
+    font-size: 0.92rem;
   }
 
   .faq-answer {
-    padding: 0 1.25rem 1.25rem 1.25rem;
-    font-size: 0.875rem;
+    padding: 0 1.15rem 1.15rem 1.15rem;
+    font-size: 0.85rem;
+    line-height: 1.55;
   }
 
   .products-editorial-grid {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 1.35rem;
   }
 
-  .section-intro {
-    margin-bottom: 2.25rem;
-  }
-
-  .section-heading {
-    font-size: clamp(1.85rem, 8vw, 2.5rem);
+  .editorial-card {
+    border-radius: 16px;
   }
 
   .card-visual {
-    height: 220px;
+    height: 210px;
   }
 
   .card-body {
-    padding: 1.5rem 1.25rem;
+    padding: 1.35rem 1.15rem;
+    gap: 0.5rem;
+  }
+
+  .card-name {
+    font-size: 1.35rem;
   }
 
   .checkout-screen {
-    padding: 3.5rem 1.5rem 2.5rem 1.5rem;
-    gap: 3.5rem;
+    padding: 3rem 1.25rem 2rem 1.25rem;
+    gap: 2.5rem;
   }
 
   .checkout-grid {
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 2.25rem;
   }
 
   .checkout-title {
-    font-size: clamp(1.85rem, 8vw, 2.5rem);
+    font-size: clamp(1.75rem, 8vw, 2.35rem);
+    line-height: 1.12;
+  }
+
+  .checkout-desc {
+    font-size: 0.95rem;
+    line-height: 1.55;
   }
 
   .form-box {
-    padding: 1.75rem 1.25rem;
+    padding: 1.5rem 1.15rem;
     border-radius: 14px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .clean-form {
+    gap: 1rem;
   }
 
   .input-group input,
   .input-group select {
     font-size: 16px;
     padding: 0.85rem;
+    border-radius: 8px;
+    box-sizing: border-box;
+    width: 100%;
   }
 
   .btn-primary-form {
-    padding: 1rem;
-    font-size: 0.95rem;
+    padding: 0.95rem;
+    font-size: 0.92rem;
   }
 
   .bottom-footer {
-    flex-direction: column;
-    gap: 1rem;
-    align-items: flex-start;
     padding-top: 2rem;
-    padding-bottom: 6rem;
+    padding-bottom: 7rem;
+    gap: 0.75rem;
   }
 }
 
@@ -1336,18 +1405,28 @@ body {
 @media (max-width: 1024px) {
   .floating-dock {
     bottom: 1.75rem;
-    right: 1.25rem;
-    gap: 0.5rem;
+    right: 1.15rem;
+    gap: 0.45rem;
+  }
+
+  .floating-dock.footer-elevated {
+    bottom: 4.5rem;
   }
 
   .floating-back-to-top {
-    padding: 0.55rem 0.95rem;
-    font-size: 0.75rem;
+    padding: 0.45rem 0.85rem;
+    font-size: 0.72rem;
   }
 
   .floating-wa-btn {
-    padding: 0.65rem 1rem;
-    font-size: 0.8125rem;
+    padding: 0.55rem 0.95rem;
+    font-size: 0.78rem;
+    gap: 0.45rem;
+  }
+
+  .floating-wa-btn svg {
+    width: 17px;
+    height: 17px;
   }
 }
 
