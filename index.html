@@ -15,76 +15,71 @@
   <div class="main-canvas">
 
     <!-- ==========================================
-         PANTALLA 1: HERO (PURA TIPOGRAFÍA Y VIDEO)
+         PANTALLA 1: HERO
          ========================================== -->
     <header class="hero-screen" id="hero">
       
-      <!-- Video Full-Bleed de Fondo -->
-      <div class="video-container">
-        <video
-          id="hero-video"
-          class="hero-video"
-          autoplay
-          muted
-          loop
-          playsinline
-          preload="auto"
-          aria-hidden="true"
-        >
-          <source src="media/nfc-hero-loop.mp4" type="video/mp4">
-        </video>
+      <!-- Navegación sobria -->
+      <nav class="top-nav">
+        <a href="#hero" class="brand">
+          <span class="brand-title">STAND<span class="brand-dot">·</span>REVIEW</span>
+        </a>
 
-        <!-- Fade oscuro localizado detrás del texto -->
-        <div class="localized-dark-fade" aria-hidden="true"></div>
-        <div class="grain-overlay" aria-hidden="true"></div>
-      </div>
+        <div class="nav-links">
+          <a href="#productos" class="nav-link">Colección</a>
+          <a href="#contacto" class="nav-link">Contacto</a>
+        </div>
+      </nav>
 
-      <!-- Contenido en capa superior sobre el video -->
-      <div class="hero-layer">
-        
-        <!-- Navegación sobria -->
-        <nav class="top-nav">
-          <a href="#hero" class="brand">
-            <span class="brand-title">STAND<span class="brand-dot">·</span>REVIEW</span>
-          </a>
+      <!-- Escenario Principal del Hero -->
+      <div class="hero-stage">
+        <!-- Bloque de Texto -->
+        <div class="hero-copy">
+          <h1 class="hero-title">
+            TUS 5 ESTRELLAS<br>
+            <span class="serif-italic">en un solo tap</span>
+          </h1>
 
-          <div class="nav-links">
-            <a href="#productos" class="nav-link">Colección</a>
-            <a href="#contacto" class="nav-link">Contacto</a>
-          </div>
-        </nav>
+          <p class="hero-subtitle">
+            Tus clientes acercan el teléfono a la placa NFC en mesa o barra y abren al instante tu perfil de Google Reviews. Sin códigos QR ni aplicaciones.
+          </p>
 
-        <!-- Titular y Acción -->
-        <div class="hero-body">
-          <div class="text-block">
-            <h1 class="hero-title">
-              TUS 5 ESTRELLAS<br>
-              <span class="serif-italic">en un solo tap</span>
-            </h1>
-
-            <p class="hero-subtitle">
-              Tus clientes acercan el teléfono a la placa NFC en mesa o barra y abren al instante tu perfil de Google Reviews. Sin códigos QR ni aplicaciones.
-            </p>
-
-            <div class="cta-group">
-              <a href="#productos" class="btn-primary">
-                <span>Ver colección</span>
-                <svg class="btn-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M3.33337 8H12.6667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M8 3.33334L12.6667 8L8 12.6667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </a>
-            </div>
+          <div class="cta-group">
+            <a href="#productos" class="btn-primary">
+              <span>Ver colección</span>
+              <svg class="btn-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3.33337 8H12.6667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8 3.33334L12.6667 8L8 12.6667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
           </div>
         </div>
 
-        <!-- Pie sutil del hero -->
-        <div class="hero-bottom-bar">
-          <span class="meta-note">NFC Contactless para hostelería y comercios</span>
-          <a href="#productos" class="meta-scroll">Explorar soportes ↓</a>
+        <!-- Contenedor del Video -->
+        <div class="video-container">
+          <video
+            id="hero-video"
+            class="hero-video"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto"
+            aria-hidden="true"
+          >
+            <source src="media/nfc-hero-loop.mp4" type="video/mp4">
+          </video>
+          <div class="localized-dark-fade" aria-hidden="true"></div>
+          <div class="grain-overlay" aria-hidden="true"></div>
         </div>
-
       </div>
+
+      <!-- Pie sutil del hero -->
+      <div class="hero-bottom-bar">
+        <span class="meta-note">NFC Contactless para hostelería y comercios</span>
+        <a href="#productos" class="meta-scroll">Explorar soportes ↓</a>
+      </div>
+
     </header>
 
 
