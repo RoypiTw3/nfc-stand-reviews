@@ -189,29 +189,34 @@
 
         <div class="form-column">
           <div class="form-box">
-            <form class="clean-form" onsubmit="event.preventDefault(); alert('¡Gracias! Prepararemos una propuesta para tu negocio.');">
+            <form class="clean-form" id="order-form">
               <div class="input-group">
                 <label for="local-name">Nombre de tu local en Google</label>
-                <input type="text" id="local-name" placeholder="Ej. Restaurante Bistro, Barcelona" required>
+                <input type="text" id="local-name" placeholder="Ej. Restaurante Bistro, Medellín" required>
               </div>
 
               <div class="input-group">
-                <label for="product-type">Modelo</label>
+                <label for="product-type">Modelo de soporte</label>
                 <select id="product-type">
-                  <option value="mesa">Stand de Mesa Acrílico</option>
-                  <option value="totem">Tótem Vanguard Roble &amp; Metal</option>
-                  <option value="tarjeta">Tarjeta Staff</option>
-                  <option value="pack">Pack Completo</option>
+                  <option value="Stand de Mesa Acrílico">Stand de Mesa Acrílico</option>
+                  <option value="Tótem Vanguard Roble & Metal">Tótem Vanguard Roble &amp; Metal</option>
+                  <option value="Tarjeta Staff Contactless">Tarjeta Staff Contactless</option>
+                  <option value="Pack Completo (Mesa + Tótem + Tarjetas)">Pack Completo (Mesa + Tótem + Tarjetas)</option>
                 </select>
               </div>
 
               <div class="input-group">
-                <label for="contact-info">WhatsApp o Email</label>
-                <input type="text" id="contact-info" placeholder="600 000 000 o email@negocio.com" required>
+                <label for="quantity">Cantidad de mesas / soportes</label>
+                <input type="number" id="quantity" min="1" max="500" placeholder="Ej. 10" required>
+              </div>
+
+              <div class="input-group">
+                <label for="contact-info">Tu Nombre o WhatsApp de contacto</label>
+                <input type="text" id="contact-info" placeholder="Ej. Carlos / 300 000 0000" required>
               </div>
 
               <button type="submit" class="btn-primary-form">
-                <span>Pedir propuesta</span>
+                <span>Pedir propuesta por WhatsApp</span>
                 <span class="arrow-sym">→</span>
               </button>
             </form>
@@ -232,6 +237,6 @@
 
   </div>
 
-  <script src="script.js?v=7.0"></script>
+  <script src="script.js?v=8.0"></script>
 </body>
 </html>

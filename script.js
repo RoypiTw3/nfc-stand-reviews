@@ -66,4 +66,54 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // =========================================================================
+  // GESTOR DE PEDIDOS VÍA WHATSAPP (+57 300 986 8949)
+  // =========================================================================
+  const orderForm = document.getElementById('order-form');
+  if (orderForm) {
+    orderForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const localName = document.getElementById('local-name')?.value.trim() || '';
+      const productType = document.getElementById('product-type')?.value || '';
+      const quantity = document.getElementById('quantity')?.value.trim() || '1';
+      const contactInfo = document.getElementById('contact-info')?.value.trim() || '';
+
+      const phone = '573009868949';
+      const text = `¡Hola STAND·REVIEW! 👋 Quiero pedir una propuesta para mi negocio:\n\n` +
+                   `📍 *Local / Negocio:* ${localName}\n` +
+                   `📦 *Modelo:* ${productType}\n` +
+                   `🔢 *Cantidad de soportes:* ${quantity}\n` +
+                   `👤 *Contacto:* ${contactInfo}\n\n` +
+                   `¿Podrían indicarme precios y tiempos de entrega?`;
+
+      const whatsappURL = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+      window.open(whatsappURL, '_blank');
+    });
+  }
+
+  // =========================================================================
+  // INTERACCIÓN DE TARJETAS DE PRODUCTO -> AUTO SELECCIÓN EN FORMULARIO
+  // =========================================================================
+  const productCards = document.querySelectorAll('.editorial-card');
+  const productSelect = document.getElementById('product-type');
+
+  if (productCards.length && productSelect) {
+    productCards.forEach((card, index) => {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', () => {
+        if (index === 0) productSelect.value = 'Stand de Mesa Acrílico';
+        else if (index === 1) productSelect.value = 'Tótem Vanguard Roble & Metal';
+        else if (index === 2) productSelect.value = 'Tarjeta Staff Contactless';
+
+        const checkout = document.getElementById('contacto');
+        if (checkout) {
+          checkout.scrollIntoView({ behavior: 'smooth' });
+          const localInput = document.getElementById('local-name');
+          if (localInput) setTimeout(() => localInput.focus(), 600);
+        }
+      });
+    });
+  }
 });
