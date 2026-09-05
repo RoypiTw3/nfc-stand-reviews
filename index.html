@@ -19,14 +19,12 @@
   <meta property="og:site_name" content="TapNFC">
   <meta property="og:title" content="TapNFC | Placas & Stands Contactless para Google Reviews">
   <meta property="og:description" content="Tus clientes acercan su teléfono a la placa NFC y abren al instante tu ficha de Google Reviews con 5 estrellas listas.">
-  <meta property="og:image" content="https://roypitw3.github.io/nfc-stand-reviews/media/glassline-poster.png">
   <meta property="og:locale" content="es_CO">
 
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="TapNFC | Placas & Stands NFC para Google Reviews">
   <meta name="twitter:description" content="Multiplica tus reseñas de 5 estrellas en segundos sin códigos QR ni apps. Hardware de lujo para hostelería y comercios.">
-  <meta name="twitter:image" content="https://roypitw3.github.io/nfc-stand-reviews/media/glassline-poster.png">
 
   <!-- Schema.org JSON-LD Structured Data -->
   <script type="application/ld+json">
@@ -38,7 +36,6 @@
         "@id": "https://roypitw3.github.io/nfc-stand-reviews/#organization",
         "name": "TapNFC Colombia",
         "url": "https://roypitw3.github.io/nfc-stand-reviews/",
-        "logo": "https://roypitw3.github.io/nfc-stand-reviews/media/glassline-poster.png",
         "contactPoint": {
           "@type": "ContactPoint",
           "telephone": "+57-315-185-6554",
@@ -73,7 +70,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,600&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
   
-  <link rel="stylesheet" href="style.css?v=14.0">
+  <link rel="stylesheet" href="style.css?v=15.0">
 </head>
 <body>
 
@@ -81,70 +78,79 @@
   <div class="main-canvas">
 
     <!-- ==========================================
-         PANTALLA 1: HERO CON SCROLLYTELLING ANIMATION
+         PANTALLA 1: HERO
          ========================================== -->
-    <div class="hero-scroll-track" id="hero-track">
-      <header class="hero-screen" id="hero">
-        
-        <!-- Navegación sobria -->
-        <nav class="top-nav">
-          <a href="#hero-track" class="brand">
-            <span class="brand-title">TAP<span class="brand-dot">·</span>NFC</span>
-          </a>
+    <header class="hero-screen" id="hero">
+      
+      <!-- Navegación sobria -->
+      <nav class="top-nav">
+        <a href="#hero" class="brand">
+          <span class="brand-title">TAP<span class="brand-dot">·</span>NFC</span>
+        </a>
 
-          <div class="nav-links">
-            <a href="#proceso" class="nav-link">Cómo funciona</a>
-            <a href="#comparativa" class="nav-link">NFC vs QR</a>
-            <a href="#productos" class="nav-link">Colección</a>
-            <a href="#faq" class="nav-link">FAQ</a>
-            <a href="#contacto" class="nav-link">Contacto</a>
-          </div>
-        </nav>
+        <div class="nav-links">
+          <a href="#proceso" class="nav-link">Cómo funciona</a>
+          <a href="#comparativa" class="nav-link">NFC vs QR</a>
+          <a href="#productos" class="nav-link">Colección</a>
+          <a href="#faq" class="nav-link">FAQ</a>
+          <a href="#contacto" class="nav-link">Contacto</a>
+        </div>
+      </nav>
 
-        <!-- Escenario Principal del Hero -->
-        <div class="hero-stage">
-          <!-- Bloque de Texto -->
-          <div class="hero-copy">
-            <h1 class="hero-title">
-              TUS 5 ESTRELLAS<br>
-              <span class="serif-italic">en un solo tap</span>
-            </h1>
+      <!-- Escenario Principal del Hero -->
+      <div class="hero-stage">
+        <!-- Bloque de Texto -->
+        <div class="hero-copy">
+          <h1 class="hero-title">
+            TUS 5 ESTRELLAS<br>
+            <span class="serif-italic">en un solo tap</span>
+          </h1>
 
-            <p class="hero-subtitle">
-              Tus clientes acercan el teléfono a la placa NFC en mesa o barra y abren al instante tu perfil de Google Reviews. Sin códigos QR ni aplicaciones.
-            </p>
+          <p class="hero-subtitle">
+            Tus clientes acercan el teléfono a la placa NFC en mesa o barra y abren al instante tu perfil de Google Reviews. Sin códigos QR ni aplicaciones.
+          </p>
 
-            <div class="cta-group">
-              <a href="#productos" class="btn-primary">
-                <span>Ver colección</span>
-                <svg class="btn-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M8 3.33337V12.6667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M3.33334 8L8 12.6667L12.6667 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </a>
-            </div>
-          </div>
-
-          <!-- Contenedor del Canvas Interactivo (Scrollytelling Frame Scrubbing) -->
-          <div class="canvas-container">
-            <canvas id="hero-canvas" class="hero-canvas" width="960" height="540"></canvas>
-            <div class="localized-dark-fade" aria-hidden="true"></div>
-            <div class="grain-overlay" aria-hidden="true"></div>
+          <div class="cta-group">
+            <a href="#productos" class="btn-primary">
+              <span>Ver colección</span>
+              <svg class="btn-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 3.33337V12.6667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M3.33334 8L8 12.6667L12.6667 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
           </div>
         </div>
 
-        <!-- Pie sutil del hero con indicador de scroll interactivo -->
-        <div class="hero-bottom-bar">
-          <span class="meta-note">NFC Contactless para hostelería y comercios</span>
-          <div class="scroll-interactive-pill">
-            <span class="pulse-dot"></span>
-            <span>Haz scroll para interactuar</span>
-          </div>
-          <a href="#productos" class="meta-scroll">Explorar soportes ↓</a>
+        <!-- Contenedor del Video -->
+        <div class="video-container">
+          <video
+            id="hero-video"
+            class="hero-video"
+            src="media/nfc-hero-loop.mp4"
+            autoplay
+            muted
+            loop
+            playsinline
+            webkit-playsinline
+            x5-playsinline
+            preload="auto"
+            tabindex="-1"
+            aria-hidden="true"
+          >
+            <source src="media/nfc-hero-loop.mp4" type="video/mp4">
+          </video>
+          <div class="localized-dark-fade" aria-hidden="true"></div>
+          <div class="grain-overlay" aria-hidden="true"></div>
         </div>
+      </div>
 
-      </header>
-    </div>
+      <!-- Pie sutil del hero -->
+      <div class="hero-bottom-bar">
+        <span class="meta-note">NFC Contactless para hostelería y comercios</span>
+        <a href="#productos" class="meta-scroll">Explorar soportes ↓</a>
+      </div>
+
+    </header>
 
 
     <!-- ==========================================

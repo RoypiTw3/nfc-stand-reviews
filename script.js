@@ -1,98 +1,73 @@
 document.addEventListener('DOMContentLoaded', () => {
   // =========================================================================
-  // 1. MOTOR DE SCROLLYTELLING CANVAS (Frame-by-Frame Scrubbing)
+  // 1. GESTOR DE VIDEO HERO (Autoplay & Optimización)
   // =========================================================================
-  const canvas = document.getElementById('hero-canvas');
-  const heroTrack = document.getElementById('hero-track');
+  const video = document.getElementById('hero-video');
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  if (canvas && heroTrack) {
-    const ctx = canvas.getContext('2d', { alpha: false });
-    const TOTAL_FRAMES = 120;
-    const frames = new Array(TOTAL_FRAMES);
-    let framesLoaded = 0;
-    let targetFrame = 0;
-    let currentRenderedFrame = 0;
-    let isLoopRunning = false;
+  if (video) {
+    video.muted = true;
+    video.defaultMuted = true;
+    video.volume = 0;
+    video.playsInline = true;
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', '');
+    video.setAttribute('muted', '');
 
-    // Formateador de ruta: media/frames/frame_0000.webp a frame_0119.webp
-    const getFramePath = (index) => {
-      const padded = String(index).padStart(4, '0');
-      return `media/frames/frame_${padded}.webp`;
-    };
-
-    // Dibujar frame en el canvas preservando el ajuste óptimo
-    const renderFrame = (img) => {
-      if (!img || !img.complete || !img.naturalWidth) return;
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    };
-
-    // 1. Cargar Frame 0 de inmediato para render inicial instantáneo
-    const firstImg = new Image();
-    firstImg.src = getFramePath(0);
-    firstImg.onload = () => {
-      frames[0] = firstImg;
-      renderFrame(firstImg);
-      // Comenzar precarga del resto en segundo plano sin bloquear
-      preloadRemainingFrames();
-    };
-
-    // 2. Precarga asíncrona de todos los demás frames
-    const preloadRemainingFrames = () => {
-      for (let i = 1; i < TOTAL_FRAMES; i++) {
-        const img = new Image();
-        img.src = getFramePath(i);
-        img.onload = () => {
-          frames[i] = img;
-          framesLoaded++;
-        };
+    const tryPlay = () => {
+      if (!prefersReducedMotion.matches) {
+        const p = video.play();
+        if (p !== undefined) {
+          p.catch(() => {});
+        }
       }
     };
 
-    // 3. Cálculo de progreso basado en el Scroll
-    const updateProgress = () => {
-      const rect = heroTrack.getBoundingClientRect();
-      const maxScroll = heroTrack.offsetHeight - window.innerHeight;
+    // Intentos de reproducción inmediata
+    tryPlay();
+    video.addEventListener('loadedmetadata', tryPlay);
+    video.addEventListener('loadeddata', tryPlay);
+    video.addEventListener('canplay', tryPlay);
+
+    // Desbloqueo universal ante cualquier interacción táctil
+    const unlockOnTouch = () => {
+      tryPlay();
+      ['touchstart', 'touchend', 'scroll', 'click'].forEach(evt => {
+        window.removeEventListener(evt, unlockOnTouch);
+      });
+    };
+    ['touchstart', 'touchend', 'scroll', 'click'].forEach(evt => {
+      window.addEventListener(evt, unlockOnTouch, { passive: true });
+    });
+
+    // Bucle continuo
+    video.addEventListener('ended', () => {
+      video.currentTime = 0;
+      tryPlay();
+    });
+
+    // Pausar video cuando se hace scroll profundo para ahorrar recursos
+    let isDeepScrolled = false;
+    window.addEventListener('scroll', () => {
+      const scrollPos = window.scrollY || window.pageYOffset;
+      const shouldPause = scrollPos > (window.innerHeight * 1.3);
       
-      if (maxScroll <= 0) return;
-
-      const progress = Math.max(0, Math.min(1, -rect.top / maxScroll));
-      targetFrame = progress * (TOTAL_FRAMES - 1);
-
-      if (!isLoopRunning) {
-        isLoopRunning = true;
-        requestAnimationFrame(tick);
+      if (shouldPause && !isDeepScrolled) {
+        isDeepScrolled = true;
+        video.pause();
+      } else if (!shouldPause && isDeepScrolled) {
+        isDeepScrolled = false;
+        tryPlay();
       }
-    };
+    }, { passive: true });
 
-    // 4. Bucle con interpolación suave (Lerp) para efecto sedoso de hardware
-    const tick = () => {
-      const diff = targetFrame - currentRenderedFrame;
-
-      if (Math.abs(diff) > 0.01) {
-        currentRenderedFrame += diff * 0.14; // Suavizado de inercia
-        const frameIndex = Math.max(0, Math.min(TOTAL_FRAMES - 1, Math.round(currentRenderedFrame)));
-        
-        const imgToDraw = frames[frameIndex] || frames[0];
-        if (imgToDraw) {
-          renderFrame(imgToDraw);
-        }
-        requestAnimationFrame(tick);
+    prefersReducedMotion.addEventListener('change', () => {
+      if (prefersReducedMotion.matches) {
+        video.pause();
       } else {
-        currentRenderedFrame = targetFrame;
-        const frameIndex = Math.max(0, Math.min(TOTAL_FRAMES - 1, Math.round(currentRenderedFrame)));
-        const imgToDraw = frames[frameIndex] || frames[0];
-        if (imgToDraw) {
-          renderFrame(imgToDraw);
-        }
-        isLoopRunning = false;
+        tryPlay();
       }
-    };
-
-    // Listeners de scroll optimizados
-    window.addEventListener('scroll', updateProgress, { passive: true });
-    window.addEventListener('resize', updateProgress, { passive: true });
-    updateProgress();
+    });
   }
 
   // =========================================================================
