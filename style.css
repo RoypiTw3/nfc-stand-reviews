@@ -297,9 +297,11 @@ body {
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    transparent 50%,
-    rgba(13, 15, 18, 0.35) 70%,
-    rgba(13, 15, 18, 0.75) 85%,
+    transparent 30%,
+    rgba(13, 15, 18, 0.20) 45%,
+    rgba(13, 15, 18, 0.55) 60%,
+    rgba(13, 15, 18, 0.88) 75%,
+    var(--color-bg-dark) 85%,
     var(--color-bg-dark) 100%
   );
   pointer-events: none;
@@ -342,7 +344,25 @@ body {
   background-image: radial-gradient(rgba(255, 255, 255, 0.5) 1px, transparent 1px);
   background-size: 8px 8px;
   pointer-events: none;
-  z-index: 5;
+  z-index: 3;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 35%,
+    rgba(0, 0, 0, 0.75) 50%,
+    rgba(0, 0, 0, 0.35) 65%,
+    rgba(0, 0, 0, 0.08) 78%,
+    transparent 85%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 35%,
+    rgba(0, 0, 0, 0.75) 50%,
+    rgba(0, 0, 0, 0.35) 65%,
+    rgba(0, 0, 0, 0.08) 78%,
+    transparent 85%
+  );
 }
 
 .hero-bottom-bar {
