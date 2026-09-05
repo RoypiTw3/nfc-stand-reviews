@@ -163,12 +163,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // =========================================================================
   // 5. DOCK FLOTANTE: VOLVER ARRIBA BLANCO + WHATSAPP ELEVADO
   // =========================================================================
+  const floatingDock = document.getElementById('floating-dock');
   const floatingWa = document.getElementById('floating-wa');
   const floatingBackToTop = document.getElementById('floating-back-to-top');
 
-  if (floatingWa || floatingBackToTop) {
+  if (floatingDock || floatingWa || floatingBackToTop) {
     const handleFloatingVisibility = () => {
       const scrollPos = window.scrollY || window.pageYOffset;
+      const windowHeight = window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight;
 
       if (scrollPos > 280) {
         if (floatingWa) floatingWa.classList.add('visible');
@@ -176,6 +179,15 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         if (floatingWa) floatingWa.classList.remove('visible');
         if (floatingBackToTop) floatingBackToTop.classList.remove('visible');
+      }
+
+      // Si está llegando al final de la página, elevar aún más el dock para despejar el footer
+      if (floatingDock) {
+        if (scrollPos + windowHeight >= docHeight - 250) {
+          floatingDock.classList.add('footer-elevated');
+        } else {
+          floatingDock.classList.remove('footer-elevated');
+        }
       }
     };
 
