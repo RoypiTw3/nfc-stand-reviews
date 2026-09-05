@@ -70,7 +70,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,600&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
   
-  <link rel="stylesheet" href="style.css?v=21.0">
+  <link rel="stylesheet" href="style.css?v=22.0">
 </head>
 <body>
 
@@ -88,12 +88,48 @@
           <span class="brand-title">TAP<span class="brand-dot">·</span>NFC</span>
         </a>
 
-        <div class="nav-links">
-          <a href="#proceso" class="nav-link nav-link-desktop">Cómo funciona</a>
-          <a href="#comparativa" class="nav-link nav-link-desktop">NFC vs QR</a>
-          <a href="#productos" class="nav-link nav-link-primary">Colección</a>
-          <a href="#faq" class="nav-link nav-link-desktop">FAQ</a>
-          <a href="#contacto" class="nav-link nav-link-cta">Pedir propuesta →</a>
+        <!-- Navegación Desktop -->
+        <div class="nav-links desktop-only-nav">
+          <a href="#proceso" class="nav-link">Cómo funciona</a>
+          <a href="#comparativa" class="nav-link">NFC vs QR</a>
+          <a href="#productos" class="nav-link">Colección</a>
+          <a href="#faq" class="nav-link">FAQ</a>
+          <a href="#contacto" class="nav-link">Contacto</a>
+        </div>
+
+        <!-- Navegación Móvil Desplegable -->
+        <div class="mobile-nav-group">
+          <div class="mobile-dropdown-wrapper" id="mobile-nav-dropdown">
+            <button class="mobile-nav-trigger" id="mobile-nav-trigger" aria-expanded="false" aria-label="Abrir menú de secciones">
+              <span>Cómo funciona</span>
+              <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="mobile-dropdown-menu" id="mobile-dropdown-menu">
+              <a href="#proceso" class="mobile-menu-item">
+                <span class="menu-item-icon">01</span>
+                <span>Cómo funciona</span>
+              </a>
+              <a href="#comparativa" class="mobile-menu-item">
+                <span class="menu-item-icon">02</span>
+                <span>NFC vs QR</span>
+              </a>
+              <a href="#productos" class="mobile-menu-item">
+                <span class="menu-item-icon">03</span>
+                <span>Colección</span>
+              </a>
+              <a href="#faq" class="mobile-menu-item">
+                <span class="menu-item-icon">04</span>
+                <span>Preguntas</span>
+              </a>
+              <a href="#contacto" class="mobile-menu-item">
+                <span class="menu-item-icon">05</span>
+                <span>Contacto</span>
+              </a>
+            </div>
+          </div>
+          <a href="#contacto" class="mobile-cta-btn">Pedir propuesta →</a>
         </div>
       </nav>
 
@@ -608,6 +644,6 @@
     </a>
   </div>
 
-  <script src="script.js?v=21.0"></script>
+  <script src="script.js?v=22.0"></script>
 </body>
 </html>

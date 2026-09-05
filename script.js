@@ -71,6 +71,35 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
+  // 1.1 MENÚ DESPLEGABLE MÓVIL (CÓMO FUNCIONA / SECCIONES)
+  // =========================================================================
+  const mobileNavDropdown = document.getElementById('mobile-nav-dropdown');
+  const mobileNavTrigger = document.getElementById('mobile-nav-trigger');
+  const mobileMenuItems = document.querySelectorAll('.mobile-menu-item');
+
+  if (mobileNavDropdown && mobileNavTrigger) {
+    mobileNavTrigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = mobileNavDropdown.classList.toggle('is-open');
+      mobileNavTrigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    mobileMenuItems.forEach(item => {
+      item.addEventListener('click', () => {
+        mobileNavDropdown.classList.remove('is-open');
+        mobileNavTrigger.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!mobileNavDropdown.contains(e.target)) {
+        mobileNavDropdown.classList.remove('is-open');
+        mobileNavTrigger.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  // =========================================================================
   // 2. FORMULARIO & ENLACE DE WHATSAPP (+57 315 185 6554)
   // =========================================================================
   const orderForm = document.getElementById('order-form');
