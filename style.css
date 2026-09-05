@@ -850,12 +850,13 @@ body {
 .input-group input:focus,
 .input-group select:focus {
   outline: none;
-  border-color: var(--color-coral);
+  border-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
 }
 
 .google-notice-box {
-  background: rgba(235, 94, 65, 0.08);
-  border: 1px solid rgba(235, 94, 65, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 8px;
   padding: 0.85rem 1rem;
   display: flex;
@@ -1359,16 +1360,31 @@ body {
 }
 
 .editorial-card::before,
-.step-card::before,
-.form-box::before {
+.step-card::before {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: inherit;
   background: radial-gradient(
     400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    rgba(255, 110, 84, 0.12),
+    rgba(255, 255, 255, 0.08),
     transparent 65%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+  z-index: 1;
+}
+
+.form-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    550px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 255, 255, 0.14),
+    transparent 70%
   );
   opacity: 0;
   pointer-events: none;
