@@ -70,7 +70,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,600&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
   
-  <link rel="stylesheet" href="style.css?v=16.0">
+  <link rel="stylesheet" href="style.css?v=17.0">
 </head>
 <body>
 
@@ -495,34 +495,43 @@
       <footer class="bottom-footer">
         <div class="footer-left">
           <span class="footer-brand">TAP<span class="brand-dot">·</span>NFC</span>
-          <span class="footer-copy-text">· Hardware Contactless Colombia</span>
+          <span class="footer-copy-text">· Hardware Contactless para Google Reviews Colombia</span>
         </div>
         <div class="footer-right">
-          <a href="#hero" class="footer-back-to-top" aria-label="Volver arriba">
-            <span>Volver arriba</span>
-            <span class="arrow-up">↑</span>
-          </a>
+          <span class="footer-tagline">Bogotá · Medellín · Cali · Barranquilla · Envíos Nacionales</span>
         </div>
       </footer>
     </section>
 
   </div>
 
-  <!-- Botón Flotante Minimalista de WhatsApp (Aparece al hacer scroll) -->
-  <a 
-    href="https://wa.me/573151856554?text=Hola%20TapNFC%2C%20quisiera%20recibir%20informaci%C3%B3n%20sobre%20las%20placas%20NFC%20para%20mi%20negocio" 
-    target="_blank" 
-    rel="noopener noreferrer" 
-    class="floating-wa-btn" 
-    id="floating-wa"
-    aria-label="Contactar por WhatsApp a TapNFC"
-  >
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
-    </svg>
-    <span>WhatsApp</span>
-  </a>
+  <!-- Dock Flotante de Acciones Rápidas (Esquina Inferior Derecha) -->
+  <div class="floating-dock" id="floating-dock">
+    <!-- Botón Volver Arriba Blanco (Ubicado justo arriba de WhatsApp) -->
+    <button class="floating-back-to-top" id="floating-back-to-top" aria-label="Volver arriba">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="19" x2="12" y2="5"></line>
+        <polyline points="5 12 12 5 19 12"></polyline>
+      </svg>
+      <span>Volver arriba</span>
+    </button>
 
-  <script src="script.js?v=16.0"></script>
+    <!-- Botón WhatsApp -->
+    <a 
+      href="https://wa.me/573151856554?text=Hola%20TapNFC%2C%20quisiera%20recibir%20informaci%C3%B3n%20sobre%20las%20placas%20NFC%20para%20mi%20negocio" 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      class="floating-wa-btn" 
+      id="floating-wa"
+      aria-label="Contactar por WhatsApp a TapNFC"
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+      </svg>
+      <span>WhatsApp</span>
+    </a>
+  </div>
+
+  <script src="script.js?v=17.0"></script>
 </body>
 </html>

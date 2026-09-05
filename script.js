@@ -161,28 +161,37 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // 5. BOTÓN FLOTANTE DE WHATSAPP (Se oculta al llegar al final para no tapar nada)
+  // 5. DOCK FLOTANTE: VOLVER ARRIBA BLANCO + WHATSAPP ELEVADO
   // =========================================================================
   const floatingWa = document.getElementById('floating-wa');
-  const contactSection = document.getElementById('contacto');
+  const floatingBackToTop = document.getElementById('floating-back-to-top');
 
-  if (floatingWa) {
-    const handleWaVisibility = () => {
+  if (floatingWa || floatingBackToTop) {
+    const handleFloatingVisibility = () => {
       const scrollPos = window.scrollY || window.pageYOffset;
-      // Obtener la posición del inicio de la sección de contacto
-      const contactTop = contactSection ? (contactSection.offsetTop - 150) : Infinity;
 
-      // Visible durante el contenido intermedio, pero SE OCULTA al llegar a la sección final
-      if (scrollPos > 350 && scrollPos < contactTop) {
-        floatingWa.classList.add('visible');
+      if (scrollPos > 280) {
+        if (floatingWa) floatingWa.classList.add('visible');
+        if (floatingBackToTop) floatingBackToTop.classList.add('visible');
       } else {
-        floatingWa.classList.remove('visible');
+        if (floatingWa) floatingWa.classList.remove('visible');
+        if (floatingBackToTop) floatingBackToTop.classList.remove('visible');
       }
     };
 
-    window.addEventListener('scroll', handleWaVisibility, { passive: true });
-    window.addEventListener('resize', handleWaVisibility, { passive: true });
-    handleWaVisibility();
+    window.addEventListener('scroll', handleFloatingVisibility, { passive: true });
+    window.addEventListener('resize', handleFloatingVisibility, { passive: true });
+    handleFloatingVisibility();
+
+    if (floatingBackToTop) {
+      floatingBackToTop.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    }
   }
 
   // =========================================================================
