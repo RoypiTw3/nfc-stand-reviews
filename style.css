@@ -267,13 +267,7 @@ body {
 }
 
 .grain-overlay {
-  position: absolute;
-  inset: 0;
-  opacity: 0.035;
-  background-image: radial-gradient(#fff 1px, transparent 1px);
-  background-size: 4px 4px;
-  pointer-events: none;
-  z-index: 3;
+  display: none;
 }
 
 .hero-bottom-bar {
