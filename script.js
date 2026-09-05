@@ -161,18 +161,28 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // 5. BOTÓN FLOTANTE DE WHATSAPP (Aparece al hacer scroll)
+  // 5. BOTÓN FLOTANTE DE WHATSAPP (Se oculta al llegar al final para no tapar nada)
   // =========================================================================
   const floatingWa = document.getElementById('floating-wa');
+  const contactSection = document.getElementById('contacto');
+
   if (floatingWa) {
-    window.addEventListener('scroll', () => {
+    const handleWaVisibility = () => {
       const scrollPos = window.scrollY || window.pageYOffset;
-      if (scrollPos > 300) {
+      // Obtener la posición del inicio de la sección de contacto
+      const contactTop = contactSection ? (contactSection.offsetTop - 150) : Infinity;
+
+      // Visible durante el contenido intermedio, pero SE OCULTA al llegar a la sección final
+      if (scrollPos > 350 && scrollPos < contactTop) {
         floatingWa.classList.add('visible');
       } else {
         floatingWa.classList.remove('visible');
       }
-    }, { passive: true });
+    };
+
+    window.addEventListener('scroll', handleWaVisibility, { passive: true });
+    window.addEventListener('resize', handleWaVisibility, { passive: true });
+    handleWaVisibility();
   }
 
   // =========================================================================
