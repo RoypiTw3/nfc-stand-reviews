@@ -306,16 +306,173 @@ body {
   transform: translateY(2px);
 }
 
+.section-intro {
+  margin-bottom: 3.5rem;
+}
+
+.section-tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-coral);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: inline-block;
+  margin-bottom: 0.65rem;
+}
+
+.section-heading {
+  font-family: var(--font-sans);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: #FFFFFF;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+/* ==========================================================================
+   SECCIÓN: CÓMO FUNCIONA (PROCESO)
+   ========================================================================== */
+.process-screen {
+  padding: 5rem 3.5rem;
+  background-color: var(--color-bg-dark);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+}
+
+.step-card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-card-border);
+  border-radius: 16px;
+  padding: 2.25rem 2rem;
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: transform 0.3s var(--transition-smooth), border-color 0.2s ease;
+}
+
+.step-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.step-num {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.2);
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+.step-card:hover .step-num {
+  color: var(--color-coral);
+}
+
+.step-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+  margin-bottom: 0.6rem;
+}
+
+.step-text {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   SECCIÓN: COMPARATIVA NFC VS QR
+   ========================================================================== */
+.comparison-screen {
+  padding: 5rem 3.5rem;
+  background-color: var(--color-bg-dark);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.comparison-table-wrapper {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-card-border);
+  border-radius: 18px;
+  overflow: hidden;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.comparison-table th {
+  padding: 1.35rem 1.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-subtle);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.comparison-table th.col-highlight {
+  color: var(--color-coral);
+  background: rgba(235, 94, 65, 0.06);
+  border-bottom: 1px solid rgba(235, 94, 65, 0.2);
+}
+
+.comparison-table td {
+  padding: 1.25rem 1.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  font-size: 0.9375rem;
+}
+
+.comparison-table tr:last-child td {
+  border-bottom: none;
+}
+
+.col-feature {
+  font-weight: 600;
+  color: #FFFFFF;
+  width: 32%;
+}
+
+.col-old {
+  color: var(--color-text-muted);
+  width: 34%;
+}
+
+.col-new {
+  color: #FFFFFF;
+  font-weight: 600;
+  background: rgba(235, 94, 65, 0.03);
+  width: 34%;
+}
+
+.highlight-val {
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
 /* ==========================================================================
    PANTALLA 2: PRODUCTOS
    ========================================================================== */
 .products-screen {
-  padding: 4rem 3.5rem 5rem 3.5rem;
+  padding: 5rem 3.5rem;
   background-color: var(--color-bg-dark);
-}
-
-.section-intro {
-  margin-bottom: 3.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .section-heading {
@@ -445,6 +602,81 @@ body {
   font-size: 0.9rem;
   line-height: 1.5;
   color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   SECCIÓN: PREGUNTAS FRECUENTES (FAQ)
+   ========================================================================== */
+.faq-screen {
+  padding: 5rem 3.5rem;
+  background-color: var(--color-bg-dark);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.faq-accordion {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.faq-item {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-card-border);
+  border-radius: 14px;
+  overflow: hidden;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.faq-item:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.faq-item[open] {
+  border-color: rgba(235, 94, 65, 0.35);
+  background: rgba(18, 21, 26, 0.95);
+}
+
+.faq-question {
+  padding: 1.35rem 1.75rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+  user-select: none;
+}
+
+.faq-question::-webkit-details-marker {
+  display: none;
+}
+
+.faq-icon {
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--color-coral);
+  transition: transform 0.25s var(--transition-smooth);
+  line-height: 1;
+}
+
+.faq-item[open] .faq-icon {
+  transform: rotate(45deg);
+}
+
+.faq-answer {
+  padding: 0 1.75rem 1.5rem 1.75rem;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--color-text-muted);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  padding-top: 1rem;
 }
 
 /* ==========================================================================
@@ -774,9 +1006,47 @@ body {
     display: none;
   }
 
-  /* Pantallas 2 y 3 */
-  .products-screen {
-    padding: 4rem 1.5rem 4.5rem 1.5rem;
+  /* Secciones nuevas en móvil */
+  .process-screen,
+  .comparison-screen,
+  .products-screen,
+  .faq-screen {
+    padding: 3.5rem 1.5rem;
+  }
+
+  .steps-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .step-card {
+    padding: 1.75rem 1.5rem;
+  }
+
+  .comparison-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 14px;
+  }
+
+  .comparison-table {
+    min-width: 540px;
+  }
+
+  .comparison-table th,
+  .comparison-table td {
+    padding: 1rem 1.15rem;
+    font-size: 0.85rem;
+  }
+
+  .faq-question {
+    padding: 1.15rem 1.25rem;
+    font-size: 0.95rem;
+  }
+
+  .faq-answer {
+    padding: 0 1.25rem 1.25rem 1.25rem;
+    font-size: 0.875rem;
   }
 
   .products-editorial-grid {
@@ -785,7 +1055,7 @@ body {
   }
 
   .section-intro {
-    margin-bottom: 2.5rem;
+    margin-bottom: 2.25rem;
   }
 
   .section-heading {
@@ -801,7 +1071,7 @@ body {
   }
 
   .checkout-screen {
-    padding: 4rem 1.5rem 2.5rem 1.5rem;
+    padding: 3.5rem 1.5rem 2.5rem 1.5rem;
     gap: 3.5rem;
   }
 
