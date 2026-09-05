@@ -76,6 +76,7 @@ body {
   padding: 2.25rem 3.5rem 2rem 3.5rem;
   overflow: hidden;
   background-color: var(--color-bg-dark);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .top-nav {
@@ -297,11 +298,9 @@ body {
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    transparent 84%,
-    rgba(13, 15, 18, 0.35) 90%,
-    rgba(13, 15, 18, 0.75) 95%,
-    var(--color-bg-dark) 99%,
-    var(--color-bg-dark) 100%
+    transparent 88%,
+    rgba(13, 15, 18, 0.3) 95%,
+    rgba(13, 15, 18, 0.8) 100%
   );
   pointer-events: none;
   z-index: 4;
@@ -347,18 +346,16 @@ body {
   -webkit-mask-image: linear-gradient(
     to bottom,
     black 0%,
-    black 84%,
-    rgba(0, 0, 0, 0.6) 91%,
-    rgba(0, 0, 0, 0.15) 96%,
-    transparent 99%
+    black 86%,
+    rgba(0, 0, 0, 0.4) 94%,
+    transparent 100%
   );
   mask-image: linear-gradient(
     to bottom,
     black 0%,
-    black 84%,
-    rgba(0, 0, 0, 0.6) 91%,
-    rgba(0, 0, 0, 0.15) 96%,
-    transparent 99%
+    black 86%,
+    rgba(0, 0, 0, 0.4) 94%,
+    transparent 100%
   );
 }
 
@@ -423,7 +420,11 @@ body {
    ========================================================================== */
 .process-screen {
   padding: 5rem 3.5rem;
-  background-color: var(--color-bg-dark);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.015) 0%,
+    rgba(255, 255, 255, 0) 160px
+  ), var(--color-bg-dark);
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
 
