@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // GESTOR DE PEDIDOS VÍA WHATSAPP (+57 300 986 8949)
+  // GESTOR DE PEDIDOS VÍA WHATSAPP (+57 300 185 6554)
   // =========================================================================
   const orderForm = document.getElementById('order-form');
   if (orderForm) {
@@ -78,14 +78,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const localName = document.getElementById('local-name')?.value.trim() || '';
       const productType = document.getElementById('product-type')?.value || '';
       const quantity = document.getElementById('quantity')?.value.trim() || '1';
-      const contactInfo = document.getElementById('contact-info')?.value.trim() || '';
+      const clientName = document.getElementById('client-name')?.value.trim() || '';
 
-      const phone = '573009868949';
+      const phone = '573001856554';
       const text = `¡Hola STAND·REVIEW! 👋 Quiero pedir una propuesta para mi negocio:\n\n` +
                    `📍 *Local / Negocio:* ${localName}\n` +
                    `📦 *Modelo:* ${productType}\n` +
-                   `🔢 *Cantidad de soportes:* ${quantity}\n` +
-                   `👤 *Contacto:* ${contactInfo}\n\n` +
+                   `🔢 *Cantidad de mesas/soportes:* ${quantity}\n` +
+                   `👤 *Mi Nombre:* ${clientName}\n\n` +
                    `¿Podrían indicarme precios y tiempos de entrega?`;
 
       const whatsappURL = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
