@@ -920,13 +920,15 @@ body {
 }
 
 /* ==========================================================================
-   FOOTER SOBRIO
+   FOOTER SOBRIO (ESPACIADO SEGURO ANTI-SOLAPAMIENTO)
    ========================================================================== */
 .bottom-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 2rem;
+  padding-top: 2.5rem;
+  padding-bottom: 1.5rem;
+  padding-right: 12rem; /* Espacio reservado para que el botón de WhatsApp nunca lo tape */
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   font-family: var(--font-mono);
   font-size: 0.75rem;
@@ -939,12 +941,22 @@ body {
 }
 
 .footer-right a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   color: var(--color-text-main);
   text-decoration: none;
   font-weight: 500;
+  padding: 0.45rem 0.85rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .footer-right a:hover {
+  background: rgba(255, 110, 84, 0.12);
+  border-color: rgba(255, 110, 84, 0.3);
   color: var(--color-coral);
 }
 
@@ -1194,9 +1206,11 @@ body {
 
   .bottom-footer {
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.25rem;
     align-items: flex-start;
-    padding-top: 1.5rem;
+    padding-top: 2rem;
+    padding-bottom: 5.5rem; /* Margen amplio para que el botón de WhatsApp nunca lo cubra */
+    padding-right: 0;
   }
 }
 
