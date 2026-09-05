@@ -97,6 +97,14 @@ document.addEventListener('DOMContentLoaded', () => {
         mobileNavTrigger.setAttribute('aria-expanded', 'false');
       }
     });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileNavDropdown.classList.contains('is-open')) {
+        mobileNavDropdown.classList.remove('is-open');
+        mobileNavTrigger.setAttribute('aria-expanded', 'false');
+        mobileNavTrigger.focus();
+      }
+    });
   }
 
   // =========================================================================
