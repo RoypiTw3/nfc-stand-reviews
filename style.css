@@ -920,12 +920,12 @@ body {
 }
 
 /* ==========================================================================
-   FOOTER SOBRIO (CENTRADOR Y ANTI-SOLAPAMIENTO TOTAL)
+   FOOTER SOBRIO Y MINIMALISTA
    ========================================================================== */
 .bottom-footer {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: flex-start;
   padding-top: 2.5rem;
   padding-bottom: 2rem;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -939,6 +939,7 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .footer-brand {
@@ -949,44 +950,6 @@ body {
 .footer-copy-text {
   color: var(--color-text-subtle);
   font-size: 0.75rem;
-}
-
-.footer-center {
-  display: flex;
-  align-items: center;
-  margin-right: auto;
-  margin-left: 3rem;
-}
-
-.btn-back-to-top {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--color-text-main);
-  text-decoration: none;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 0.55rem 1.1rem;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 9999px;
-  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-}
-
-.btn-back-to-top:hover {
-  background: rgba(255, 110, 84, 0.15);
-  border-color: rgba(255, 110, 84, 0.4);
-  color: var(--color-coral);
-  transform: translateY(-2px);
-}
-
-.top-arrow {
-  transition: transform 0.2s ease;
-}
-
-.btn-back-to-top:hover .top-arrow {
-  transform: translateY(-2px);
 }
 
 /* ==========================================================================
@@ -1235,22 +1198,10 @@ body {
 
   .bottom-footer {
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
     align-items: flex-start;
     padding-top: 2rem;
-    padding-bottom: 6.5rem; /* Margen generoso para que el botón flotante quede completamente libre */
-  }
-
-  .footer-center {
-    margin-left: 0;
-    margin-right: 0;
-    width: 100%;
-  }
-
-  .btn-back-to-top {
-    width: auto;
-    padding: 0.6rem 1.15rem;
-    font-size: 0.8125rem;
+    padding-bottom: 6rem;
   }
 }
 
