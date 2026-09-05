@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STAND·REVIEW | Placas NFC para Google Reviews</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,600&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- CONTENEDOR CONTINUO UNIFICADO (12px margen, 22px radio) -->
+  <div class="main-canvas">
+
+    <!-- ==========================================
+         PANTALLA 1: HERO (PURA TIPOGRAFÍA Y VIDEO)
+         ========================================== -->
+    <header class="hero-screen" id="hero">
+      
+      <!-- Video Full-Bleed de Fondo -->
+      <div class="video-container">
+        <video
+          id="hero-video"
+          class="hero-video"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+          aria-hidden="true"
+        >
+          <source src="media/nfc-hero-loop.mp4" type="video/mp4">
+        </video>
+
+        <!-- Fade oscuro localizado detrás del texto -->
+        <div class="localized-dark-fade" aria-hidden="true"></div>
+        <div class="grain-overlay" aria-hidden="true"></div>
+      </div>
+
+      <!-- Contenido en capa superior sobre el video -->
+      <div class="hero-layer">
+        
+        <!-- Navegación sobria -->
+        <nav class="top-nav">
+          <a href="#hero" class="brand">
+            <span class="brand-title">STAND<span class="brand-dot">·</span>REVIEW</span>
+          </a>
+
+          <div class="nav-links">
+            <a href="#productos" class="nav-link">Colección</a>
+            <a href="#contacto" class="nav-link">Contacto</a>
+          </div>
+        </nav>
+
+        <!-- Titular y Acción -->
+        <div class="hero-body">
+          <div class="text-block">
+            <h1 class="hero-title">
+              TUS 5 ESTRELLAS<br>
+              <span class="serif-italic">en un solo tap</span>
+            </h1>
+
+            <p class="hero-subtitle">
+              Tus clientes acercan el teléfono a la placa NFC en mesa o barra y abren al instante tu perfil de Google Reviews. Sin códigos QR ni aplicaciones.
+            </p>
+
+            <div class="cta-group">
+              <a href="#productos" class="btn-primary">
+                <span>Ver colección</span>
+                <svg class="btn-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3.33337 8H12.6667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M8 3.33334L12.6667 8L8 12.6667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pie sutil del hero -->
+        <div class="hero-bottom-bar">
+          <span class="meta-note">NFC Contactless para hostelería y comercios</span>
+          <a href="#productos" class="meta-scroll">Explorar soportes ↓</a>
+        </div>
+
+      </div>
+    </header>
+
+
+    <!-- ==========================================
+         PANTALLA 2: COLECCIÓN DE PRODUCTOS NFC
+         ========================================== -->
+    <section class="products-screen" id="productos">
+      <div class="section-intro">
+        <h2 class="section-heading">Soportes &amp; Placas NFC</h2>
+        <p class="intro-desc">
+          Hardware sólido en acrílico, roble y policarbonato para hostelería y locales de alto tráfico.
+        </p>
+      </div>
+
+      <div class="products-editorial-grid">
+        <!-- Producto 1: Mesa Acrílico -->
+        <article class="editorial-card">
+          <div class="card-visual">
+            <div class="img-container">
+              <img 
+                src="media/producto-mesa-acrilico.png" 
+                alt="Stand de Mesa NFC" 
+                class="prod-image"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+              >
+              <div class="prod-placeholder">
+                <span class="ph-title">Stand de Mesa</span>
+                <span class="ph-sub">Acrílico Cristal Mate</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <h3 class="card-name">Stand de Mesa</h3>
+            <span class="card-type">Acrílico Cristal</span>
+            <p class="card-text">Formato vertical compacto para situar en cada mesa o barra sin ocupar espacio.</p>
+          </div>
+        </article>
+
+        <!-- Producto 2: Tótem Roble & Metal -->
+        <article class="editorial-card">
+          <div class="card-visual">
+            <div class="img-container">
+              <img 
+                src="media/producto-totem-madera.png" 
+                alt="Tótem Vanguard NFC" 
+                class="prod-image"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+              >
+              <div class="prod-placeholder ph-wood">
+                <span class="ph-title">Tótem Vanguard</span>
+                <span class="ph-sub">Roble &amp; Aluminio</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <h3 class="card-name">Tótem Vanguard</h3>
+            <span class="card-type">Roble &amp; Aluminio</span>
+            <p class="card-text">Base pesada con ángulo ergonómico para mostradores de pago y recepciones.</p>
+          </div>
+        </article>
+
+        <!-- Producto 3: Tarjeta Staff -->
+        <article class="editorial-card">
+          <div class="card-visual">
+            <div class="img-container">
+              <img 
+                src="media/producto-tarjeta-staff.png" 
+                alt="Tarjeta Staff NFC" 
+                class="prod-image"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+              >
+              <div class="prod-placeholder ph-card">
+                <span class="ph-title">Tarjeta Staff</span>
+                <span class="ph-sub">Policarbonato Soft-Touch</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <h3 class="card-name">Tarjeta Staff</h3>
+            <span class="card-type">Policarbonato Soft-Touch</span>
+            <p class="card-text">Para que el personal de sala la acerque al momento de entregar la cuenta.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+
+    <!-- ==========================================
+         PANTALLA 3: SOLICITUD DIRECTA
+         ========================================== -->
+    <section class="checkout-screen" id="contacto">
+      <div class="checkout-grid">
+        <div class="process-column">
+          <h2 class="checkout-title">Preconfigurado<br><span class="serif-italic">para tu local</span></h2>
+          <p class="checkout-desc">
+            Enviamos cada soporte grabado y programado con la URL oficial de tu ficha de Google Maps. Solo desempaquetar y usar.
+          </p>
+        </div>
+
+        <div class="form-column">
+          <div class="form-box">
+            <form class="clean-form" onsubmit="event.preventDefault(); alert('¡Gracias! Prepararemos una propuesta para tu negocio.');">
+              <div class="input-group">
+                <label for="local-name">Nombre de tu local en Google</label>
+                <input type="text" id="local-name" placeholder="Ej. Restaurante Bistro, Barcelona" required>
+              </div>
+
+              <div class="input-group">
+                <label for="product-type">Modelo</label>
+                <select id="product-type">
+                  <option value="mesa">Stand de Mesa Acrílico</option>
+                  <option value="totem">Tótem Vanguard Roble &amp; Metal</option>
+                  <option value="tarjeta">Tarjeta Staff</option>
+                  <option value="pack">Pack Completo</option>
+                </select>
+              </div>
+
+              <div class="input-group">
+                <label for="contact-info">WhatsApp o Email</label>
+                <input type="text" id="contact-info" placeholder="600 000 000 o email@negocio.com" required>
+              </div>
+
+              <button type="submit" class="btn-primary-form">
+                <span>Pedir propuesta</span>
+                <span class="arrow-sym">→</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pie de página sobrio -->
+      <footer class="bottom-footer">
+        <div class="footer-left">
+          <span class="footer-brand">STAND·REVIEW</span>
+        </div>
+        <div class="footer-right">
+          <a href="#hero">Volver arriba ↑</a>
+        </div>
+      </footer>
+    </section>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
