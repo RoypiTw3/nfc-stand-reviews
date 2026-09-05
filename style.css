@@ -464,6 +464,33 @@ body {
 .highlight-val {
   color: #FFFFFF;
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+}
+
+.badge-cross {
+  color: rgba(255, 255, 255, 0.35);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  margin-right: 0.45rem;
+}
+
+.badge-check {
+  color: var(--color-coral);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-right: 0.45rem;
+}
+
+/* Scroll margin para navegación suave */
+.hero-screen,
+.process-screen,
+.comparison-screen,
+.products-screen,
+.faq-screen,
+.checkout-screen {
+  scroll-margin-top: 1rem;
 }
 
 /* ==========================================================================
@@ -473,24 +500,6 @@ body {
   padding: 5rem 3.5rem;
   background-color: var(--color-bg-dark);
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-}
-
-.section-heading {
-  font-family: var(--font-sans);
-  font-size: clamp(2rem, 3.5vw, 3rem);
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.025em;
-  color: #FFFFFF;
-  text-transform: uppercase;
-  margin-bottom: 0.75rem;
-}
-
-.intro-desc {
-  max-width: 500px;
-  font-size: 1rem;
-  line-height: 1.6;
-  color: var(--color-text-muted);
 }
 
 .products-editorial-grid {

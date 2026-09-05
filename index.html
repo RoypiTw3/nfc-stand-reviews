@@ -11,7 +11,7 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,600&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,600&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=12.0">
+  <link rel="stylesheet" href="style.css?v=13.0">
 </head>
 <body>
 
@@ -145,35 +145,35 @@
           <thead>
             <tr>
               <th>Criterio de Experiencia</th>
-              <th>Código QR de Papel</th>
+              <th>Código QR Tradicional</th>
               <th class="col-highlight">TapNFC Hardware</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td class="col-feature">Tiempo de interacción</td>
-              <td class="col-old">8 a 15 segundos</td>
-              <td class="col-new"><span class="highlight-val">2 a 3 segundos (Instantáneo)</span></td>
+              <td class="col-old"><span class="badge-cross">✕</span> 8 a 15 segundos</td>
+              <td class="col-new"><span class="highlight-val"><span class="badge-check">✓</span> 2 a 3 segundos (Instantáneo)</span></td>
             </tr>
             <tr>
               <td class="col-feature">Fricción para el cliente</td>
-              <td class="col-old">Abrir cámara, enfocar y ajustar luz</td>
-              <td class="col-new"><span class="highlight-val">1 solo tap contactless</span></td>
+              <td class="col-old"><span class="badge-cross">✕</span> Abrir cámara, enfocar y ajustar luz</td>
+              <td class="col-new"><span class="highlight-val"><span class="badge-check">✓</span> 1 solo tap contactless</span></td>
             </tr>
             <tr>
-              <td class="col-feature">En ambientes oscuros</td>
-              <td class="col-old">Falla frecuentemente</td>
-              <td class="col-new"><span class="highlight-val">100% efectivo sin depender de luz</span></td>
+              <td class="col-feature">En ambientes con poca luz</td>
+              <td class="col-old"><span class="badge-cross">✕</span> Falla frecuentemente</td>
+              <td class="col-new"><span class="highlight-val"><span class="badge-check">✓</span> 100% efectivo siempre</span></td>
             </tr>
             <tr>
               <td class="col-feature">Percepción del local</td>
-              <td class="col-old">Impresión casera / descuidada</td>
-              <td class="col-new"><span class="highlight-val">Hardware sólido &amp; de diseño</span></td>
+              <td class="col-old"><span class="badge-cross">✕</span> Papel / Sticker genérico</td>
+              <td class="col-new"><span class="highlight-val"><span class="badge-check">✓</span> Hardware sólido de diseño</span></td>
             </tr>
             <tr>
               <td class="col-feature">Mantenimiento</td>
-              <td class="col-old">Reimpresión por manchas / arrugas</td>
-              <td class="col-new"><span class="highlight-val">Sin baterías, vida útil eterna</span></td>
+              <td class="col-old"><span class="badge-cross">✕</span> Reimpresión por desgaste</td>
+              <td class="col-new"><span class="highlight-val"><span class="badge-check">✓</span> Sin baterías, vida útil eterna</span></td>
             </tr>
           </tbody>
         </table>
@@ -186,6 +186,7 @@
          ========================================== -->
     <section class="products-screen" id="productos">
       <div class="section-intro">
+        <span class="section-tag">Colección de Hardware</span>
         <h2 class="section-heading">Soportes &amp; Placas NFC</h2>
         <p class="intro-desc">
           Hardware sólido en acrílico, roble y policarbonato para hostelería y locales de alto tráfico.
@@ -337,6 +338,7 @@
     <section class="checkout-screen" id="contacto">
       <div class="checkout-grid">
         <div class="process-column">
+          <span class="section-tag">Solicitud Directa</span>
           <h2 class="checkout-title">Preconfigurado<br><span class="serif-italic">para tu local</span></h2>
           <p class="checkout-desc">
             Enviamos cada soporte grabado y programado con la URL oficial de tu ficha de Google Maps. Solo desempaquetar y usar.
@@ -455,6 +457,6 @@
       }
     });
   </script>
-  <script src="script.js?v=20260905_1312"></script>
+  <script src="script.js?v=13.0"></script>
 </body>
 </html>
