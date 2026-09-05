@@ -143,7 +143,25 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // 4. BOTÓN FLOTANTE DE WHATSAPP (Aparece al hacer scroll)
+  // 4. ACORDEÓN EXCLUSIVO (Cierra automáticamente las demás preguntas)
+  // =========================================================================
+  const faqItems = document.querySelectorAll('.faq-item');
+  if (faqItems.length) {
+    faqItems.forEach((item) => {
+      item.addEventListener('toggle', () => {
+        if (item.open) {
+          faqItems.forEach((otherItem) => {
+            if (otherItem !== item && otherItem.open) {
+              otherItem.open = false;
+            }
+          });
+        }
+      });
+    });
+  }
+
+  // =========================================================================
+  // 5. BOTÓN FLOTANTE DE WHATSAPP (Aparece al hacer scroll)
   // =========================================================================
   const floatingWa = document.getElementById('floating-wa');
   if (floatingWa) {
