@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // GESTOR DE PEDIDOS VÍA WHATSAPP (+57 300 185 6554)
+  // GESTOR DE PEDIDOS VÍA WHATSAPP (+57 315 185 6554)
   // =========================================================================
   const orderForm = document.getElementById('order-form');
   if (orderForm) {
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const quantity = document.getElementById('quantity')?.value.trim() || '1';
       const clientName = document.getElementById('client-name')?.value.trim() || '';
 
-      const phone = '573001856554';
+      const phone = '573151856554';
       const text = `¡Hola STAND·REVIEW! 👋 Quiero pedir una propuesta para mi negocio:\n\n` +
                    `📍 *Local / Negocio:* ${localName}\n` +
                    `📦 *Modelo:* ${productType}\n` +
