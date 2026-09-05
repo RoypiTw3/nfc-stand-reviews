@@ -671,62 +671,50 @@ body {
     font-size: 0.95rem;
   }
 
-  /* Video Fluyendo Orgánicamente en la Parte Inferior (Centrado perfecto y fundido) */
+  /* Video Fluyendo Orgánicamente en la Parte Inferior (Unificado como una sola pieza) */
   .video-container {
     position: relative;
     inset: auto;
     width: calc(100% + 3rem);
     margin-left: -1.5rem;
     margin-right: -1.5rem;
-    height: 350px;
-    margin-top: 1rem;
-    margin-bottom: 0;
+    height: 380px;
+    margin-top: 0.5rem;
+    margin-bottom: -1rem;
     border-radius: 0;
     overflow: hidden;
-    background: #0D0F12;
+    background: transparent;
     border: none;
     box-shadow: none;
     pointer-events: none;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
 
-  /* Fundido superior suave y natural hacia el fondo */
-  .video-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
-    background: linear-gradient(
+    /* Máscara alfa pura: funde los píxeles del video suavemente arriba y abajo sin capas negras encima */
+    -webkit-mask-image: linear-gradient(
       to bottom,
-      #0D0F12 0%,
-      rgba(13, 15, 18, 0.6) 50%,
+      transparent 0%,
+      rgba(0, 0, 0, 0.4) 10%,
+      rgba(0, 0, 0, 1) 25%,
+      rgba(0, 0, 0, 1) 75%,
+      rgba(0, 0, 0, 0.4) 90%,
       transparent 100%
     );
-    z-index: 4;
-    pointer-events: none;
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.4) 10%,
+      rgba(0, 0, 0, 1) 25%,
+      rgba(0, 0, 0, 1) 75%,
+      rgba(0, 0, 0, 0.4) 90%,
+      transparent 100%
+    );
   }
 
-  /* Fundido inferior para conexión con sección de productos */
+  .video-container::before,
   .video-container::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 50px;
-    background: linear-gradient(
-      to top,
-      #0D0F12 0%,
-      rgba(13, 15, 18, 0.6) 50%,
-      transparent 100%
-    );
-    z-index: 4;
-    pointer-events: none;
-    display: block;
+    display: none;
   }
 
   .hero-video {
@@ -735,8 +723,8 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 80% center;
-    background: #0D0F12;
+    object-position: 87% center; /* Un poco más hacia la izquierda como solicitado */
+    background: transparent;
     display: block;
   }
 
