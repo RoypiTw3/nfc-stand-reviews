@@ -187,8 +187,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     }, {
-      rootMargin: '0px 0px -40px 0px',
-      threshold: 0.1
+      rootMargin: '120px 0px 80px 0px',
+      threshold: 0.01
     });
 
     revealElements.forEach(el => revealObserver.observe(el));
