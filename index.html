@@ -83,7 +83,7 @@
   
   <link rel="preload" as="image" href="media/hero-bg-clean.jpg" media="(min-width: 1025px)" fetchpriority="high">
   <link rel="preload" as="image" href="media/hero-bg-mobile.jpg" media="(max-width: 1024px)" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=52.0">
+  <link rel="stylesheet" href="style.css?v=53.0">
 </head>
 <body>
 
@@ -214,19 +214,28 @@
 
       <div class="steps-grid">
         <div class="step-card reveal-on-scroll" style="--reveal-delay: 0.05s;">
-          <span class="step-num">01</span>
+          <div class="step-num-pill">
+            <span class="step-num">01</span>
+            <span class="step-label">PASO</span>
+          </div>
           <h3 class="step-title">Acerca el smartphone</h3>
           <p class="step-text">El cliente pasa su teléfono a 2 cm del soporte o placa NFC. Sin encender cámaras ni instalar nada.</p>
         </div>
 
         <div class="step-card reveal-on-scroll" style="--reveal-delay: 0.15s;">
-          <span class="step-num">02</span>
+          <div class="step-num-pill">
+            <span class="step-num">02</span>
+            <span class="step-label">PASO</span>
+          </div>
           <h3 class="step-title">Apertura instantánea</h3>
           <p class="step-text">El sistema abre de inmediato la pantalla oficial de Google Reviews de tu local con las 5 estrellas listas.</p>
         </div>
 
         <div class="step-card reveal-on-scroll" style="--reveal-delay: 0.25s;">
-          <span class="step-num">03</span>
+          <div class="step-num-pill">
+            <span class="step-num">03</span>
+            <span class="step-label">PASO</span>
+          </div>
           <h3 class="step-title">Tu ranking se dispara</h3>
           <p class="step-text">Consigues reseñas auténticas todos los días en el momento de mayor satisfacción del comensal.</p>
         </div>
@@ -253,7 +262,12 @@
             <tr>
               <th>Criterio de Experiencia</th>
               <th>Código QR Tradicional</th>
-              <th class="col-highlight">TapNFC Hardware</th>
+              <th class="col-highlight">
+                <div class="col-highlight-header">
+                  <span>TapNFC Hardware</span>
+                  <span class="table-badge-rec">★ 5X MÁS EFICAZ</span>
+                </div>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -376,6 +390,7 @@
         <!-- Producto 1: Tarjeta NFC + Base de Madera -->
         <article class="editorial-card reveal-on-scroll" data-product="Tarjeta NFC + Base de Madera" style="--reveal-delay: 0.05s;">
           <div class="card-visual">
+            <span class="product-micro-badge">★ Más vendido</span>
             <div class="img-container">
               <img 
                 src="media/producto-tarjeta-base.jpg" 
@@ -402,6 +417,7 @@
         <!-- Producto 2: Sticker NFC -->
         <article class="editorial-card reveal-on-scroll" data-product="Sticker NFC Adhesivo" style="--reveal-delay: 0.15s;">
           <div class="card-visual">
+            <span class="product-micro-badge">Uso rudo &amp; barras</span>
             <div class="img-container">
               <img 
                 src="media/producto-sticker-nfc.jpg" 
@@ -428,6 +444,7 @@
         <!-- Producto 3: Tarjeta Staff -->
         <article class="editorial-card reveal-on-scroll" data-product="Tarjeta Staff Contactless" style="--reveal-delay: 0.25s;">
           <div class="card-visual">
+            <span class="product-micro-badge">Servicio de mesa</span>
             <div class="img-container">
               <img 
                 src="media/producto-tarjeta-staff.jpg" 
@@ -470,7 +487,7 @@
         <details class="faq-item" name="faq-group" open>
           <summary class="faq-question">
             <span>¿Funciona con cualquier teléfono celular?</span>
-            <span class="faq-icon">+</span>
+            <span class="faq-icon-wrapper"><span class="faq-icon">+</span></span>
           </summary>
           <div class="faq-answer">
             <p>Sí. Prácticamente el 100% de los smartphones modernos (iPhone desde el modelo 7 en adelante y todos los dispositivos Android con pagos contactless) cuentan con lector NFC nativo activado de fábrica sin necesidad de instalar apps.</p>
@@ -480,7 +497,7 @@
         <details class="faq-item" name="faq-group">
           <summary class="faq-question">
             <span>¿Los soportes necesitan baterías, pilas o recarga eléctrica?</span>
-            <span class="faq-icon">+</span>
+            <span class="faq-icon-wrapper"><span class="faq-icon">+</span></span>
           </summary>
           <div class="faq-answer">
             <p>No. Los chips NFC de TapNFC son componentes pasivos de ingeniería sólida que se alimentan por inducción electromagnética milimétrica solo cuando el celular se acerca. Cero cables, cero baterías y vida útil ilimitada.</p>
@@ -490,7 +507,7 @@
         <details class="faq-item" name="faq-group">
           <summary class="faq-question">
             <span>¿Vienen ya grabados y programados con mi negocio?</span>
-            <span class="faq-icon">+</span>
+            <span class="faq-icon-wrapper"><span class="faq-icon">+</span></span>
           </summary>
           <div class="faq-answer">
             <p>Sí. Antes del despacho programamos y verificamos cada chip con el enlace directo y oficial de tu ficha de Google Maps. Solo debes desempaquetar y colocar en tus mesas o barra.</p>
@@ -500,7 +517,7 @@
         <details class="faq-item" name="faq-group">
           <summary class="faq-question">
             <span>¿Qué pasa si mi negocio aún no tiene ficha en Google Maps?</span>
-            <span class="faq-icon">+</span>
+            <span class="faq-icon-wrapper"><span class="faq-icon">+</span></span>
           </summary>
           <div class="faq-answer">
             <p>¡Nosotros nos encargamos! Selecciona la opción en el formulario y te asesoramos creando, verificando y optimizando el perfil oficial de tu negocio en Google Maps antes de enviarte los soportes.</p>
@@ -510,7 +527,7 @@
         <details class="faq-item" name="faq-group">
           <summary class="faq-question">
             <span>¿Hacen envíos a toda Colombia?</span>
-            <span class="faq-icon">+</span>
+            <span class="faq-icon-wrapper"><span class="faq-icon">+</span></span>
           </summary>
           <div class="faq-answer">
             <p>Sí, realizamos envíos a nivel nacional (Medellín, Bogotá, Cali, Barranquilla, Bucaramanga, Cartagena, Eje Cafetero y cualquier municipio del país) con número de guía y entrega asegurada.</p>
@@ -584,6 +601,22 @@
                 <span>Pedir propuesta por WhatsApp</span>
                 <span class="arrow-sym">→</span>
               </button>
+
+              <!-- Señales de Confianza Editorial (UI/UX Pro Max) -->
+              <div class="form-trust-badges">
+                <div class="trust-item">
+                  <span class="trust-dot">●</span>
+                  <span>Sin aplicaciones ni suscripciones</span>
+                </div>
+                <div class="trust-item">
+                  <span class="trust-dot">●</span>
+                  <span>Grabado y verificado</span>
+                </div>
+                <div class="trust-item">
+                  <span class="trust-dot">●</span>
+                  <span>Envíos asegurados a todo el país</span>
+                </div>
+              </div>
             </form>
           </div>
         </div>
@@ -630,6 +663,6 @@
     </a>
   </div>
 
-  <script src="script.js?v=52.0"></script>
+  <script src="script.js?v=53.0"></script>
 </body>
 </html>
