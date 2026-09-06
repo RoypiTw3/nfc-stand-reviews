@@ -111,8 +111,24 @@ document.addEventListener('DOMContentLoaded', () => {
   // 2. FORMULARIO & ENLACE DE WHATSAPP (+57 315 185 6554)
   // =========================================================================
   const orderForm = document.getElementById('order-form');
+  const nfcPurposeSelect = document.getElementById('nfc-purpose');
+  const googleStatusGroup = document.getElementById('google-status-group');
   const googleSelect = document.getElementById('google-status');
   const googleNotice = document.getElementById('google-notice');
+
+  // Mostrar / Ocultar opciones de Google Maps según el propósito del NFC
+  if (nfcPurposeSelect && googleStatusGroup) {
+    nfcPurposeSelect.addEventListener('change', () => {
+      const val = nfcPurposeSelect.value;
+      const isGoogleRelevant = val.includes('Google Reseñas') || val.includes('Uso Mixto');
+      googleStatusGroup.style.display = isGoogleRelevant ? 'flex' : 'none';
+      if (!isGoogleRelevant && googleNotice) {
+        googleNotice.style.display = 'none';
+      } else if (isGoogleRelevant && googleSelect && googleSelect.value === 'no' && googleNotice) {
+        googleNotice.style.display = 'flex';
+      }
+    });
+  }
 
   // Mostrar / Ocultar aviso de alta en Google Maps
   if (googleSelect && googleNotice) {
@@ -130,22 +146,29 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
 
       const localName = document.getElementById('local-name')?.value.trim() || '';
+      const nfcPurpose = document.getElementById('nfc-purpose')?.value || 'Google Reseñas (5 estrellas)';
+      const isGoogleRelevant = nfcPurpose.includes('Google Reseñas') || nfcPurpose.includes('Uso Mixto');
       const googleStatus = document.getElementById('google-status')?.value || 'si';
-      const isNewGoogle = (googleStatus === 'no');
+      const isNewGoogle = isGoogleRelevant && (googleStatus === 'no');
       const productType = document.getElementById('product-type')?.value || '';
       const quantity = document.getElementById('quantity')?.value.trim() || '1';
       const clientName = document.getElementById('client-name')?.value.trim() || '';
 
       const phone = '573151856554';
-      const text = `Hola TapNFC, quiero solicitar una propuesta para mi negocio:\n\n` +
-                   `• Local / Negocio: ${localName}\n` +
-                   `• Ficha en Google Maps: ${isNewGoogle ? 'No (Deseo el servicio de creación de ficha)' : 'Sí, ya registrada'}\n` +
-                   `• Modelo: ${productType}\n` +
-                   `• Cantidad de soportes: ${quantity}\n` +
-                   `• Nombre: ${clientName}\n\n` +
-                   (isNewGoogle 
-                     ? '¿Podrían incluir la cotización para crearnos la ficha en Google Maps y los soportes?' 
-                     : '¿Podrían indicarme precios y tiempos de entrega?');
+      let text = `Hola TapNFC, quiero solicitar una propuesta para mi negocio:\n\n` +
+                 `• Local / Negocio: ${localName}\n` +
+                 `• Uso deseado del NFC: ${nfcPurpose}\n`;
+
+      if (isGoogleRelevant) {
+        text += `• Ficha en Google Maps: ${isNewGoogle ? 'No (Deseo el servicio de creación de ficha)' : 'Sí, ya registrada'}\n`;
+      }
+
+      text += `• Modelo: ${productType}\n` +
+              `• Cantidad de soportes: ${quantity}\n` +
+              `• Nombre: ${clientName}\n\n` +
+              (isNewGoogle 
+                ? '¿Podrían incluir la cotización para crearnos la ficha en Google Maps y los soportes?' 
+                : '¿Podrían indicarme precios y tiempos de entrega?');
 
       const whatsappURL = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
       window.open(whatsappURL, '_blank');
