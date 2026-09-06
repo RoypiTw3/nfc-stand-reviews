@@ -83,7 +83,7 @@
   
   <link rel="preload" as="image" href="media/hero-bg-clean.jpg" media="(min-width: 1025px)" fetchpriority="high">
   <link rel="preload" as="image" href="media/hero-bg-mobile.jpg" media="(max-width: 1024px)" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=55.0">
+  <link rel="stylesheet" href="style.css?v=56.0">
 </head>
 <body>
 
@@ -186,9 +186,204 @@
           </div>
         </div>
 
-        <!-- Escenario Reservado para Showcase 3D de Productos -->
-        <div class="hero-visual-container" id="hero-3d-stage" aria-label="Espacio de productos 3D">
-          <!-- Espacio reservado para modelos 3D interactivos y carrusel de productos -->
+        <!-- Escenario de Showcase y Carrusel 3D de Productos -->
+        <div class="hero-visual-container" id="hero-3d-stage" aria-label="Showcase 3D de Productos TapNFC">
+          <div class="carousel-3d-wrapper" id="carousel-3d">
+            <!-- Botón Flecha Anterior -->
+            <button class="carousel-3d-arrow prev-arrow" id="carousel-prev" aria-label="Producto anterior">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+
+            <!-- Ventana de Visualización con Perspectiva 3D -->
+            <div class="carousel-3d-viewport" id="carousel-viewport">
+              <div class="carousel-3d-stage" id="carousel-stage">
+                
+                <!-- PRODUCTO 0: Stand NFC + Smartphone -->
+                <div class="product-3d-item is-active" data-index="0">
+                  <div class="card-3d-inner">
+                    <!-- Cara Frontal -->
+                    <div class="card-3d-face card-3d-front">
+                      <div class="card-3d-badge-bar">
+                        <span class="card-3d-pill">MÁS PEDIDO</span>
+                        <button class="card-flip-btn" type="button" aria-label="Voltear tarjeta">
+                          <span>Ficha ↺</span>
+                        </button>
+                      </div>
+                      <div class="card-3d-visual">
+                        <img src="media/hero-nfc-stand-phone.jpg" alt="Stand NFC con smartphone" class="product-3d-img" loading="eager" fetchpriority="high">
+                        <div class="card-3d-reflection"></div>
+                      </div>
+                      <div class="card-3d-info">
+                        <h3 class="card-3d-title">Stand Inteligente + Móvil</h3>
+                        <p class="card-3d-desc">Transmisión instantánea al contacto físico</p>
+                      </div>
+                      <div class="card-3d-hint">Toca la tarjeta para voltear ↺</div>
+                    </div>
+                    <!-- Cara Posterior (Ficha Técnica) -->
+                    <div class="card-3d-face card-3d-back">
+                      <div class="card-back-header">
+                        <span class="card-3d-pill pill-gold">ESPECIFICACIONES</span>
+                        <h4 class="card-back-title">Stand NFC Madera & Acero</h4>
+                      </div>
+                      <div class="specs-grid">
+                        <div class="spec-row"><span class="spec-k">Chip NFC</span><span class="spec-v">NTAG215 Ultra Range</span></div>
+                        <div class="spec-row"><span class="spec-k">Base</span><span class="spec-v">Nogal Macizo Tratado</span></div>
+                        <div class="spec-row"><span class="spec-k">Compatibilidad</span><span class="spec-v">100% iPhone & Android</span></div>
+                        <div class="spec-row"><span class="spec-k">Respuesta</span><span class="spec-v">&lt; 0.1s sin apps</span></div>
+                      </div>
+                      <div class="card-back-footer">
+                        <a href="#contacto" class="btn-card-order">Pedir este modelo</a>
+                        <button class="btn-flip-back" type="button">Volver al frente ↻</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-3d-pedestal-shadow"></div>
+                </div>
+
+                <!-- PRODUCTO 1: Placa Base Madera -->
+                <div class="product-3d-item is-next" data-index="1">
+                  <div class="card-3d-inner">
+                    <div class="card-3d-face card-3d-front">
+                      <div class="card-3d-badge-bar">
+                        <span class="card-3d-pill">RESTAURANTES</span>
+                        <button class="card-flip-btn" type="button" aria-label="Voltear tarjeta">
+                          <span>Ficha ↺</span>
+                        </button>
+                      </div>
+                      <div class="card-3d-visual">
+                        <img src="media/producto-tarjeta-base.jpg" alt="Placa NFC con base de madera" class="product-3d-img" loading="lazy">
+                        <div class="card-3d-reflection"></div>
+                      </div>
+                      <div class="card-3d-info">
+                        <h3 class="card-3d-title">Placa Base de Madera</h3>
+                        <p class="card-3d-desc">Elegancia clásica para barra o mesas</p>
+                      </div>
+                      <div class="card-3d-hint">Toca la tarjeta para voltear ↺</div>
+                    </div>
+                    <div class="card-3d-face card-3d-back">
+                      <div class="card-back-header">
+                        <span class="card-3d-pill pill-gold">ESPECIFICACIONES</span>
+                        <h4 class="card-back-title">Placa NFC Roble Natural</h4>
+                      </div>
+                      <div class="specs-grid">
+                        <div class="spec-row"><span class="spec-k">Chip NFC</span><span class="spec-v">NTAG213 Blindado</span></div>
+                        <div class="spec-row"><span class="spec-k">Material</span><span class="spec-v">Acrílico Óptico + Roble</span></div>
+                        <div class="spec-row"><span class="spec-k">Durabilidad</span><span class="spec-v">Resistente a líquidos</span></div>
+                        <div class="spec-row"><span class="spec-k">Lectura</span><span class="spec-v">Bidireccional frontal</span></div>
+                      </div>
+                      <div class="card-back-footer">
+                        <a href="#contacto" class="btn-card-order">Pedir este modelo</a>
+                        <button class="btn-flip-back" type="button">Volver al frente ↻</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-3d-pedestal-shadow"></div>
+                </div>
+
+                <!-- PRODUCTO 2: Sticker NFC Ultra Adhesivo -->
+                <div class="product-3d-item is-hidden" data-index="2">
+                  <div class="card-3d-inner">
+                    <div class="card-3d-face card-3d-front">
+                      <div class="card-3d-badge-bar">
+                        <span class="card-3d-pill">ALTA ADHERENCIA</span>
+                        <button class="card-flip-btn" type="button" aria-label="Voltear tarjeta">
+                          <span>Ficha ↺</span>
+                        </button>
+                      </div>
+                      <div class="card-3d-visual">
+                        <img src="media/producto-sticker-nfc.jpg" alt="Sticker NFC ultra adhesivo" class="product-3d-img" loading="lazy">
+                        <div class="card-3d-reflection"></div>
+                      </div>
+                      <div class="card-3d-info">
+                        <h3 class="card-3d-title">Sticker NFC Ultra Grip</h3>
+                        <p class="card-3d-desc">Fijación 3M mate para cualquier superficie</p>
+                      </div>
+                      <div class="card-3d-hint">Toca la tarjeta para voltear ↺</div>
+                    </div>
+                    <div class="card-3d-face card-3d-back">
+                      <div class="card-back-header">
+                        <span class="card-3d-pill pill-gold">ESPECIFICACIONES</span>
+                        <h4 class="card-back-title">Sticker Pro Negro Mate</h4>
+                      </div>
+                      <div class="specs-grid">
+                        <div class="spec-row"><span class="spec-k">Fijación</span><span class="spec-v">Adhesivo Industrial 3M</span></div>
+                        <div class="spec-row"><span class="spec-k">Acabado</span><span class="spec-v">Policarbonato mate anti-rayas</span></div>
+                        <div class="spec-row"><span class="spec-k">Respaldo</span><span class="spec-v">Micro QR láser de auxilio</span></div>
+                        <div class="spec-row"><span class="spec-k">Grosor</span><span class="spec-v">Ultra-delgado 1.2mm</span></div>
+                      </div>
+                      <div class="card-back-footer">
+                        <a href="#contacto" class="btn-card-order">Pedir este modelo</a>
+                        <button class="btn-flip-back" type="button">Volver al frente ↻</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-3d-pedestal-shadow"></div>
+                </div>
+
+                <!-- PRODUCTO 3: Tarjeta Staff Contactless -->
+                <div class="product-3d-item is-prev" data-index="3">
+                  <div class="card-3d-inner">
+                    <div class="card-3d-face card-3d-front">
+                      <div class="card-3d-badge-bar">
+                        <span class="card-3d-pill">STAFF & EQUIPO</span>
+                        <button class="card-flip-btn" type="button" aria-label="Voltear tarjeta">
+                          <span>Ficha ↺</span>
+                        </button>
+                      </div>
+                      <div class="card-3d-visual">
+                        <img src="media/producto-tarjeta-staff.jpg" alt="Tarjeta contactless para staff" class="product-3d-img" loading="lazy">
+                        <div class="card-3d-reflection"></div>
+                      </div>
+                      <div class="card-3d-info">
+                        <h3 class="card-3d-title">Tarjeta Staff Gold VIP</h3>
+                        <p class="card-3d-desc">Efecto pizarra y grabado oro para meseros</p>
+                      </div>
+                      <div class="card-3d-hint">Toca la tarjeta para voltear ↺</div>
+                    </div>
+                    <div class="card-3d-face card-3d-back">
+                      <div class="card-back-header">
+                        <span class="card-3d-pill pill-gold">ESPECIFICACIONES</span>
+                        <h4 class="card-back-title">Tarjeta Staff Policarbonato</h4>
+                      </div>
+                      <div class="specs-grid">
+                        <div class="spec-row"><span class="spec-k">Material</span><span class="spec-v">Policarbonato 0.8mm Rígido</span></div>
+                        <div class="spec-row"><span class="spec-k">Grabado</span><span class="spec-v">Foil Dorado Metálico</span></div>
+                        <div class="spec-row"><span class="spec-k">Chip NFC</span><span class="spec-v">NTAG213 de 144 bytes</span></div>
+                        <div class="spec-row"><span class="spec-k">Uso</span><span class="spec-v">Portátil para camareros</span></div>
+                      </div>
+                      <div class="card-back-footer">
+                        <a href="#contacto" class="btn-card-order">Pedir este modelo</a>
+                        <button class="btn-flip-back" type="button">Volver al frente ↻</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-3d-pedestal-shadow"></div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Botón Flecha Siguiente -->
+            <button class="carousel-3d-arrow next-arrow" id="carousel-next" aria-label="Siguiente producto">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+
+            <!-- Barra Inferior del Carrusel (Puntos y Modo 3D) -->
+            <div class="carousel-3d-controls">
+              <div class="carousel-3d-dots" id="carousel-dots" role="tablist" aria-label="Selección de producto">
+                <button class="dot-btn is-active" data-index="0" role="tab" aria-selected="true" aria-label="Ver Stand Inteligente"></button>
+                <button class="dot-btn" data-index="1" role="tab" aria-selected="false" aria-label="Ver Placa Base Madera"></button>
+                <button class="dot-btn" data-index="2" role="tab" aria-selected="false" aria-label="Ver Sticker NFC"></button>
+                <button class="dot-btn" data-index="3" role="tab" aria-selected="false" aria-label="Ver Tarjeta Staff"></button>
+              </div>
+              <div class="carousel-mode-toggle">
+                <button class="mode-toggle-btn" id="btn-toggle-tilt" type="button" aria-label="Alternar modo de inclinación 3D">
+                  <span class="mode-icon">✦</span>
+                  <span class="mode-text">3D Activo</span>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -663,6 +858,6 @@
     </a>
   </div>
 
-  <script src="script.js?v=55.0"></script>
+  <script src="script.js?v=56.0"></script>
 </body>
 </html>
