@@ -343,7 +343,7 @@ body {
   z-index: 10;
   display: flex;
   align-items: flex-end;
-  justify-content: space-between;
+  justify-content: flex-end;
   width: 100%;
   padding-top: 1.25rem;
   font-size: 0.8125rem;
@@ -803,11 +803,11 @@ body {
    PANTALLA 3: SOLICITUD
    ========================================================================== */
 .checkout-screen {
-  padding: 5rem 3.5rem 6rem 3.5rem;
+  padding: 5rem 3.5rem 2rem 3.5rem;
   background-color: var(--color-bg-dark);
   display: flex;
   flex-direction: column;
-  gap: 5rem;
+  gap: 2.75rem;
 }
 
 .checkout-grid {
@@ -960,29 +960,22 @@ body {
 }
 
 /* ==========================================================================
-   FOOTER SOBRIO Y ELEGANTE
+   FOOTER SOBRIO Y COMPACTO
    ========================================================================== */
 .bottom-footer {
   display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  padding-top: 3rem;
-  padding-bottom: 5.5rem;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 1.5rem;
+  padding-bottom: 2rem;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   font-family: var(--font-mono);
   font-size: 0.8125rem;
   width: 100%;
 }
 
-.footer-left {
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-  max-width: 650px;
-}
-
 .footer-brand-row {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.75rem;
   flex-wrap: wrap;
@@ -995,7 +988,7 @@ body {
 }
 
 .footer-brand-logo {
-  height: 28px;
+  height: 24px;
   width: auto;
   display: block;
   object-fit: contain;
@@ -1008,25 +1001,11 @@ body {
   transform: scale(1.02);
 }
 
-.footer-brand {
+.footer-dot {
+  color: var(--color-teal);
   font-weight: 700;
-  color: #FFFFFF;
-  letter-spacing: 0.04em;
-}
-
-.footer-copy-text {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.8125rem;
-}
-
-.footer-coverage-row {
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-}
-
-.footer-pin-icon {
-  font-size: 0.85rem;
+  font-size: 1.1rem;
+  line-height: 1;
 }
 
 .footer-tagline {
@@ -1479,36 +1458,40 @@ body {
    ========================================================================== */
 .floating-dock {
   position: fixed;
-  bottom: 3.5rem;
-  right: 2.75rem;
+  bottom: 4rem;
+  right: 2.25rem;
   z-index: 999;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 0.75rem;
+  gap: 0.55rem;
   pointer-events: none;
   transition: bottom 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.floating-dock.avoid-form {
+  transform: translateY(-80px);
+}
+
 .floating-dock.footer-elevated {
-  bottom: 5.5rem;
+  bottom: 4.5rem;
 }
 
 .floating-back-to-top {
   pointer-events: auto;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.65rem 1.15rem;
+  gap: 0.4rem;
+  padding: 0.45rem 0.9rem;
   background: #FFFFFF;
   color: #11110F;
   border: none;
   border-radius: 9999px;
   font-family: var(--font-mono);
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
   opacity: 0;
   visibility: hidden;
   transform: translateY(10px) scale(0.95);
@@ -1540,19 +1523,19 @@ body {
   pointer-events: auto;
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
-  padding: 0.75rem 1.25rem;
-  background: rgba(18, 22, 28, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  gap: 0.45rem;
+  padding: 0.55rem 1.05rem;
+  background: rgba(18, 22, 28, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 9999px;
   color: #FFFFFF;
   text-decoration: none;
   font-family: var(--font-sans);
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
   opacity: 0;
   visibility: hidden;
   transform: translateY(10px) scale(0.95);
@@ -1578,29 +1561,33 @@ body {
 
 @media (max-width: 1024px) {
   .floating-dock {
-    bottom: 1.75rem;
-    right: 1.15rem;
-    gap: 0.45rem;
+    bottom: 2.25rem;
+    right: 1rem;
+    gap: 0.4rem;
+  }
+
+  .floating-dock.avoid-form {
+    transform: translateY(-85px);
   }
 
   .floating-dock.footer-elevated {
-    bottom: 4.5rem;
+    bottom: 3.5rem;
   }
 
   .floating-back-to-top {
-    padding: 0.45rem 0.85rem;
-    font-size: 0.72rem;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.7rem;
   }
 
   .floating-wa-btn {
-    padding: 0.55rem 0.95rem;
-    font-size: 0.78rem;
-    gap: 0.45rem;
+    padding: 0.45rem 0.8rem;
+    font-size: 0.75rem;
+    gap: 0.4rem;
   }
 
   .floating-wa-btn svg {
-    width: 17px;
-    height: 17px;
+    width: 16px;
+    height: 16px;
   }
 }
 
