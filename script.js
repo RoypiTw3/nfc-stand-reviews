@@ -207,8 +207,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (floatingDock || floatingWa || floatingBackToTop) {
     const handleFloatingVisibility = () => {
       const scrollPos = window.scrollY || window.pageYOffset;
-      const windowHeight = window.innerHeight;
-      const docHeight = document.documentElement.scrollHeight;
 
       if (scrollPos > 280) {
         if (floatingWa) floatingWa.classList.add('visible');
@@ -217,38 +215,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (floatingWa) floatingWa.classList.remove('visible');
         if (floatingBackToTop) floatingBackToTop.classList.remove('visible');
       }
-
-      // Si está llegando al final de la página, elevar el dock para despejar el footer compacto
-      if (floatingDock) {
-        if (scrollPos + windowHeight >= docHeight - 120) {
-          floatingDock.classList.add('footer-elevated');
-        } else {
-          floatingDock.classList.remove('footer-elevated');
-        }
-      }
     };
 
     window.addEventListener('scroll', handleFloatingVisibility, { passive: true });
     window.addEventListener('resize', handleFloatingVisibility, { passive: true });
     handleFloatingVisibility();
-
-    // Evitar sobreponerse al botón del formulario de pedido ("Pedir propuesta por WhatsApp")
-    const formSubmitBtn = document.querySelector('.btn-primary-form');
-    if (formSubmitBtn && floatingDock && 'IntersectionObserver' in window) {
-      const formBtnObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            floatingDock.classList.add('avoid-form');
-          } else {
-            floatingDock.classList.remove('avoid-form');
-          }
-        });
-      }, {
-        threshold: 0,
-        rootMargin: "0px 0px -20px 0px"
-      });
-      formBtnObserver.observe(formSubmitBtn);
-    }
 
     if (floatingBackToTop) {
       floatingBackToTop.addEventListener('click', (e) => {

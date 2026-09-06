@@ -1458,23 +1458,14 @@ body {
    ========================================================================== */
 .floating-dock {
   position: fixed;
-  bottom: 4rem;
-  right: 2.25rem;
+  bottom: 1.5rem;
+  right: 2rem;
   z-index: 999;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 0.55rem;
+  gap: 0.5rem;
   pointer-events: none;
-  transition: bottom 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.floating-dock.avoid-form {
-  transform: translateY(-80px);
-}
-
-.floating-dock.footer-elevated {
-  bottom: 4.5rem;
 }
 
 .floating-back-to-top {
@@ -1561,17 +1552,9 @@ body {
 
 @media (max-width: 1024px) {
   .floating-dock {
-    bottom: 2.25rem;
+    bottom: 1.25rem;
     right: 1rem;
-    gap: 0.4rem;
-  }
-
-  .floating-dock.avoid-form {
-    transform: translateY(-85px);
-  }
-
-  .floating-dock.footer-elevated {
-    bottom: 3.5rem;
+    gap: 0.35rem;
   }
 
   .floating-back-to-top {
