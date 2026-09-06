@@ -650,19 +650,14 @@ body {
   display: none;
 }
 
-/* Scroll margin para navegación suave y content-visibility para rendimiento sub-1s */
-.hero-screen {
-  scroll-margin-top: 1rem;
-}
-
+/* Scroll margin para navegación suave */
+.hero-screen,
 .process-screen,
 .comparison-screen,
 .products-screen,
 .faq-screen,
 .checkout-screen {
   scroll-margin-top: 1rem;
-  content-visibility: auto;
-  contain-intrinsic-size: 0 650px;
 }
 
 /* ==========================================================================
