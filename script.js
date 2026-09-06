@@ -61,34 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }, { passive: true });
 
-    // Control de audio (Mute / Unmute)
-    const soundToggle = document.getElementById('video-sound-toggle');
-    if (soundToggle) {
-      const iconMuted = soundToggle.querySelector('.icon-muted');
-      const iconUnmuted = soundToggle.querySelector('.icon-unmuted');
-
-      soundToggle.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        if (video.muted) {
-          video.muted = false;
-          video.volume = 1;
-          soundToggle.setAttribute('aria-label', 'Silenciar video');
-          soundToggle.setAttribute('title', 'Silenciar video');
-          if (iconMuted) iconMuted.style.display = 'none';
-          if (iconUnmuted) iconUnmuted.style.display = 'block';
-        } else {
-          video.muted = true;
-          video.volume = 0;
-          soundToggle.setAttribute('aria-label', 'Activar sonido del video');
-          soundToggle.setAttribute('title', 'Activar sonido');
-          if (iconMuted) iconMuted.style.display = 'block';
-          if (iconUnmuted) iconUnmuted.style.display = 'none';
-        }
-      });
-    }
-
     prefersReducedMotion.addEventListener('change', () => {
       if (prefersReducedMotion.matches) {
         video.pause();

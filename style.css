@@ -147,14 +147,64 @@ body {
   display: none;
 }
 
-/* Escenario Desktop - Composición Flanqueada de 3 Columnas */
+/* Video de Fondo a Pantalla Completa en el Hero (Centrado, Ocupa Toda la Pantalla) */
+.hero-video-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+  background-color: var(--color-bg-dark);
+}
+
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+
+/* Viñeta Multilateral de Alto Contraste para Máxima Legibilidad */
+.video-vignette-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+  background: 
+    /* Viñeta Izquierda (protege el texto del titular y llamada a la acción) */
+    linear-gradient(90deg, rgba(13, 15, 18, 0.96) 0%, rgba(13, 15, 18, 0.85) 25%, rgba(13, 15, 18, 0.35) 42%, transparent 52%),
+    /* Viñeta Derecha (protege las tarjetas de especificaciones y social proof) */
+    linear-gradient(270deg, rgba(13, 15, 18, 0.96) 0%, rgba(13, 15, 18, 0.85) 25%, rgba(13, 15, 18, 0.35) 42%, transparent 52%),
+    /* Viñeta Superior (para legibilidad del navbar) */
+    linear-gradient(to bottom, rgba(13, 15, 18, 0.85) 0%, rgba(13, 15, 18, 0.25) 15%, transparent 25%),
+    /* Viñeta Inferior (transición suave a la siguiente sección) */
+    linear-gradient(to bottom, transparent 75%, rgba(13, 15, 18, 0.75) 90%, rgba(13, 15, 18, 0.98) 100%);
+}
+
+.grain-overlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0.16;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.5) 1px, transparent 1px);
+  background-size: 8px 8px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Escenario Desktop - Información Flanqueando a los Lados, Centro Abierto al Video */
 .hero-stage {
   position: relative;
   z-index: 10;
-  display: grid;
-  grid-template-columns: minmax(280px, 1fr) minmax(360px, 1.4fr) minmax(250px, 0.95fr);
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 2.25rem;
   width: 100%;
   flex-grow: 1;
   padding: 1.5rem 0;
@@ -169,7 +219,8 @@ body {
 .hero-col-left {
   align-items: flex-start;
   gap: 1.25rem;
-  max-width: 440px;
+  max-width: 480px;
+  z-index: 10;
 }
 
 .hero-kicker {
@@ -268,133 +319,13 @@ body {
   transform: translateY(3px);
 }
 
-/* Columna Central: Video Frame Showcase */
-.hero-col-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-.hero-video-frame {
-  position: relative;
-  width: 100%;
-  max-width: 620px;
-  border-radius: 20px;
-  background: #000000;
-  padding: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 
-    0 24px 60px rgba(0, 0, 0, 0.8),
-    0 0 50px rgba(245, 158, 11, 0.15);
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
-}
-
-.hero-video-frame:hover {
-  border-color: rgba(245, 158, 11, 0.35);
-  box-shadow: 
-    0 30px 75px rgba(0, 0, 0, 0.9),
-    0 0 65px rgba(245, 158, 11, 0.24);
-}
-
-.video-ambient-glow {
-  position: absolute;
-  inset: -15px;
-  border-radius: 30px;
-  background: radial-gradient(circle at center, rgba(245, 158, 11, 0.2) 0%, transparent 70%);
-  filter: blur(25px);
-  z-index: -1;
-  pointer-events: none;
-}
-
-.video-aspect-wrap {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: 16px;
-  overflow: hidden;
-  background-color: #000000;
-}
-
-.hero-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-  display: block;
-}
-
-.video-overlay-tint {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at center, transparent 65%, rgba(13, 15, 18, 0.35) 100%);
-  pointer-events: none;
-}
-
-/* Badge Flotante sobre el video */
-.video-badge-floating {
-  position: absolute;
-  top: 14px;
-  left: 14px;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: rgba(13, 15, 18, 0.72);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  padding: 0.35rem 0.75rem;
-  border-radius: 9999px;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  color: #FFFFFF;
-  letter-spacing: 0.03em;
-  pointer-events: none;
-  z-index: 5;
-}
-
-.status-live-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background-color: var(--color-teal);
-  box-shadow: 0 0 8px var(--color-teal);
-}
-
-/* Botón de Sonido del Video */
-.video-sound-btn {
-  position: absolute;
-  bottom: 14px;
-  right: 14px;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: rgba(13, 15, 18, 0.75);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #FFFFFF;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 5;
-  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-}
-
-.video-sound-btn:hover {
-  background: rgba(245, 158, 11, 0.9);
-  border-color: var(--color-teal);
-  color: #11110F;
-  transform: scale(1.08);
-}
-
 /* Columna Derecha: Métricas y Especificaciones */
 .hero-col-right {
   display: flex;
   flex-direction: column;
   gap: 1.15rem;
-  max-width: 360px;
+  max-width: 370px;
+  z-index: 10;
 }
 
 /* Card de Social Proof */
@@ -1446,36 +1377,14 @@ body {
   }
 
   /* Columna Central en Móvil */
-  .hero-col-center {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-
-  .hero-video-frame {
-    width: 100%;
-    max-width: 100%;
-    border-radius: 16px;
-    padding: 3px;
-  }
-
-  .video-aspect-wrap {
-    border-radius: 13px;
-    aspect-ratio: 16 / 9;
-  }
-
-  .video-badge-floating {
-    top: 10px;
-    left: 10px;
-    font-size: 0.68rem;
-    padding: 0.28rem 0.6rem;
-  }
-
-  .video-sound-btn {
-    bottom: 10px;
-    right: 10px;
-    width: 34px;
-    height: 34px;
+  .video-vignette-overlay {
+    background: linear-gradient(
+      to bottom,
+      rgba(13, 15, 18, 0.88) 0%,
+      rgba(13, 15, 18, 0.72) 35%,
+      rgba(13, 15, 18, 0.75) 65%,
+      rgba(13, 15, 18, 0.96) 100%
+    );
   }
 
   /* Columna Derecha en Móvil */
