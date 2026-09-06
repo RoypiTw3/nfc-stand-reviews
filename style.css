@@ -239,6 +239,8 @@ body {
 }
 
 .btn-primary {
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
@@ -251,22 +253,53 @@ body {
   padding: 0.95rem 1.75rem;
   border-radius: 9999px;
   text-decoration: none;
-  transition: transform 0.25s var(--transition-smooth), box-shadow 0.25s ease, background-color 0.2s ease, color 0.2s ease;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  z-index: 1;
+  transition: transform 0.25s var(--transition-smooth), box-shadow 0.3s ease, color 0.25s ease;
+}
+
+/* Contenido interior sobre la capa líquida */
+.btn-primary > * {
+  position: relative;
+  z-index: 2;
+  transition: transform 0.25s var(--transition-smooth), color 0.25s ease;
 }
 
 .btn-arrow {
-  transition: transform 0.25s var(--transition-smooth);
+  display: inline-block;
+  vertical-align: middle;
 }
 
-.btn-primary:hover {
+/* Burbuja líquida que sube desde abajo (estilo WhatsApp Web) */
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 200%;
+  height: 320%;
+  border-radius: 50%;
+  background-color: var(--color-teal);
+  transform: translate(-50%, 0%);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.btn-primary:hover,
+.btn-primary:active {
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(245, 158, 11, 0.35);
-  background-color: var(--color-teal);
   color: #11110F;
 }
 
-.btn-primary:hover .btn-arrow {
+.btn-primary:hover::before,
+.btn-primary:active::before {
+  transform: translate(-50%, -68%);
+}
+
+.btn-primary:hover .btn-arrow,
+.btn-primary:active .btn-arrow {
   transform: translateY(3px);
 }
 
@@ -915,6 +948,8 @@ body {
 }
 
 .btn-primary-form {
+  position: relative;
+  overflow: hidden;
   width: 100%;
   display: flex;
   align-items: center;
@@ -930,33 +965,68 @@ body {
   border-radius: 10px;
   cursor: pointer;
   margin-top: 0.5rem;
-  transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease;
+  z-index: 1;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  transition: transform 0.25s var(--transition-smooth), box-shadow 0.3s ease, color 0.3s ease;
 }
 
-.btn-primary-form:hover {
-  background: var(--color-teal);
+/* Contenido interior sobre la capa líquida */
+.btn-primary-form > * {
+  position: relative;
+  z-index: 2;
+  transition: color 0.3s ease, transform 0.25s ease;
+}
+
+/* Burbuja líquida verde WhatsApp subiendo desde abajo (estilo WhatsApp Web) */
+.btn-primary-form::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 200%;
+  height: 320%;
+  border-radius: 50%;
+  background-color: #25D366;
+  transform: translate(-50%, 0%);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.btn-primary-form:hover,
+.btn-primary-form:active {
   color: #FFFFFF;
   transform: translateY(-2px);
+  box-shadow: 0 8px 26px rgba(37, 211, 102, 0.38);
+}
+
+.btn-primary-form:hover::before,
+.btn-primary-form:active::before {
+  transform: translate(-50%, -68%);
 }
 
 .form-wa-icon {
   color: #25D366;
   flex-shrink: 0;
-  transition: transform 0.2s ease, color 0.2s ease;
+  transition: transform 0.25s ease, color 0.3s ease;
 }
 
-.btn-primary-form:hover .form-wa-icon {
+.btn-primary-form:hover .form-wa-icon,
+.btn-primary-form:active .form-wa-icon {
   transform: scale(1.1);
   color: #FFFFFF;
 }
 
 .arrow-sym {
   font-size: 1.1rem;
-  transition: transform 0.2s ease;
+  display: inline-block;
+  transition: transform 0.25s ease, color 0.3s ease;
 }
 
-.btn-primary-form:hover .arrow-sym {
+.btn-primary-form:hover .arrow-sym,
+.btn-primary-form:active .arrow-sym {
   transform: translateX(4px);
+  color: #FFFFFF;
 }
 
 /* ==========================================================================
