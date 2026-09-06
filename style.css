@@ -2,6 +2,7 @@
    CSS RESET & CINEMATIC DARK VARIABLES (EDITORIAL SWISS / MINIMAL)
    ========================================================================== */
 :root {
+  color-scheme: dark;
   --color-bg-dark: #0D0F12;
   --color-bg-surface: #14171D;
   --color-bg-card: rgba(22, 26, 32, 0.85);
@@ -242,7 +243,11 @@ body {
 }
 
 .cta-group {
-  margin-top: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.65rem;
+  margin-top: 0.35rem;
 }
 
 .btn-primary {
@@ -250,18 +255,23 @@ body {
   overflow: hidden;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.75rem;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F5F7FA 100%);
   background-color: #FFFFFF;
   color: #11110F;
   font-family: var(--font-sans);
   font-size: 0.9375rem;
   font-weight: 600;
   letter-spacing: -0.01em;
-  padding: 0.95rem 1.75rem;
+  padding: 0.85rem 1.75rem;
   border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.95);
   text-decoration: none;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 16px rgba(245, 158, 11, 0.12);
   z-index: 1;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   transition: transform 0.25s var(--transition-smooth), box-shadow 0.3s ease, color 0.25s ease;
 }
 
@@ -1994,30 +2004,36 @@ body {
   .cta-group {
     width: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
-    margin-top: 0.15rem;
-    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: 0.35rem;
   }
 
   .btn-primary {
-    width: auto;
-    flex: 0 0 auto;
+    width: 100%;
+    max-width: 340px;
     justify-content: center;
-    padding: 0.6rem 1.15rem;
-    font-size: 0.82rem;
+    padding: 0.78rem 1.5rem;
+    font-size: 0.9rem;
+    border-radius: 9999px;
   }
 
   .live-reviews-badge {
     width: auto;
-    flex: 0 0 auto;
-    padding: 0.35rem 0.65rem;
+    max-width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.35rem 0.8rem;
     border-radius: 9999px;
     margin-top: 0;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .badge-content {
-    font-size: 0.72rem;
+    font-size: 0.7rem;
   }
 
   /* Ocultar en móvil para liberar 80px verticales y posicionar los productos 3D en el campo visual inmediato */
