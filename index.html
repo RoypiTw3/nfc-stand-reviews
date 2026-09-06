@@ -81,7 +81,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,600&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
   
-  <link rel="stylesheet" href="style.css?v=45.0">
+  <link rel="stylesheet" href="style.css?v=46.0">
 </head>
 <body>
 
@@ -93,27 +93,6 @@
          ========================================== -->
     <header class="hero-screen" id="hero">
       
-      <!-- Video de Fondo a Pantalla Completa (Centrado, Ocupa Toda la Pantalla) -->
-      <div class="hero-video-backdrop" aria-hidden="true">
-        <video
-          id="hero-video"
-          class="hero-video"
-          src="media/hero-video-new.mp4"
-          poster="media/hero-video-poster.jpg"
-          autoplay
-          muted
-          loop
-          playsinline
-          webkit-playsinline
-          x5-playsinline
-          preload="auto"
-          tabindex="-1"
-        >
-          <source src="media/hero-video-new.mp4" type="video/mp4">
-        </video>
-        <div class="video-vignette-overlay" aria-hidden="true"></div>
-        <div class="grain-overlay" aria-hidden="true"></div>
-      </div>
       
       <!-- Navegación sobria -->
       <nav class="top-nav">
@@ -165,10 +144,10 @@
         </div>
       </nav>
 
-      <!-- Escenario Principal del Hero (Información a los lados, Centro abierto al video) -->
+      <!-- Escenario Principal del Hero (Diseño 3D Stand + Smartphone y Grid Dot Matrix) -->
       <div class="hero-stage">
-        <!-- Columna Izquierda: Titular y CTA Principal -->
-        <div class="hero-col hero-col-left">
+        <!-- Bloque de Texto Editorial a la Izquierda -->
+        <div class="hero-copy">
           <div class="hero-kicker">
             <span class="kicker-dot"></span>
             <span>Hardware Contactless</span>
@@ -192,12 +171,9 @@
               </svg>
             </a>
           </div>
-        </div>
 
-        <!-- Columna Derecha: Prueba Social, Características y Pedido Rápido -->
-        <div class="hero-col hero-col-right">
-          <!-- Card de Calificaciones en Vivo (Social Proof) -->
-          <div class="hero-card-proof">
+          <!-- Badge de Calificaciones en Vivo (Social Proof) -->
+          <div class="live-reviews-badge">
             <div class="stars-row" aria-label="Calificación 4.9 estrellas">
               <span class="star-g">★</span>
               <span class="star-g">★</span>
@@ -205,45 +181,26 @@
               <span class="star-g">★</span>
               <span class="star-g">★</span>
             </div>
-            <div class="proof-score-row">
-              <span class="proof-score-val">4.9</span>
-              <span class="proof-score-total">/ 5.0</span>
-            </div>
-            <span class="proof-desc">+1.500 reseñas reales generadas</span>
-          </div>
-
-          <!-- Mini Lista Editorial de Beneficios -->
-          <div class="hero-features-list">
-            <div class="hero-feature-item">
-              <span class="feature-bullet">⚡</span>
-              <div class="feature-info">
-                <strong class="feature-title">1 Solo Toque</strong>
-                <span class="feature-sub">A 2 cm de distancia sin abrir cámaras</span>
-              </div>
-            </div>
-
-            <div class="hero-feature-item">
-              <span class="feature-bullet">🛡️</span>
-              <div class="feature-info">
-                <strong class="feature-title">Acrílico &amp; Madera</strong>
-                <span class="feature-sub">Diseño de lujo para hostelería</span>
-              </div>
-            </div>
-
-            <div class="hero-feature-item">
-              <span class="feature-bullet">🇨🇴</span>
-              <div class="feature-info">
-                <strong class="feature-title">Envío a todo el país</strong>
-                <span class="feature-sub">Preconfigurado y listo para usar</span>
-              </div>
+            <div class="badge-content">
+              <span class="badge-score">4.9&nbsp;/&nbsp;5.0</span>
+              <span class="badge-dot-sep">·</span>
+              <span class="badge-text">+1.500 reseñas reales generadas</span>
             </div>
           </div>
+        </div>
 
-          <!-- Botón de Pedido Directo -->
-          <a href="#contacto" class="hero-fast-quote-btn">
-            <span>Configurar pedido</span>
-            <span class="fast-quote-arrow">→</span>
-          </a>
+        <!-- Contenedor Visual 3D Hero (Stand Madera + Smartphone + Ficha Google) -->
+        <div class="hero-visual-container">
+          <img
+            src="media/hero-nfc-stand-phone.jpg"
+            alt="Soporte NFC de madera para Google Reviews con smartphone y tarjeta de 5 estrellas"
+            class="hero-visual-img"
+            width="1920"
+            height="1080"
+            loading="eager"
+            fetchpriority="high"
+          >
+          <div class="localized-dark-fade" aria-hidden="true"></div>
         </div>
       </div>
 
@@ -691,6 +648,6 @@
     </a>
   </div>
 
-  <script src="script.js?v=45.0"></script>
+  <script src="script.js?v=46.0"></script>
 </body>
 </html>
