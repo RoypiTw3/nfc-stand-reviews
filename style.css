@@ -11,7 +11,8 @@
   --color-text-muted: rgba(244, 241, 234, 0.72);
   --color-text-subtle: rgba(244, 241, 234, 0.45);
 
-  --color-coral: #FF6E54;
+  --color-teal: #00D2B4;
+  --color-coral: var(--color-teal);
   --color-ivory: #F3F0E8;
   --color-ink: #11110F;
 
@@ -116,7 +117,7 @@ body {
 }
 
 .brand-dot {
-  color: var(--color-coral);
+  color: var(--color-teal);
   margin: 0 2px;
 }
 
@@ -137,7 +138,7 @@ body {
 
 .nav-link:hover {
   opacity: 1;
-  color: var(--color-coral);
+  color: var(--color-teal);
 }
 
 .mobile-nav-group {
@@ -180,7 +181,7 @@ body {
   font-style: italic;
   text-transform: lowercase;
   letter-spacing: -0.01em;
-  color: var(--color-coral);
+  color: var(--color-teal);
   display: inline-block;
   padding-right: 0.1em;
 }
@@ -221,7 +222,7 @@ body {
 .btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(255, 255, 255, 0.25);
-  background-color: var(--color-coral);
+  background-color: var(--color-teal);
   color: #FFFFFF;
 }
 
@@ -246,7 +247,7 @@ body {
 }
 
 .live-reviews-badge:hover {
-  border-color: rgba(255, 110, 84, 0.35);
+  border-color: rgba(0, 210, 180, 0.35);
 }
 
 .stars-row {
@@ -393,7 +394,7 @@ body {
 }
 
 .meta-scroll {
-  color: var(--color-coral);
+  color: var(--color-teal);
   text-decoration: none;
   font-family: var(--font-mono);
   font-size: 0.75rem;
@@ -412,7 +413,7 @@ body {
   font-family: var(--font-mono);
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--color-coral);
+  color: var(--color-teal);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   display: inline-block;
@@ -476,7 +477,7 @@ body {
 }
 
 .step-card:hover .step-num {
-  color: var(--color-coral);
+  color: var(--color-teal);
 }
 
 .step-title {
@@ -530,9 +531,9 @@ body {
 }
 
 .comparison-table th.col-highlight {
-  color: var(--color-coral);
-  background: rgba(235, 94, 65, 0.06);
-  border-bottom: 1px solid rgba(235, 94, 65, 0.2);
+  color: var(--color-teal);
+  background: rgba(0, 210, 180, 0.08);
+  border-bottom: 1px solid rgba(0, 210, 180, 0.25);
 }
 
 .comparison-table td {
@@ -559,7 +560,7 @@ body {
 .col-new {
   color: #FFFFFF;
   font-weight: 600;
-  background: rgba(235, 94, 65, 0.03);
+  background: rgba(0, 210, 180, 0.04);
   width: 34%;
 }
 
@@ -578,7 +579,7 @@ body {
 }
 
 .badge-check {
-  color: var(--color-coral);
+  color: var(--color-teal);
   font-family: var(--font-mono);
   font-size: 0.875rem;
   font-weight: 700;
@@ -720,7 +721,7 @@ body {
   font-family: var(--font-mono);
   font-size: 0.6875rem;
   font-weight: 600;
-  color: var(--color-coral);
+  color: var(--color-teal);
   text-transform: uppercase;
   margin-bottom: 0.75rem;
 }
@@ -739,7 +740,7 @@ body {
   font-family: var(--font-mono);
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--color-coral);
+  color: var(--color-teal);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   transition: transform 0.2s ease, opacity 0.2s ease;
@@ -786,7 +787,7 @@ body {
 }
 
 .faq-item[open] {
-  border-color: rgba(235, 94, 65, 0.35);
+  border-color: rgba(0, 210, 180, 0.35);
   background: rgba(18, 21, 26, 0.95);
 }
 
@@ -804,7 +805,7 @@ body {
 }
 
 .faq-question:focus-visible {
-  outline: 2px solid var(--color-coral);
+  outline: 2px solid var(--color-teal);
   outline-offset: -2px;
   border-radius: 8px;
 }
@@ -817,7 +818,7 @@ body {
   font-family: var(--font-mono);
   font-size: 1.4rem;
   font-weight: 400;
-  color: var(--color-coral);
+  color: var(--color-teal);
   transition: transform 0.25s var(--transition-smooth);
   line-height: 1;
 }
@@ -938,7 +939,7 @@ body {
   font-family: var(--font-mono);
   font-size: 0.6875rem;
   font-weight: 700;
-  color: var(--color-coral);
+  color: var(--color-teal);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -970,7 +971,7 @@ body {
 }
 
 .btn-primary-form:hover {
-  background: var(--color-coral);
+  background: var(--color-teal);
   color: #FFFFFF;
   transform: translateY(-2px);
 }
@@ -1216,7 +1217,7 @@ body {
   .mobile-menu-item:active,
   .mobile-menu-item:hover {
     background: rgba(255, 255, 255, 0.08);
-    color: var(--color-coral);
+    color: var(--color-teal);
   }
 
   .mobile-menu-item.mobile-menu-cta {
@@ -1239,7 +1240,7 @@ body {
   .menu-item-icon {
     font-family: var(--font-mono);
     font-size: 0.72rem;
-    color: var(--color-coral);
+    color: var(--color-teal);
     font-weight: 700;
   }
 
@@ -1480,8 +1481,8 @@ body {
   }
 
   .comp-vs-box.new-nfc {
-    background: rgba(235, 94, 65, 0.08);
-    border: 1px solid rgba(235, 94, 65, 0.3);
+    background: rgba(0, 210, 180, 0.08);
+    border: 1px solid rgba(0, 210, 180, 0.3);
   }
 
   .comp-label {
@@ -1494,7 +1495,7 @@ body {
   }
 
   .comp-vs-box.new-nfc .comp-label {
-    color: var(--color-coral);
+    color: var(--color-teal);
   }
 
   .comp-value {
