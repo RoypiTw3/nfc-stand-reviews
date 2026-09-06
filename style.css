@@ -11,8 +11,9 @@
   --color-text-muted: rgba(244, 241, 234, 0.72);
   --color-text-subtle: rgba(244, 241, 234, 0.45);
 
-  --color-teal: #00D2B4;
-  --color-coral: var(--color-teal);
+  --color-blue: #2F76F6;
+  --color-teal: var(--color-blue);
+  --color-coral: var(--color-blue);
   --color-ivory: #F3F0E8;
   --color-ink: #11110F;
 
@@ -247,7 +248,7 @@ body {
 }
 
 .live-reviews-badge:hover {
-  border-color: rgba(0, 210, 180, 0.35);
+  border-color: rgba(47, 118, 246, 0.35);
 }
 
 .stars-row {
@@ -532,8 +533,8 @@ body {
 
 .comparison-table th.col-highlight {
   color: var(--color-teal);
-  background: rgba(0, 210, 180, 0.08);
-  border-bottom: 1px solid rgba(0, 210, 180, 0.25);
+  background: rgba(47, 118, 246, 0.08);
+  border-bottom: 1px solid rgba(47, 118, 246, 0.25);
 }
 
 .comparison-table td {
@@ -560,7 +561,7 @@ body {
 .col-new {
   color: #FFFFFF;
   font-weight: 600;
-  background: rgba(0, 210, 180, 0.04);
+  background: rgba(47, 118, 246, 0.04);
   width: 34%;
 }
 
@@ -787,7 +788,7 @@ body {
 }
 
 .faq-item[open] {
-  border-color: rgba(0, 210, 180, 0.35);
+  border-color: rgba(47, 118, 246, 0.35);
   background: rgba(18, 21, 26, 0.95);
 }
 
@@ -1481,8 +1482,8 @@ body {
   }
 
   .comp-vs-box.new-nfc {
-    background: rgba(0, 210, 180, 0.08);
-    border: 1px solid rgba(0, 210, 180, 0.3);
+    background: rgba(47, 118, 246, 0.08);
+    border: 1px solid rgba(47, 118, 246, 0.3);
   }
 
   .comp-label {
