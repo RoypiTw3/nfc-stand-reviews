@@ -81,7 +81,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,600&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
   
-  <link rel="stylesheet" href="style.css?v=43.0">
+  <link rel="stylesheet" href="style.css?v=44.0">
 </head>
 <body>
 
@@ -143,10 +143,15 @@
         </div>
       </nav>
 
-      <!-- Escenario Principal del Hero -->
+      <!-- Escenario Principal del Hero (Composición Flanqueada con Video Central) -->
       <div class="hero-stage">
-        <!-- Bloque de Texto -->
-        <div class="hero-copy">
+        <!-- Columna Izquierda: Titular y CTA Principal -->
+        <div class="hero-col hero-col-left">
+          <div class="hero-kicker">
+            <span class="kicker-dot"></span>
+            <span>Hardware Contactless</span>
+          </div>
+
           <h1 class="hero-title">
             TUS 5 ESTRELLAS<br>
             <span class="serif-italic">en un solo tap</span>
@@ -165,9 +170,59 @@
               </svg>
             </a>
           </div>
+        </div>
 
-          <!-- Badge de Calificaciones en Vivo (Social Proof) -->
-          <div class="live-reviews-badge">
+        <!-- Columna Central: Escaparate de Video Central -->
+        <div class="hero-col hero-col-center">
+          <div class="hero-video-frame">
+            <div class="video-ambient-glow" aria-hidden="true"></div>
+            
+            <div class="video-aspect-wrap">
+              <video
+                id="hero-video"
+                class="hero-video"
+                src="media/hero-video-new.mp4"
+                poster="media/hero-video-poster.jpg"
+                autoplay
+                muted
+                loop
+                playsinline
+                webkit-playsinline
+                x5-playsinline
+                preload="auto"
+                tabindex="-1"
+                aria-label="Presentación de placa acrílica TapNFC en mesa urbana"
+              >
+                <source src="media/hero-video-new.mp4" type="video/mp4">
+              </video>
+              <div class="video-overlay-tint" aria-hidden="true"></div>
+            </div>
+
+            <!-- Badge Flotante sobre el video -->
+            <div class="video-badge-floating">
+              <span class="status-live-dot"></span>
+              <span class="video-badge-text">TAP NFCS · Contactless Experience</span>
+            </div>
+
+            <!-- Botón Discreto de Audio (Mute / Unmute) -->
+            <button type="button" id="video-sound-toggle" class="video-sound-btn" aria-label="Activar sonido del video" title="Activar sonido">
+              <svg class="sound-icon icon-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <line x1="23" y1="9" x2="17" y2="15"></line>
+                <line x1="17" y1="9" x2="23" y2="15"></line>
+              </svg>
+              <svg class="sound-icon icon-unmuted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Columna Derecha: Prueba Social, Características y Pedido Rápido -->
+        <div class="hero-col hero-col-right">
+          <!-- Card de Calificaciones en Vivo (Social Proof) -->
+          <div class="hero-card-proof">
             <div class="stars-row" aria-label="Calificación 4.9 estrellas">
               <span class="star-g">★</span>
               <span class="star-g">★</span>
@@ -175,34 +230,45 @@
               <span class="star-g">★</span>
               <span class="star-g">★</span>
             </div>
-            <div class="badge-content">
-              <span class="badge-score">4.9&nbsp;/&nbsp;5.0</span>
-              <span class="badge-dot-sep">·</span>
-              <span class="badge-text">+1.500 reseñas reales generadas</span>
+            <div class="proof-score-row">
+              <span class="proof-score-val">4.9</span>
+              <span class="proof-score-total">/ 5.0</span>
+            </div>
+            <span class="proof-desc">+1.500 reseñas reales generadas</span>
+          </div>
+
+          <!-- Mini Lista Editorial de Beneficios -->
+          <div class="hero-features-list">
+            <div class="hero-feature-item">
+              <span class="feature-bullet">⚡</span>
+              <div class="feature-info">
+                <strong class="feature-title">1 Solo Toque</strong>
+                <span class="feature-sub">A 2 cm de distancia sin abrir cámaras</span>
+              </div>
+            </div>
+
+            <div class="hero-feature-item">
+              <span class="feature-bullet">🛡️</span>
+              <div class="feature-info">
+                <strong class="feature-title">Acrílico &amp; Madera</strong>
+                <span class="feature-sub">Diseño de lujo para hostelería</span>
+              </div>
+            </div>
+
+            <div class="hero-feature-item">
+              <span class="feature-bullet">🇨🇴</span>
+              <div class="feature-info">
+                <strong class="feature-title">Envío a todo el país</strong>
+                <span class="feature-sub">Preconfigurado y listo para usar</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Contenedor del Video -->
-        <div class="video-container">
-          <video
-            id="hero-video"
-            class="hero-video"
-            src="media/nfc-hero-loop.mp4"
-            autoplay
-            muted
-            loop
-            playsinline
-            webkit-playsinline
-            x5-playsinline
-            preload="auto"
-            tabindex="-1"
-            aria-hidden="true"
-          >
-            <source src="media/nfc-hero-loop.mp4" type="video/mp4">
-          </video>
-          <div class="localized-dark-fade" aria-hidden="true"></div>
-          <div class="grain-overlay" aria-hidden="true"></div>
+          <!-- Botón de Pedido Directo -->
+          <a href="#contacto" class="hero-fast-quote-btn">
+            <span>Configurar pedido</span>
+            <span class="fast-quote-arrow">→</span>
+          </a>
         </div>
       </div>
 
@@ -650,6 +716,6 @@
     </a>
   </div>
 
-  <script src="script.js?v=43.0"></script>
+  <script src="script.js?v=44.0"></script>
 </body>
 </html>
