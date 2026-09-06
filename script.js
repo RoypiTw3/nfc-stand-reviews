@@ -1,74 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
   // =========================================================================
-  // 1. GESTOR DE VIDEO HERO (Autoplay & Optimización)
+  // 1. RENDIMIENTO: DETECCIÓN DE REDUCED MOTION
   // =========================================================================
-  const video = document.getElementById('hero-video');
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-  if (video) {
-    video.muted = true;
-    video.defaultMuted = true;
-    video.volume = 0;
-    video.playsInline = true;
-    video.setAttribute('playsinline', '');
-    video.setAttribute('webkit-playsinline', '');
-    video.setAttribute('muted', '');
-
-    const tryPlay = () => {
-      if (!prefersReducedMotion.matches) {
-        const p = video.play();
-        if (p !== undefined) {
-          p.catch(() => {});
-        }
-      }
-    };
-
-    // Intentos de reproducción inmediata
-    tryPlay();
-    video.addEventListener('loadedmetadata', tryPlay);
-    video.addEventListener('loadeddata', tryPlay);
-    video.addEventListener('canplay', tryPlay);
-
-    // Desbloqueo universal ante cualquier interacción táctil
-    const unlockOnTouch = () => {
-      tryPlay();
-      ['touchstart', 'touchend', 'scroll', 'click'].forEach(evt => {
-        window.removeEventListener(evt, unlockOnTouch);
-      });
-    };
-    ['touchstart', 'touchend', 'scroll', 'click'].forEach(evt => {
-      window.addEventListener(evt, unlockOnTouch, { passive: true });
-    });
-
-    // Bucle continuo
-    video.addEventListener('ended', () => {
-      video.currentTime = 0;
-      tryPlay();
-    });
-
-    // Pausar video cuando se hace scroll profundo para ahorrar recursos
-    let isDeepScrolled = false;
-    window.addEventListener('scroll', () => {
-      const scrollPos = window.scrollY || window.pageYOffset;
-      const shouldPause = scrollPos > (window.innerHeight * 1.3);
-      
-      if (shouldPause && !isDeepScrolled) {
-        isDeepScrolled = true;
-        video.pause();
-      } else if (!shouldPause && isDeepScrolled) {
-        isDeepScrolled = false;
-        tryPlay();
-      }
-    }, { passive: true });
-
-    prefersReducedMotion.addEventListener('change', () => {
-      if (prefersReducedMotion.matches) {
-        video.pause();
-      } else {
-        tryPlay();
-      }
-    });
-  }
 
   // =========================================================================
   // 1.1 MENÚ DESPLEGABLE MÓVIL (CÓMO FUNCIONA / SECCIONES)
@@ -205,9 +139,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const floatingBackToTop = document.getElementById('floating-back-to-top');
 
   if (floatingDock || floatingWa || floatingBackToTop) {
-    const handleFloatingVisibility = () => {
+    let scrollTicking = false;
+    const updateFloatingVisibility = () => {
       const scrollPos = window.scrollY || window.pageYOffset;
-
       if (scrollPos > 280) {
         if (floatingWa) floatingWa.classList.add('visible');
         if (floatingBackToTop) floatingBackToTop.classList.add('visible');
@@ -215,11 +149,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if (floatingWa) floatingWa.classList.remove('visible');
         if (floatingBackToTop) floatingBackToTop.classList.remove('visible');
       }
+      scrollTicking = false;
     };
 
-    window.addEventListener('scroll', handleFloatingVisibility, { passive: true });
-    window.addEventListener('resize', handleFloatingVisibility, { passive: true });
-    handleFloatingVisibility();
+    const onScrollOrResize = () => {
+      if (!scrollTicking) {
+        window.requestAnimationFrame(updateFloatingVisibility);
+        scrollTicking = true;
+      }
+    };
+
+    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+    window.addEventListener('resize', onScrollOrResize, { passive: true });
+    updateFloatingVisibility();
 
     if (floatingBackToTop) {
       floatingBackToTop.addEventListener('click', (e) => {
@@ -255,16 +197,39 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // 7. SPOTLIGHT CARD GLOW (Seguimiento Dinámico de Puntero)
+  // 7. SPOTLIGHT CARD GLOW (Seguimiento Optimizado sin Layout Thrashing)
   // =========================================================================
   const glowElements = document.querySelectorAll('.editorial-card, .step-card, .form-box');
   glowElements.forEach(card => {
+    let cardRect = null;
+    let glowRAF = null;
+
+    card.addEventListener('mouseenter', () => {
+      cardRect = card.getBoundingClientRect();
+    }, { passive: true });
+
     card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      card.style.setProperty('--mouse-x', `${x}px`);
-      card.style.setProperty('--mouse-y', `${y}px`);
+      if (!cardRect) {
+        cardRect = card.getBoundingClientRect();
+      }
+      const x = e.clientX - cardRect.left;
+      const y = e.clientY - cardRect.top;
+
+      if (!glowRAF) {
+        glowRAF = window.requestAnimationFrame(() => {
+          card.style.setProperty('--mouse-x', `${x}px`);
+          card.style.setProperty('--mouse-y', `${y}px`);
+          glowRAF = null;
+        });
+      }
+    }, { passive: true });
+
+    card.addEventListener('mouseleave', () => {
+      cardRect = null;
+      if (glowRAF) {
+        window.cancelAnimationFrame(glowRAF);
+        glowRAF = null;
+      }
     }, { passive: true });
   });
 });
