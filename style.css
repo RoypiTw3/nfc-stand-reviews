@@ -77,12 +77,11 @@ body {
   justify-content: space-between;
   padding: 2.25rem 3.5rem 2rem 3.5rem;
   overflow: hidden;
-  background-color: #0A0D12;
-  background-image: 
-    radial-gradient(ellipse 70% 60% at 65% 50%, rgba(32, 48, 68, 0.42) 0%, rgba(13, 17, 23, 0.25) 45%, transparent 75%),
-    radial-gradient(rgba(255, 255, 255, 0.12) 1.2px, transparent 1.2px);
-  background-size: 100% 100%, 18px 18px;
-  background-repeat: no-repeat, repeat;
+  background-color: #07090C;
+  background-image: url('media/hero-bg-clean.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -326,44 +325,17 @@ body {
   white-space: nowrap;
 }
 
-/* Columna Derecha: Contenedor Visual 3D del Hero (Stand Madera + Smartphone + Ficha Google) */
+/* Columna Derecha: Escenario Reservado para Showcase 3D de Productos */
 .hero-visual-container {
   position: relative;
   flex: 1 1 auto;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 480px;
   max-width: 760px;
   z-index: 5;
-}
-
-.hero-visual-img {
-  width: 100%;
-  height: auto;
-  max-height: 540px;
-  object-fit: contain;
-  display: block;
-  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6));
-  -webkit-mask-image: radial-gradient(ellipse 92% 88% at 52% 50%, black 72%, transparent 100%);
-  mask-image: radial-gradient(ellipse 92% 88% at 52% 50%, black 72%, transparent 100%);
-  animation: hero-float 6s ease-in-out infinite alternate;
-}
-
-@keyframes hero-float {
-  0% {
-    transform: translateY(0px);
-  }
-  100% {
-    transform: translateY(-8px);
-  }
-}
-
-.localized-dark-fade {
-  position: absolute;
-  inset: 0;
   pointer-events: none;
-  background: linear-gradient(90deg, #0A0D12 0%, rgba(10, 13, 18, 0) 15%);
-  z-index: 6;
 }
 
 .hero-bottom-bar {
@@ -1286,16 +1258,11 @@ body {
   .hero-visual-container {
     width: 100%;
     max-width: 100%;
+    min-height: 180px;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 0.5rem;
-  }
-
-  .hero-visual-img {
-    max-height: 380px;
-    width: 100%;
-    object-fit: contain;
   }
 
   .hero-bottom-bar {
@@ -1724,9 +1691,5 @@ a, button, input, select, .editorial-card, .faq-question {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
-  }
-
-  .hero-visual-img {
-    animation: none !important;
   }
 }

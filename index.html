@@ -81,7 +81,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,600&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
   
-  <link rel="stylesheet" href="style.css?v=46.0">
+  <link rel="preload" as="image" href="media/hero-bg-clean.jpg" fetchpriority="high">
+  <link rel="stylesheet" href="style.css?v=47.0">
 </head>
 <body>
 
@@ -189,18 +190,9 @@
           </div>
         </div>
 
-        <!-- Contenedor Visual 3D Hero (Stand Madera + Smartphone + Ficha Google) -->
-        <div class="hero-visual-container">
-          <img
-            src="media/hero-nfc-stand-phone.jpg"
-            alt="Soporte NFC de madera para Google Reviews con smartphone y tarjeta de 5 estrellas"
-            class="hero-visual-img"
-            width="1920"
-            height="1080"
-            loading="eager"
-            fetchpriority="high"
-          >
-          <div class="localized-dark-fade" aria-hidden="true"></div>
+        <!-- Escenario Reservado para Showcase 3D de Productos -->
+        <div class="hero-visual-container" id="hero-3d-stage" aria-label="Espacio de productos 3D">
+          <!-- Espacio reservado para modelos 3D interactivos y carrusel de productos -->
         </div>
       </div>
 
@@ -648,6 +640,6 @@
     </a>
   </div>
 
-  <script src="script.js?v=46.0"></script>
+  <script src="script.js?v=47.0"></script>
 </body>
 </html>
