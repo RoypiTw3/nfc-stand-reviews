@@ -99,6 +99,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const prod = card.getAttribute('data-product');
         if (prod) {
           productSelect.value = prod;
+          productSelect.classList.remove('select-pulse');
+          void productSelect.offsetWidth;
+          productSelect.classList.add('select-pulse');
+          setTimeout(() => productSelect.classList.remove('select-pulse'), 1600);
         }
 
         const checkout = document.getElementById('contacto');

@@ -26,6 +26,18 @@
   --frame-margin: 12px;
   --frame-radius: 22px;
   --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Design System: 8px Spacing Scale */
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 80px;
+  --space-section: 96px;
 }
 
 *, *::before, *::after {
@@ -1572,6 +1584,25 @@ body {
   box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.18), 0 4px 14px rgba(0, 0, 0, 0.3);
 }
 
+.input-group select.select-pulse {
+  animation: selectPulseHighlight 1.5s ease-out;
+}
+
+@keyframes selectPulseHighlight {
+  0% {
+    border-color: var(--color-gold);
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.45), 0 0 20px rgba(245, 158, 11, 0.25);
+  }
+  50% {
+    border-color: var(--color-gold);
+    box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.2), 0 0 25px rgba(245, 158, 11, 0.15);
+  }
+  100% {
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: none;
+  }
+}
+
 .google-notice-box {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.16);
@@ -1884,7 +1915,9 @@ body {
   .mobile-nav-trigger {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.45rem;
+    min-height: 40px;
     padding: 0.5rem 1.15rem;
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.18);
@@ -1897,6 +1930,7 @@ body {
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    touch-action: manipulation;
   }
 
   .mobile-nav-trigger:active,
@@ -1909,8 +1943,10 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
     padding: 0;
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.18);
@@ -1921,6 +1957,7 @@ body {
     -webkit-backdrop-filter: blur(12px);
     transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
     flex-shrink: 0;
+    touch-action: manipulation;
   }
 
   .mobile-nav-ig-btn svg {
@@ -2198,9 +2235,17 @@ body {
   }
 
   .carousel-3d-arrow {
-    width: 32px;
-    height: 32px;
-    top: calc(50% - 16px);
+    width: 36px;
+    height: 36px;
+    top: calc(50% - 18px);
+    touch-action: manipulation;
+    position: absolute;
+  }
+
+  .carousel-3d-arrow::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
   }
 
   .carousel-3d-arrow.prev-arrow {

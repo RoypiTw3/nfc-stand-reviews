@@ -9,6 +9,7 @@
   <meta name="description" content="Multiplica tus reseñas de 5 estrellas en Google al instante. Placas y soportes NFC premium para restaurantes, hoteles y locales en Colombia. Sin códigos QR ni apps.">
   <meta name="keywords" content="TapNFC, placas NFC, soporte google reviews, reseñas google maps colombia, stand contactless hosteleria, codigo qr vs nfc">
   <meta name="author" content="TapNFC Colombia">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <link rel="canonical" href="https://roypitw3.github.io/nfc-stand-reviews/">
   <meta name="theme-color" content="#070809">
   <meta name="color-scheme" content="dark">
@@ -30,15 +31,18 @@
   <meta property="og:image" content="https://roypitw3.github.io/nfc-stand-reviews/media/og-preview.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="900">
+  <meta property="og:image:alt" content="TapNFC Placas y Stands Contactless para Google Reviews en Colombia">
   <meta property="og:locale" content="es_CO">
 
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@tapnfcs">
+  <meta name="twitter:creator" content="@tapnfcs">
   <meta name="twitter:title" content="TapNFC | Placas & Stands NFC para Google Reviews">
   <meta name="twitter:description" content="Multiplica tus reseñas de 5 estrellas en segundos sin códigos QR ni apps. Hardware de lujo para hostelería y comercios.">
   <meta name="twitter:image" content="https://roypitw3.github.io/nfc-stand-reviews/media/og-preview.jpg">
 
-  <!-- Schema.org JSON-LD Structured Data -->
+  <!-- Schema.org JSON-LD Structured Data (Organization + Product con AggregateRating + FAQPage) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -48,6 +52,9 @@
         "@id": "https://roypitw3.github.io/nfc-stand-reviews/#organization",
         "name": "TapNFC Colombia",
         "url": "https://roypitw3.github.io/nfc-stand-reviews/",
+        "sameAs": [
+          "https://www.instagram.com/tapnfcs"
+        ],
         "contactPoint": {
           "@type": "ContactPoint",
           "telephone": "+57-315-185-6554",
@@ -65,6 +72,13 @@
           "@type": "Brand",
           "name": "TapNFC"
         },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.9",
+          "reviewCount": "1500",
+          "bestRating": "5",
+          "worstRating": "1"
+        },
         "offers": {
           "@type": "AggregateOffer",
           "priceCurrency": "COP",
@@ -72,6 +86,52 @@
           "highPrice": "250000",
           "offerCount": "3"
         }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://roypitw3.github.io/nfc-stand-reviews/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "¿Funciona con cualquier teléfono celular?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sí. Prácticamente el 100% de los smartphones modernos (iPhone 7 en adelante y dispositivos Android) cuentan con tecnología NFC nativa. Funciona al instante sin necesidad de que tus clientes instalen aplicaciones."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Los soportes necesitan baterías, cables o recarga eléctrica?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "En absoluto. Nuestros chips NFC son componentes pasivos que se alimentan por inducción electromagnética solo cuando el celular se acerca. Cero cables, cero baterías y vida útil ilimitada, ideal para el alto tráfico comercial."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Vienen ya grabados y programados con mi negocio?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sí, entregamos una solución 'llave en mano'. Antes del despacho, programamos y verificamos cada soporte con el enlace exacto de tu perfil de Google Maps. Solo debes desempaquetarlos y empezar a usarlos."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Qué pasa si mi negocio aún no tiene ficha en Google Maps?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "¡Nosotros nos encargamos! Selecciona esa opción al hacer tu pedido y te brindaremos asesoría para crear, verificar y optimizar el perfil oficial de tu negocio o consultorio antes de enviarte el hardware."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Hacen envíos a toda Colombia?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sí, realizamos envíos seguros a nivel nacional (Bogotá, Medellín, Cali, Bucaramanga, Barranquilla, Eje Cafetero y cualquier municipio del país). Todo despacho cuenta con número de guía y garantía de entrega asegurada."
+            }
+          }
+        ]
       }
     ]
   }
@@ -84,7 +144,7 @@
   
   <link rel="preload" as="image" href="media/hero-bg-clean.jpg" media="(min-width: 1025px)" fetchpriority="high">
   <link rel="preload" as="image" href="media/hero-bg-mobile.jpg" media="(max-width: 1024px)" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=64.0">
+  <link rel="stylesheet" href="style.css?v=65.0">
 </head>
 <body>
 
@@ -887,6 +947,6 @@
     </a>
   </div>
 
-  <script src="script.js?v=64.0"></script>
+  <script src="script.js?v=65.0"></script>
 </body>
 </html>
