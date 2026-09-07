@@ -240,13 +240,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const carouselWrapper = document.getElementById('carousel-3d');
   if (carouselStage && carouselWrapper) {
     const items = Array.from(carouselStage.querySelectorAll('.product-3d-item'));
-    const dots = Array.from(document.querySelectorAll('#carousel-dots .dot-btn'));
     const prevBtn = document.getElementById('carousel-prev');
     const nextBtn = document.getElementById('carousel-next');
-    const tiltToggleBtn = document.getElementById('btn-toggle-tilt');
     const total = items.length;
     let currentIndex = 0;
-    let isTiltEnabled = true;
+    const isTiltEnabled = true; // Efecto 3D siempre activo
 
     // Actualizar estados espaciales 3D del carrusel
     const updateCarousel = (newIndex) => {
@@ -269,13 +267,6 @@ document.addEventListener('DOMContentLoaded', () => {
           item.classList.add('is-hidden');
         }
       });
-
-      // Actualizar puntos de paginación
-      dots.forEach((dot, idx) => {
-        const isActive = idx === currentIndex;
-        dot.classList.toggle('is-active', isActive);
-        dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
-      });
     };
 
     // Botones flechas
@@ -292,16 +283,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCarousel(currentIndex + 1);
       });
     }
-
-    // Puntos indicadores
-    dots.forEach((dot) => {
-      dot.addEventListener('click', () => {
-        const targetIdx = parseInt(dot.getAttribute('data-index'), 10);
-        if (!isNaN(targetIdx) && targetIdx !== currentIndex) {
-          updateCarousel(targetIdx);
-        }
-      });
-    });
 
     // Clic en tarjetas laterales para traerlas al frente, o en tarjeta activa para voltear (flip 3D)
     items.forEach((item, idx) => {
@@ -329,30 +310,6 @@ document.addEventListener('DOMContentLoaded', () => {
         item.classList.toggle('is-flipped');
       });
     });
-
-    // Alternar modo 3D / Recto
-    if (tiltToggleBtn) {
-      const modeText = tiltToggleBtn.querySelector('.mode-text');
-      tiltToggleBtn.addEventListener('click', () => {
-        isTiltEnabled = !isTiltEnabled;
-        tiltToggleBtn.classList.toggle('is-tilt-disabled', !isTiltEnabled);
-
-        const activeItem = items[currentIndex];
-        if (activeItem) {
-          if (!isTiltEnabled) {
-            targetRx = 0;
-            targetRy = 0;
-            currentRx = 0;
-            currentRy = 0;
-            activeItem.style.setProperty('--card-rx', '0deg');
-            activeItem.style.setProperty('--card-ry', '0deg');
-            if (modeText) modeText.textContent = 'Modo Recto';
-          } else {
-            if (modeText) modeText.textContent = '3D Activo';
-          }
-        }
-      });
-    }
 
     // FÍSICAS DE SEGUIMIENTO DE CURSOR (LERP DAMPING)
     let currentRx = 0;

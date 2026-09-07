@@ -868,70 +868,6 @@ body {
   transform: rotateX(80deg) scale(0.85);
 }
 
-/* Barra Inferior de Controles del Carrusel */
-.carousel-3d-controls {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 320px;
-  margin-top: 1.15rem;
-  z-index: 15;
-}
-
-.carousel-3d-dots {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-}
-
-.dot-btn {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.22);
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.dot-btn.is-active {
-  width: 24px;
-  border-radius: 9999px;
-  background: var(--color-teal);
-  box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
-}
-
-.dot-btn:hover:not(.is-active) {
-  background: rgba(255, 255, 255, 0.5);
-}
-
-.mode-toggle-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: var(--color-text-muted);
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  padding: 0.35rem 0.65rem;
-  border-radius: 9999px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.mode-toggle-btn:hover {
-  color: #FFFFFF;
-  border-color: rgba(255, 255, 255, 0.25);
-}
-
-.mode-toggle-btn.is-tilt-disabled {
-  background: rgba(245, 158, 11, 0.15);
-  border-color: rgba(245, 158, 11, 0.35);
-  color: var(--color-teal);
-}
 
 .hero-bottom-bar {
   position: relative;
@@ -2163,24 +2099,6 @@ body {
     right: -12px;
   }
 
-  .carousel-3d-controls {
-    margin-top: 0.4rem;
-    max-width: 220px;
-  }
-
-  .dot-btn {
-    width: 7px;
-    height: 7px;
-  }
-
-  .dot-btn.is-active {
-    width: 18px;
-  }
-
-  .mode-toggle-btn {
-    font-size: 0.6rem;
-    padding: 0.2rem 0.5rem;
-  }
 
   .hero-bottom-bar {
     display: none;
@@ -2750,10 +2668,6 @@ a, button, input, select, .editorial-card, .faq-question {
   .carousel-3d-arrow.prev-arrow { left: -18px; }
   .carousel-3d-arrow.next-arrow { right: -18px; }
 
-  .carousel-3d-controls {
-    max-width: 360px;
-    margin-top: 1.35rem;
-  }
 
   .process-screen,
   .comparison-screen,
