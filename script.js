@@ -1,439 +1,559 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // =========================================================================
-  // 1. RENDIMIENTO: DETECCIÓN DE REDUCED MOTION
-  // =========================================================================
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   // =========================================================================
-  // 1.1 MENÚ DESPLEGABLE MÓVIL (CÓMO FUNCIONA / SECCIONES)
+  // 1. TIPOGRAFÍA DEL HERO: mostrar la palabra cuando Gloock esté lista
   // =========================================================================
-  const mobileNavDropdown = document.getElementById('mobile-nav-dropdown');
-  const mobileNavTrigger = document.getElementById('mobile-nav-trigger');
-  const mobileMenuItems = document.querySelectorAll('.mobile-menu-item');
+  const markFontsReady = () => document.documentElement.classList.add('fonts-ready');
+  if (document.fonts && document.fonts.load) {
+    Promise.race([
+      document.fonts.load('400 1em Gloock'),
+      new Promise((resolve) => setTimeout(resolve, 3000))
+    ]).then(markFontsReady, markFontsReady);
+  } else {
+    markFontsReady();
+  }
 
-  if (mobileNavDropdown && mobileNavTrigger) {
-    mobileNavTrigger.addEventListener('click', (e) => {
+  // =========================================================================
+  // 2. NAVEGACIÓN MÓVIL
+  // =========================================================================
+  const navToggle = document.getElementById('nav-toggle');
+  const navSheet = document.getElementById('nav-sheet');
+
+  if (navToggle && navSheet) {
+    const setNavOpen = (open) => {
+      navSheet.hidden = !open;
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      navToggle.setAttribute('aria-label', open ? 'Cerrar navegación' : 'Abrir navegación');
+    };
+
+    navToggle.addEventListener('click', (e) => {
       e.stopPropagation();
-      const isOpen = mobileNavDropdown.classList.toggle('is-open');
-      mobileNavTrigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      setNavOpen(navSheet.hidden);
     });
 
-    mobileMenuItems.forEach(item => {
-      item.addEventListener('click', () => {
-        mobileNavDropdown.classList.remove('is-open');
-        mobileNavTrigger.setAttribute('aria-expanded', 'false');
-      });
+    navSheet.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => setNavOpen(false));
     });
 
     document.addEventListener('click', (e) => {
-      if (!mobileNavDropdown.contains(e.target)) {
-        mobileNavDropdown.classList.remove('is-open');
-        mobileNavTrigger.setAttribute('aria-expanded', 'false');
-      }
+      if (!navSheet.hidden && !navSheet.contains(e.target)) setNavOpen(false);
     });
 
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && mobileNavDropdown.classList.contains('is-open')) {
-        mobileNavDropdown.classList.remove('is-open');
-        mobileNavTrigger.setAttribute('aria-expanded', 'false');
-        mobileNavTrigger.focus();
+      if (e.key === 'Escape' && !navSheet.hidden) {
+        setNavOpen(false);
+        navToggle.focus();
       }
     });
   }
 
   // =========================================================================
-  // 2. FORMULARIO & ENLACE DE WHATSAPP (+57 315 185 6554)
+  // 3. PLACAS 3D: inclinación suave siguiendo el mouse
+  // =========================================================================
+  const hero = document.getElementById('hero');
+  const stage = document.getElementById('hero-stage');
+  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+
+  if (hero && stage && finePointer.matches && !reduceMotion.matches) {
+    let targetY = 0;
+    let targetX = 0;
+    let currentY = 0;
+    let currentX = 0;
+    let tiltRAF = null;
+
+    const tick = () => {
+      currentY += (targetY - currentY) * 0.08;
+      currentX += (targetX - currentX) * 0.08;
+      stage.style.setProperty('--ry', `${currentY.toFixed(2)}deg`);
+      stage.style.setProperty('--rx', `${currentX.toFixed(2)}deg`);
+
+      if (Math.abs(targetY - currentY) + Math.abs(targetX - currentX) > 0.02) {
+        tiltRAF = window.requestAnimationFrame(tick);
+      } else {
+        tiltRAF = null;
+      }
+    };
+
+    const startTick = () => {
+      if (!tiltRAF) tiltRAF = window.requestAnimationFrame(tick);
+    };
+
+    hero.addEventListener('pointermove', (e) => {
+      const rect = hero.getBoundingClientRect();
+      targetY = ((e.clientX - rect.left) / rect.width - 0.5) * 18;
+      targetX = ((e.clientY - rect.top) / rect.height - 0.5) * -6;
+      startTick();
+    }, { passive: true });
+
+    hero.addEventListener('pointerleave', () => {
+      targetY = 0;
+      targetX = 0;
+      startTick();
+    }, { passive: true });
+  }
+
+  // =========================================================================
+  // 4. FORMULARIO CORTO → WHATSAPP (+57 315 185 6554)
   // =========================================================================
   const orderForm = document.getElementById('order-form');
-  const googleSelect = document.getElementById('google-status');
-  const googleNotice = document.getElementById('google-notice');
+  const solutionGroup = document.getElementById('solution-group');
+  const solutionInputs = Array.from(document.querySelectorAll('input[name="solution"]'));
+  const formPick = document.getElementById('form-pick');
+  const formPickName = document.getElementById('form-pick-name');
+  const formPickClear = document.getElementById('form-pick-clear');
+  let pickedProduct = null; // { name, need }
 
-  // Mostrar / Ocultar aviso de alta en Google Maps
-  if (googleSelect && googleNotice) {
-    googleSelect.addEventListener('change', () => {
-      if (googleSelect.value === 'no') {
-        googleNotice.style.display = 'flex';
-      } else {
-        googleNotice.style.display = 'none';
+  const getSolution = () => solutionInputs.find((input) => input.checked) || solutionInputs[0];
+
+  const pulse = (el) => {
+    if (!el) return;
+    el.classList.remove('select-pulse');
+    void el.offsetWidth;
+    el.classList.add('select-pulse');
+    setTimeout(() => el.classList.remove('select-pulse'), 1600);
+  };
+
+  const setPickedProduct = (product) => {
+    pickedProduct = product;
+    if (!formPick || !formPickName) return;
+    formPick.hidden = !product;
+    formPickName.textContent = product ? product.name : '';
+  };
+
+  // Un modelo de reseñas no aplica si se pide solo el menú
+  const dropPickIfMismatch = () => {
+    const solution = getSolution()?.value;
+    if (pickedProduct && pickedProduct.need === 'resenas' && solution === 'menu') {
+      setPickedProduct(null);
+    }
+  };
+
+  const applyNeed = (need) => {
+    const input = solutionInputs.find((item) => item.value === need);
+    if (!input) return;
+    input.checked = true;
+    dropPickIfMismatch();
+    pulse(solutionGroup && solutionGroup.querySelector('.choices'));
+  };
+
+  solutionInputs.forEach((input) => input.addEventListener('change', dropPickIfMismatch));
+  if (formPickClear) formPickClear.addEventListener('click', () => setPickedProduct(null));
+
+  // Enlaces con data-need preseleccionan la opción
+  document.querySelectorAll('a[data-need]').forEach((link) => {
+    link.addEventListener('click', () => applyNeed(link.getAttribute('data-need')));
+  });
+
+  // Productos de la colección → recordar el modelo y bajar al formulario
+  document.querySelectorAll('.product').forEach((card) => {
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.product-stage')) return;
+      const name = card.querySelector('.product-name')?.textContent.trim() || '';
+      const need = card.getAttribute('data-need') || '';
+      setPickedProduct(name ? { name, need } : null);
+      if (need) applyNeed(need);
+
+      const contact = document.getElementById('contacto');
+      if (contact) {
+        contact.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+        const firstInput = document.getElementById('local-name');
+        if (firstInput) setTimeout(() => firstInput.focus({ preventScroll: true }), 600);
       }
     });
-  }
+  });
 
   if (orderForm) {
     orderForm.addEventListener('submit', (e) => {
       e.preventDefault();
 
       const localName = document.getElementById('local-name')?.value.trim() || '';
-      const googleStatus = document.getElementById('google-status')?.value || 'si';
-      const isNewGoogle = (googleStatus === 'no');
-      const productType = document.getElementById('product-type')?.value || '';
+      const solutionLabel = getSolution()?.nextElementSibling?.textContent.trim() || '';
       const quantity = document.getElementById('quantity')?.value.trim() || '1';
       const clientName = document.getElementById('client-name')?.value.trim() || '';
 
-      const phone = '573151856554';
-      const text = `Hola TapNFC, quiero solicitar una propuesta para mi negocio:\n\n` +
-                   `• Local / Negocio: ${localName}\n` +
-                   `• Ficha en Google Maps: ${isNewGoogle ? 'No (Deseo el servicio de creación de ficha)' : 'Sí, ya registrada'}\n` +
-                   `• Modelo: ${productType}\n` +
-                   `• Cantidad de soportes: ${quantity}\n` +
+      const text = `Hola TapNFC, quiero cotizar para mi negocio:\n\n` +
+                   `• Negocio: ${localName}\n` +
+                   `• Quiero: ${solutionLabel}\n` +
+                   (pickedProduct ? `• Modelo: ${pickedProduct.name}\n` : '') +
+                   `• Cantidad: ${quantity}\n` +
                    `• Nombre: ${clientName}\n\n` +
-                   (isNewGoogle 
-                     ? '¿Podrían incluir la cotización para crearnos la ficha en Google Maps y los soportes?' 
-                     : '¿Podrían indicarme precios y tiempos de entrega?');
+                   '¿Me pueden dar precios y tiempos de entrega?';
 
-      const whatsappURL = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
-      window.open(whatsappURL, '_blank');
+      window.open(`https://wa.me/573151856554?text=${encodeURIComponent(text)}`, '_blank');
     });
   }
 
   // =========================================================================
-  // 3. TARJETAS DE PRODUCTO -> AUTO SELECCIÓN EN FORMULARIO
+  // 5. PESTAÑAS "ASÍ FUNCIONA"
   // =========================================================================
-  const productCards = document.querySelectorAll('.editorial-card');
-  const productSelect = document.getElementById('product-type');
+  const tabs = Array.from(document.querySelectorAll('.tab'));
+  if (tabs.length) {
+    const selectTab = (tab) => {
+      tabs.forEach((t) => {
+        const isActive = t === tab;
+        t.classList.toggle('is-active', isActive);
+        t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        t.tabIndex = isActive ? 0 : -1;
+        const panel = document.getElementById(t.getAttribute('aria-controls'));
+        if (panel) panel.hidden = !isActive;
+      });
+      // La pantalla de ejemplo (reseña o menú) cambia con la pestaña
+      document.querySelectorAll('[data-for]').forEach((visual) => {
+        visual.hidden = visual.getAttribute('data-for') !== tab.id;
+      });
+    };
 
-  if (productCards.length && productSelect) {
-    productCards.forEach((card) => {
-      card.style.cursor = 'pointer';
-      card.addEventListener('click', () => {
-        const prod = card.getAttribute('data-product');
-        if (prod) {
-          productSelect.value = prod;
-          productSelect.classList.remove('select-pulse');
-          void productSelect.offsetWidth;
-          productSelect.classList.add('select-pulse');
-          setTimeout(() => productSelect.classList.remove('select-pulse'), 1600);
-        }
-
-        const checkout = document.getElementById('contacto');
-        if (checkout) {
-          checkout.scrollIntoView({ behavior: 'smooth' });
-          const localInput = document.getElementById('local-name');
-          if (localInput) {
-            setTimeout(() => localInput.focus(), 500);
-          }
-        }
+    tabs.forEach((tab, idx) => {
+      tab.addEventListener('click', () => selectTab(tab));
+      tab.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        e.preventDefault();
+        const step = e.key === 'ArrowRight' ? 1 : -1;
+        const next = tabs[(idx + step + tabs.length) % tabs.length];
+        selectTab(next);
+        next.focus();
       });
     });
   }
 
   // =========================================================================
-  // 4. ACORDEÓN EXCLUSIVO (Cierra automáticamente las demás preguntas)
+  // 6. PREGUNTAS: solo una abierta a la vez
   // =========================================================================
   const faqItems = document.querySelectorAll('.faq-item');
-  if (faqItems.length) {
-    faqItems.forEach((item) => {
-      item.addEventListener('toggle', () => {
-        if (item.open) {
-          faqItems.forEach((otherItem) => {
-            if (otherItem !== item && otherItem.open) {
-              otherItem.open = false;
-            }
-          });
-        }
+  faqItems.forEach((item) => {
+    item.addEventListener('toggle', () => {
+      if (!item.open) return;
+      faqItems.forEach((other) => {
+        if (other !== item && other.open) other.open = false;
       });
     });
-  }
+  });
 
   // =========================================================================
-  // 5. DOCK FLOTANTE: VOLVER ARRIBA BLANCO + WHATSAPP ELEVADO
+  // 7. WHATSAPP FLOTANTE
+  // Aparece apenas se empieza a bajar y se oculta en el formulario de
+  // contacto, que ya tiene su propio botón de WhatsApp.
   // =========================================================================
-  const floatingDock = document.getElementById('floating-dock');
   const floatingWa = document.getElementById('floating-wa');
-  const floatingBackToTop = document.getElementById('floating-back-to-top');
-
-  if (floatingDock || floatingWa || floatingBackToTop) {
+  if (floatingWa) {
     let scrollTicking = false;
-    const updateFloatingVisibility = () => {
-      const scrollPos = window.scrollY || window.pageYOffset;
-      if (scrollPos > 280) {
-        if (floatingWa) floatingWa.classList.add('visible');
-        if (floatingBackToTop) floatingBackToTop.classList.add('visible');
-      } else {
-        if (floatingWa) floatingWa.classList.remove('visible');
-        if (floatingBackToTop) floatingBackToTop.classList.remove('visible');
-      }
+    let contactInView = false;
+
+    const updateFloating = () => {
+      floatingWa.classList.toggle('visible', window.scrollY > 24 && !contactInView);
       scrollTicking = false;
     };
 
-    const onScrollOrResize = () => {
+    const contactSection = document.getElementById('contacto');
+    if (contactSection && 'IntersectionObserver' in window) {
+      new IntersectionObserver((entries) => {
+        contactInView = entries[0].isIntersecting;
+        updateFloating();
+      }, { rootMargin: '0px 0px -35% 0px' }).observe(contactSection);
+    }
+
+    window.addEventListener('scroll', () => {
       if (!scrollTicking) {
-        window.requestAnimationFrame(updateFloatingVisibility);
+        window.requestAnimationFrame(updateFloating);
         scrollTicking = true;
       }
+    }, { passive: true });
+    updateFloating();
+  }
+
+  // =========================================================================
+  // 7.1 DEMO DE RESEÑA INTERACTIVA (no envía nada; solo para jugar)
+  // =========================================================================
+  const reviewDemo = document.getElementById('review-demo');
+
+  const makeStarGroup = (group, onChange) => {
+    const buttons = Array.from(group.querySelectorAll('button'));
+    let value = 0;
+
+    const paint = (count, className) => {
+      buttons.forEach((btn, idx) => btn.classList.toggle(className, idx < count));
     };
 
-    window.addEventListener('scroll', onScrollOrResize, { passive: true });
-    window.addEventListener('resize', onScrollOrResize, { passive: true });
-    updateFloatingVisibility();
+    const set = (count, { pop = false } = {}) => {
+      value = count;
+      paint(count, 'is-on');
+      buttons.forEach((btn, idx) => {
+        btn.setAttribute('aria-checked', idx === count - 1 ? 'true' : 'false');
+        btn.tabIndex = idx === Math.max(count, 1) - 1 ? 0 : -1;
+      });
+      if (pop && count > 0) {
+        const btn = buttons[count - 1];
+        btn.classList.remove('is-pop');
+        void btn.offsetWidth;
+        btn.classList.add('is-pop');
+      }
+      if (onChange) onChange(count);
+    };
 
-    if (floatingBackToTop) {
-      floatingBackToTop.addEventListener('click', (e) => {
+    buttons.forEach((btn, idx) => {
+      btn.addEventListener('click', () => set(idx + 1, { pop: true }));
+      btn.addEventListener('pointerenter', (e) => {
+        if (e.pointerType !== 'mouse') return;
+        group.classList.add('is-hovering');
+        paint(idx + 1, 'is-hover');
+      });
+      btn.addEventListener('keydown', (e) => {
+        if (!['ArrowRight', 'ArrowUp', 'ArrowLeft', 'ArrowDown'].includes(e.key)) return;
         e.preventDefault();
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        });
+        const step = (e.key === 'ArrowRight' || e.key === 'ArrowUp') ? 1 : -1;
+        const next = Math.min(buttons.length, Math.max(1, (value || idx + 1) + step));
+        set(next, { pop: true });
+        buttons[next - 1].focus();
+      });
+    });
+
+    group.addEventListener('pointerleave', () => {
+      group.classList.remove('is-hovering');
+      paint(0, 'is-hover');
+    });
+
+    set(0);
+    return { set, get: () => value };
+  };
+
+  if (reviewDemo) {
+    const form = reviewDemo.querySelector('.ui-form');
+    const done = reviewDemo.querySelector('.ui-done');
+    const textarea = reviewDemo.querySelector('.ui-textarea');
+    const publishBtn = reviewDemo.querySelector('[data-review-publish]');
+    const cancelBtn = reviewDemo.querySelector('[data-review-cancel]');
+    const resetBtn = reviewDemo.querySelector('[data-review-reset]');
+    const mainGroupEl = reviewDemo.querySelector('.ui-stars--main');
+    let touched = false;
+    let mainGroup = null;
+
+    const updatePublish = () => {
+      if (publishBtn) publishBtn.disabled = !mainGroup || mainGroup.get() === 0;
+    };
+
+    const groups = Array.from(reviewDemo.querySelectorAll('[data-stars]')).map((el) => {
+      const group = makeStarGroup(el, () => updatePublish());
+      el.addEventListener('click', () => { touched = true; });
+      return group;
+    });
+    mainGroup = groups[Array.from(reviewDemo.querySelectorAll('[data-stars]')).indexOf(mainGroupEl)];
+    updatePublish();
+
+    const clearAll = () => {
+      groups.forEach((g) => g.set(0));
+      if (textarea) textarea.value = '';
+      updatePublish();
+    };
+
+    // Las 5 estrellas grandes se llenan solas al aparecer (como la placa real)
+    if (mainGroupEl && 'IntersectionObserver' in window) {
+      const introObserver = new IntersectionObserver((entries, observer) => {
+        if (!entries[0].isIntersecting) return;
+        observer.disconnect();
+        if (touched || mainGroup.get() > 0) return;
+        mainGroupEl.classList.add('is-intro');
+        mainGroup.set(5);
+        setTimeout(() => mainGroupEl.classList.remove('is-intro'), 1200);
+      }, { threshold: 0.6 });
+      introObserver.observe(mainGroupEl);
+    }
+
+    if (cancelBtn) cancelBtn.addEventListener('click', () => { touched = true; clearAll(); });
+
+    if (publishBtn) {
+      publishBtn.addEventListener('click', () => {
+        if (publishBtn.disabled) return;
+        reviewDemo.classList.add('is-done');
+        if (done) done.hidden = false;
+        if (form) form.setAttribute('aria-hidden', 'true');
+        if (resetBtn) resetBtn.focus({ preventScroll: true });
+      });
+    }
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        clearAll();
+        reviewDemo.classList.remove('is-done');
+        if (done) done.hidden = true;
+        if (form) form.removeAttribute('aria-hidden');
+        const firstStar = mainGroupEl && mainGroupEl.querySelector('button');
+        if (firstStar) firstStar.focus({ preventScroll: true });
       });
     }
   }
 
   // =========================================================================
-  // 6. ANIMACIÓN DE ENTRADA AL HACER SCROLL (INTERSECTION OBSERVER)
+  // 7.2 COLECCIÓN 3D: ARRASTRAR PARA GIRAR, TOCAR PARA VOLTEAR
+  // - Al soltar, vuelve suave a quedar de frente o de espaldas.
+  // - Con mouse, se inclina un poco siguiendo el cursor.
+  // - La primera vez que aparece la colección, cada producto da una vuelta.
   // =========================================================================
-  const revealElements = document.querySelectorAll('.reveal-on-scroll');
+  const stages = Array.from(document.querySelectorAll('.product-stage'));
+
+  const stageControls = stages.map((stage) => {
+    let faceYaw = 0;      // 0, 180, 360… (de frente o de espaldas)
+    let tiltYaw = 0;      // inclinación por el cursor
+    let tiltPitch = 0;
+    let yaw = 0;
+    let pitch = 0;
+    let targetYaw = 0;
+    let targetPitch = 0;
+    let ease = 0.12;
+    let rafId = null;
+    let drag = null;
+
+    const render = () => {
+      stage.style.setProperty('--ry', `${yaw.toFixed(2)}deg`);
+      stage.style.setProperty('--rx', `${pitch.toFixed(2)}deg`);
+    };
+
+    const tick = () => {
+      const k = drag ? 0.35 : ease;
+      yaw += (targetYaw - yaw) * k;
+      pitch += (targetPitch - pitch) * k;
+      render();
+      if (drag || Math.abs(targetYaw - yaw) + Math.abs(targetPitch - pitch) > 0.05) {
+        rafId = window.requestAnimationFrame(tick);
+      } else {
+        yaw = targetYaw;
+        pitch = targetPitch;
+        render();
+        rafId = null;
+        ease = 0.12;
+      }
+    };
+
+    const animate = () => {
+      if (reduceMotion.matches && !drag) {
+        yaw = targetYaw;
+        pitch = targetPitch;
+        render();
+        return;
+      }
+      if (!rafId) rafId = window.requestAnimationFrame(tick);
+    };
+
+    const settle = () => {
+      targetYaw = faceYaw + tiltYaw;
+      targetPitch = tiltPitch;
+      animate();
+    };
+
+    const flip = () => {
+      faceYaw += 180;
+      settle();
+    };
+
+    const spin = () => {
+      if (reduceMotion.matches || drag) return;
+      ease = 0.055;
+      faceYaw += 360;
+      settle();
+    };
+
+    // Evitar que el navegador "agarre" las imágenes del diseño como foto
+    stage.addEventListener('dragstart', (e) => e.preventDefault());
+
+    stage.addEventListener('pointerdown', (e) => {
+      if (e.button !== 0) return;
+      if (e.pointerType === 'mouse') e.preventDefault();
+      drag = { x: e.clientX, y: e.clientY, yaw: targetYaw, pitch: targetPitch, moved: false, mouse: e.pointerType === 'mouse' };
+      try { stage.setPointerCapture(e.pointerId); } catch (err) { /* sin captura */ }
+    });
+
+    stage.addEventListener('pointermove', (e) => {
+      if (!drag) {
+        // Inclinación suave siguiendo el mouse (no en táctil)
+        if (e.pointerType !== 'mouse') return;
+        const rect = stage.getBoundingClientRect();
+        tiltYaw = ((e.clientX - rect.left) / rect.width - 0.5) * 30;
+        tiltPitch = ((e.clientY - rect.top) / rect.height - 0.5) * -16;
+        settle();
+        return;
+      }
+      const dx = e.clientX - drag.x;
+      const dy = e.clientY - drag.y;
+      if (!drag.moved && Math.abs(dx) + Math.abs(dy) > 6) {
+        drag.moved = true;
+        stage.classList.add('is-dragging');
+      }
+      if (!drag.moved) return;
+      targetYaw = drag.yaw + dx * 0.6;
+      // Con mouse también se inclina arriba/abajo; en táctil solo de lado
+      // para no estorbar el scroll de la página.
+      if (drag.mouse) targetPitch = Math.max(-40, Math.min(28, drag.pitch - dy * 0.4));
+      animate();
+    });
+
+    const endDrag = (e) => {
+      if (!drag) return;
+      const wasMoved = drag.moved;
+      drag = null;
+      stage.classList.remove('is-dragging');
+      try { stage.releasePointerCapture(e.pointerId); } catch (err) { /* ya liberado */ }
+      if (wasMoved) {
+        faceYaw = Math.round((targetYaw - tiltYaw) / 180) * 180;
+        settle();
+      } else if (e.type === 'pointerup') {
+        flip();
+      }
+    };
+
+    stage.addEventListener('pointerup', endDrag);
+    stage.addEventListener('pointercancel', endDrag);
+
+    stage.addEventListener('pointerleave', (e) => {
+      if (drag || e.pointerType !== 'mouse') return;
+      tiltYaw = 0;
+      tiltPitch = 0;
+      settle();
+    });
+
+    stage.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        flip();
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        e.preventDefault();
+        faceYaw += e.key === 'ArrowRight' ? 45 : -45;
+        settle();
+      }
+    });
+
+    return { spin };
+  });
+
+  // Una vuelta de presentación cuando cada producto aparece por primera vez
+  // (se observa cada estudio por separado: en celular la colección es muy alta)
+  if (stageControls.length && 'IntersectionObserver' in window && !reduceMotion.matches) {
+    const introObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        const idx = stages.indexOf(entry.target);
+        setTimeout(stageControls[idx].spin, 250 + (idx % 3) * 160);
+      });
+    }, { threshold: 0.55 });
+    stages.forEach((stage) => introObserver.observe(stage));
+  }
+
+  // =========================================================================
+  // 8. APARICIÓN AL HACER SCROLL
+  // =========================================================================
+  const revealElements = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window && revealElements.length) {
     const revealObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-visible');
           observer.unobserve(entry.target);
         }
       });
-    }, {
-      rootMargin: '120px 0px 80px 0px',
-      threshold: 0.01
-    });
+    }, { rootMargin: '0px 0px -40px 0px', threshold: 0.01 });
 
-    revealElements.forEach(el => revealObserver.observe(el));
+    revealElements.forEach((el) => revealObserver.observe(el));
   } else {
-    revealElements.forEach(el => el.classList.add('is-visible'));
-  }
-
-  // =========================================================================
-  // 7. SPOTLIGHT CARD GLOW (Seguimiento Optimizado sin Layout Thrashing)
-  // =========================================================================
-  const glowElements = document.querySelectorAll('.editorial-card, .step-card, .form-box');
-  glowElements.forEach(card => {
-    let cardRect = null;
-    let glowRAF = null;
-
-    card.addEventListener('mouseenter', () => {
-      cardRect = card.getBoundingClientRect();
-    }, { passive: true });
-
-    card.addEventListener('mousemove', (e) => {
-      if (!cardRect) {
-        cardRect = card.getBoundingClientRect();
-      }
-      const x = e.clientX - cardRect.left;
-      const y = e.clientY - cardRect.top;
-
-      if (!glowRAF) {
-        glowRAF = window.requestAnimationFrame(() => {
-          card.style.setProperty('--mouse-x', `${x}px`);
-          card.style.setProperty('--mouse-y', `${y}px`);
-          glowRAF = null;
-        });
-      }
-    }, { passive: true });
-
-    card.addEventListener('mouseleave', () => {
-      cardRect = null;
-      if (glowRAF) {
-        window.cancelAnimationFrame(glowRAF);
-        glowRAF = null;
-      }
-    }, { passive: true });
-  });
-
-  // =========================================================================
-  // 8. CARRUSEL & SHOWCASE 3D INTERACTIVO DE PRODUCTOS (HERO)
-  // =========================================================================
-  const carouselStage = document.getElementById('carousel-stage');
-  const carouselWrapper = document.getElementById('carousel-3d');
-  if (carouselStage && carouselWrapper) {
-    const items = Array.from(carouselStage.querySelectorAll('.product-3d-item'));
-    const prevBtn = document.getElementById('carousel-prev');
-    const nextBtn = document.getElementById('carousel-next');
-    const total = items.length;
-    let currentIndex = 0;
-    const isTiltEnabled = true; // Efecto 3D siempre activo
-
-    // Actualizar estados espaciales 3D del carrusel
-    const updateCarousel = (newIndex) => {
-      currentIndex = ((newIndex % total) + total) % total;
-
-      items.forEach((item, idx) => {
-        item.classList.remove('is-active', 'is-next', 'is-prev', 'is-hidden', 'is-flipped');
-        item.style.removeProperty('--card-rx');
-        item.style.removeProperty('--card-ry');
-        item.style.removeProperty('--shine-x');
-        item.style.removeProperty('--shine-y');
-
-        if (idx === currentIndex) {
-          item.classList.add('is-active');
-        } else if (idx === (currentIndex + 1) % total) {
-          item.classList.add('is-next');
-        } else if (idx === (currentIndex - 1 + total) % total) {
-          item.classList.add('is-prev');
-        } else {
-          item.classList.add('is-hidden');
-        }
-      });
-    };
-
-    // Botones flechas
-    if (prevBtn) {
-      prevBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        updateCarousel(currentIndex - 1);
-      });
-    }
-
-    if (nextBtn) {
-      nextBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        updateCarousel(currentIndex + 1);
-      });
-    }
-
-    // Clic en tarjetas laterales para traerlas al frente, o en tarjeta activa para voltear (flip 3D)
-    items.forEach((item, idx) => {
-      item.addEventListener('click', (e) => {
-        if (idx !== currentIndex) {
-          e.preventDefault();
-          updateCarousel(idx);
-          return;
-        }
-
-        // Si se hizo clic en el enlace de pedido de la ficha trasera
-        if (e.target.closest('.btn-card-order')) {
-          return;
-        }
-
-        // Si se pulsa el botón para volver al frente
-        if (e.target.closest('.btn-flip-back')) {
-          e.preventDefault();
-          item.classList.remove('is-flipped');
-          return;
-        }
-
-        // Alternar volteo 3D de 180°
-        e.preventDefault();
-        item.classList.toggle('is-flipped');
-      });
-    });
-
-    // FÍSICAS DE SEGUIMIENTO DE CURSOR (LERP DAMPING)
-    let currentRx = 0;
-    let currentRy = 0;
-    let currentShineX = 50;
-    let currentShineY = 50;
-    let targetRx = 0;
-    let targetRy = 0;
-    let targetShineX = 50;
-    let targetShineY = 50;
-    let isTracking = false;
-    let tiltRAF = null;
-    let wrapperRect = null;
-
-    const animateTilt = () => {
-      const activeItem = items[currentIndex];
-      if (!activeItem || !isTiltEnabled) {
-        tiltRAF = null;
-        return;
-      }
-
-      const ease = 0.12;
-      currentRx += (targetRx - currentRx) * ease;
-      currentRy += (targetRy - currentRy) * ease;
-      currentShineX += (targetShineX - currentShineX) * ease;
-      currentShineY += (targetShineY - currentShineY) * ease;
-
-      activeItem.style.setProperty('--card-rx', `${currentRx.toFixed(2)}deg`);
-      activeItem.style.setProperty('--card-ry', `${currentRy.toFixed(2)}deg`);
-      activeItem.style.setProperty('--shine-x', `${currentShineX.toFixed(1)}%`);
-      activeItem.style.setProperty('--shine-y', `${currentShineY.toFixed(1)}%`);
-
-      const diff = Math.abs(targetRx - currentRx) + Math.abs(targetRy - currentRy);
-      if (isTracking || diff > 0.05) {
-        tiltRAF = window.requestAnimationFrame(animateTilt);
-      } else {
-        tiltRAF = null;
-      }
-    };
-
-    const startTiltLoop = () => {
-      if (!tiltRAF && isTiltEnabled) {
-        tiltRAF = window.requestAnimationFrame(animateTilt);
-      }
-    };
-
-    carouselWrapper.addEventListener('mouseenter', () => {
-      wrapperRect = carouselWrapper.getBoundingClientRect();
-      isTracking = true;
-      startTiltLoop();
-    }, { passive: true });
-
-    carouselWrapper.addEventListener('mousemove', (e) => {
-      if (!isTiltEnabled) return;
-      if (!wrapperRect) wrapperRect = carouselWrapper.getBoundingClientRect();
-
-      const x = (e.clientX - wrapperRect.left) / wrapperRect.width - 0.5;
-      const y = (e.clientY - wrapperRect.top) / wrapperRect.height - 0.5;
-
-      targetRx = -y * 18;
-      targetRy = x * 22;
-      targetShineX = (x + 0.5) * 100;
-      targetShineY = (y + 0.5) * 100;
-
-      startTiltLoop();
-    }, { passive: true });
-
-    carouselWrapper.addEventListener('mouseleave', () => {
-      wrapperRect = null;
-      isTracking = false;
-      targetRx = 0;
-      targetRy = 0;
-      targetShineX = 50;
-      targetShineY = 50;
-      startTiltLoop();
-    }, { passive: true });
-
-    // GESTOS TÁCTILES EN MÓVIL (SWIPE)
-    let touchStartX = 0;
-    let touchStartY = 0;
-
-    carouselWrapper.addEventListener('touchstart', (e) => {
-      if (e.touches && e.touches[0]) {
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-      }
-    }, { passive: true });
-
-    carouselWrapper.addEventListener('touchend', (e) => {
-      if (!touchStartX) return;
-      const touchEndX = e.changedTouches && e.changedTouches[0] ? e.changedTouches[0].clientX : touchStartX;
-      const touchEndY = e.changedTouches && e.changedTouches[0] ? e.changedTouches[0].clientY : touchStartY;
-      const diffX = touchEndX - touchStartX;
-      const diffY = touchEndY - touchStartY;
-
-      if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
-        if (diffX < 0) {
-          updateCarousel(currentIndex + 1);
-        } else {
-          updateCarousel(currentIndex - 1);
-        }
-      }
-      touchStartX = 0;
-      touchStartY = 0;
-    }, { passive: true });
-
-    // Navegación por teclado
-    window.addEventListener('keydown', (e) => {
-      const rect = carouselWrapper.getBoundingClientRect();
-      const inView = rect.top < window.innerHeight && rect.bottom > 0;
-      if (!inView) return;
-
-      if (e.key === 'ArrowLeft') {
-        updateCarousel(currentIndex - 1);
-      } else if (e.key === 'ArrowRight') {
-        updateCarousel(currentIndex + 1);
-      }
-    });
-
-    // Iniciar con la primera tarjeta activa
-    updateCarousel(0);
+    revealElements.forEach((el) => el.classList.add('is-visible'));
   }
 });
