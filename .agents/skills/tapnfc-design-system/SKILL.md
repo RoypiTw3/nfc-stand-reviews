@@ -115,3 +115,9 @@ Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable
 ## Publicación
 - Cada cambio de CSS o JS sube el cache-buster `?v=` en index.html (style.css y script.js juntos).
 - Commit y push a `origin main` solo cuando el dueño apruebe lo que vio en local.
+
+## Hosting (v103)
+- Sitio oficial: **https://www.tapnfcs.com** (AWS Amplify, app `tapnfcs` / `d1rmv8smyyi7a1`, us-east-1, rama `main`). Cada push a `origin main` se publica solo.
+- `amplify.yml` copia únicamente `index.html`, `style.css`, `script.js`, `favicon.ico` y `media/` (sin los .mp4) a `dist/`. Si se agrega un archivo nuevo en la raíz, hay que sumarlo ahí.
+- El DNS está en **Spaceship** (no en Route 53): `www` es un CNAME a CloudFront; la raíz `@` es un CNAME que Spaceship convierte en ALIAS; además está el CNAME `_…acm-validations.aws` del certificado SSL (no borrarlo, renueva el certificado).
+- `https://tapnfcs.com` redirige a `https://www.tapnfcs.com`. Canonical, `og:url`, `og:image`, `twitter:image` y el JSON-LD usan `https://www.tapnfcs.com/`.
