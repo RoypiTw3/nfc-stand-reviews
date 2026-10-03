@@ -34,7 +34,8 @@
 }
 
 :root {
-  color-scheme: light;
+  /* `only`: los navegadores no pueden oscurecer la página por su cuenta */
+  color-scheme: only light;
   --page: #E7E0D3;
   --paper: #F5F1EA;
   --tint: #EEE8DD;

@@ -3,7 +3,7 @@ name: tapnfc-design-system
 description: Sistema de diseño vigente de TapNFC (landing de placas NFC para Google Reviews y menús digitales; estilo clásico, limpio y claro, con placas en 3D en el hero). Úsala antes de cambiar estilos, colores, tipografía, textos, imágenes o secciones de index.html, style.css o script.js en este proyecto. Tiene prioridad sobre las reglas genéricas de otras skills de diseño.
 ---
 
-# TapNFC — Sistema de diseño (v104, clásico, limpio y con carácter)
+# TapNFC — Sistema de diseño (v105, clásico, limpio y con carácter)
 
 Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable, cro-landing-page, responsive-patterns, etc.) sugiere algo que la contradice, gana esta.
 
@@ -113,6 +113,10 @@ Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable
 - Las placas que no se ven llevan `.is-paused` (IntersectionObserver) y sus animaciones infinitas se pausan.
 - Animaciones de 0.6 s o menos, solo `transform` y `opacity`; respetar `prefers-reduced-motion`.
 - Para medir el scroll: puppeteer-core con el Chrome instalado, viewport 390×844 @3x, CPU 4x, `--disable-gpu` e `Input.synthesizeScrollGesture`, leyendo `PipelineReporter`, `UpdateLayoutTree`, `Layerize` y `FunctionCall` del trace.
+
+## Siempre en claro (v105)
+- La página nunca cambia de colores con el modo oscuro del celular o del navegador: `<meta name="color-scheme" content="only light">`, `:root { color-scheme: only light; }` y `<meta name="darkreader-lock">` (extensión Dark Reader). Es la forma oficial de desactivar el "tema oscuro automático" de Chrome/Brave/Samsung. No agregar reglas `@media (prefers-color-scheme: dark)`.
+- Para comprobarlo: Chrome con `--force-dark-mode --enable-features=WebContentsForceDark --blink-settings=forceDarkModeEnabled=true` y el fondo del hero debe seguir crema.
 
 ## Responsive
 - style.css es **mobile-first** desde v70: base de 375px y `@media (min-width: …)` en 480, 640, 768, 900, 960 y 1440. La única excepción es `(min-width: 960px) and (max-height: 760px)` para pantallas bajas.
