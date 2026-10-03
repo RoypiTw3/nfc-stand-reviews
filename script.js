@@ -61,12 +61,17 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentY = 0;
     let currentX = 0;
     let tiltRAF = null;
+    // El giro se escribe en cada placa (no en el escenario) para que el
+    // navegador no tenga que recalcular todo lo que hay dentro.
+    const heroBodies = Array.from(stage.querySelectorAll('.obj-body'));
 
     const tick = () => {
       currentY += (targetY - currentY) * 0.08;
       currentX += (targetX - currentX) * 0.08;
-      stage.style.setProperty('--ry', `${currentY.toFixed(2)}deg`);
-      stage.style.setProperty('--rx', `${currentX.toFixed(2)}deg`);
+      heroBodies.forEach((body) => {
+        body.style.setProperty('--ry', `${currentY.toFixed(2)}deg`);
+        body.style.setProperty('--rx', `${currentX.toFixed(2)}deg`);
+      });
 
       if (Math.abs(targetY - currentY) + Math.abs(targetX - currentX) > 0.02) {
         tiltRAF = window.requestAnimationFrame(tick);
@@ -234,32 +239,37 @@ document.addEventListener('DOMContentLoaded', () => {
   // 7. WHATSAPP FLOTANTE
   // Aparece apenas se empieza a bajar y se oculta en el formulario de
   // contacto, que ya tiene su propio botón de WhatsApp.
+  // Sin escuchar el scroll: un marcador invisible a 24px del inicio avisa
+  // cuándo se empezó a bajar (así el scroll no hace trabajo extra).
   // =========================================================================
   const floatingWa = document.getElementById('floating-wa');
-  if (floatingWa) {
-    let scrollTicking = false;
+  if (floatingWa && 'IntersectionObserver' in window) {
+    let scrolled = false;
     let contactInView = false;
 
     const updateFloating = () => {
-      floatingWa.classList.toggle('visible', window.scrollY > 24 && !contactInView);
-      scrollTicking = false;
+      floatingWa.classList.toggle('visible', scrolled && !contactInView);
     };
 
+    const topMarker = document.createElement('div');
+    topMarker.setAttribute('aria-hidden', 'true');
+    topMarker.style.cssText = 'position:absolute;top:24px;left:0;width:1px;height:1px;pointer-events:none;';
+    document.body.appendChild(topMarker);
+    new IntersectionObserver((entries) => {
+      const entry = entries[0];
+      scrolled = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+      updateFloating();
+    }).observe(topMarker);
+
     const contactSection = document.getElementById('contacto');
-    if (contactSection && 'IntersectionObserver' in window) {
+    if (contactSection) {
       new IntersectionObserver((entries) => {
         contactInView = entries[0].isIntersecting;
         updateFloating();
       }, { rootMargin: '0px 0px -35% 0px' }).observe(contactSection);
     }
-
-    window.addEventListener('scroll', () => {
-      if (!scrollTicking) {
-        window.requestAnimationFrame(updateFloating);
-        scrollTicking = true;
-      }
-    }, { passive: true });
-    updateFloating();
+  } else if (floatingWa) {
+    floatingWa.classList.add('visible');
   }
 
   // =========================================================================
@@ -388,6 +398,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // - Al soltar, vuelve suave a quedar de frente o de espaldas.
   // - Con mouse, se inclina un poco siguiendo el cursor.
   // - La primera vez que aparece la colección, cada producto da una vuelta.
+  //   Esa vuelta la anima el navegador por su cuenta (Web Animations), así
+  //   no le quita fluidez al scroll mientras se baja por la página.
   // =========================================================================
   const stages = Array.from(document.querySelectorAll('.product-stage'));
 
@@ -399,17 +411,18 @@ document.addEventListener('DOMContentLoaded', () => {
     let pitch = 0;
     let targetYaw = 0;
     let targetPitch = 0;
-    let ease = 0.12;
     let rafId = null;
     let drag = null;
+    let spinAnim = null;
 
+    const body = stage.querySelector('.obj-body') || stage;
     const render = () => {
-      stage.style.setProperty('--ry', `${yaw.toFixed(2)}deg`);
-      stage.style.setProperty('--rx', `${pitch.toFixed(2)}deg`);
+      body.style.setProperty('--ry', `${yaw.toFixed(2)}deg`);
+      body.style.setProperty('--rx', `${pitch.toFixed(2)}deg`);
     };
 
     const tick = () => {
-      const k = drag ? 0.35 : ease;
+      const k = drag ? 0.35 : 0.12;
       yaw += (targetYaw - yaw) * k;
       pitch += (targetPitch - pitch) * k;
       render();
@@ -420,7 +433,6 @@ document.addEventListener('DOMContentLoaded', () => {
         pitch = targetPitch;
         render();
         rafId = null;
-        ease = 0.12;
       }
     };
 
@@ -446,10 +458,27 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const spin = () => {
-      if (reduceMotion.matches || drag) return;
-      ease = 0.055;
-      faceYaw += 360;
-      settle();
+      if (reduceMotion.matches || drag || spinAnim || !body.animate) return;
+      const css = getComputedStyle(body);
+      const x = (parseFloat(css.getPropertyValue('--pitch')) || 0) + pitch;
+      const y = (parseFloat(css.getPropertyValue('--yaw')) || 0) + yaw;
+      spinAnim = body.animate([
+        { transform: `rotateX(${x}deg) rotateY(${y}deg)` },
+        { transform: `rotateX(${x}deg) rotateY(${y + 360}deg)` }
+      ], { duration: 1800, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
+      spinAnim.onfinish = () => { spinAnim = null; };
+    };
+
+    // Si lo tocan mientras da la vuelta, sigue desde donde va (sin saltos)
+    const stopSpin = () => {
+      if (!spinAnim) return;
+      const progress = spinAnim.effect.getComputedTiming().progress || 0;
+      spinAnim.cancel();
+      spinAnim = null;
+      yaw += progress * 360;
+      targetYaw = yaw;
+      faceYaw = Math.round((yaw - tiltYaw) / 180) * 180;
+      render();
     };
 
     // Evitar que el navegador "agarre" las imágenes del diseño como foto
@@ -458,6 +487,7 @@ document.addEventListener('DOMContentLoaded', () => {
     stage.addEventListener('pointerdown', (e) => {
       if (e.button !== 0) return;
       if (e.pointerType === 'mouse') e.preventDefault();
+      stopSpin();
       drag = { x: e.clientX, y: e.clientY, yaw: targetYaw, pitch: targetPitch, moved: false, mouse: e.pointerType === 'mouse' };
       try { stage.setPointerCapture(e.pointerId); } catch (err) { /* sin captura */ }
     });
@@ -465,7 +495,7 @@ document.addEventListener('DOMContentLoaded', () => {
     stage.addEventListener('pointermove', (e) => {
       if (!drag) {
         // Inclinación suave siguiendo el mouse (no en táctil)
-        if (e.pointerType !== 'mouse') return;
+        if (e.pointerType !== 'mouse' || spinAnim) return;
         const rect = stage.getBoundingClientRect();
         tiltYaw = ((e.clientX - rect.left) / rect.width - 0.5) * 30;
         tiltPitch = ((e.clientY - rect.top) / rect.height - 0.5) * -16;
@@ -504,13 +534,14 @@ document.addEventListener('DOMContentLoaded', () => {
     stage.addEventListener('pointercancel', endDrag);
 
     stage.addEventListener('pointerleave', (e) => {
-      if (drag || e.pointerType !== 'mouse') return;
+      if (drag || spinAnim || e.pointerType !== 'mouse') return;
       tiltYaw = 0;
       tiltPitch = 0;
       settle();
     });
 
     stage.addEventListener('keydown', (e) => {
+      if (['Enter', ' ', 'ArrowLeft', 'ArrowRight'].includes(e.key)) stopSpin();
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         flip();
@@ -536,6 +567,19 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }, { threshold: 0.55 });
     stages.forEach((stage) => introObserver.observe(stage));
+  }
+
+  // =========================================================================
+  // 7.3 PAUSAR LAS PLACAS QUE NO SE VEN
+  // Las placas flotan y se mecen sin parar; fuera de pantalla se pausan
+  // para que el celular no siga dibujándolas mientras se baja por la página.
+  // =========================================================================
+  const animatedStages = document.querySelectorAll('#hero-stage, .product-stage, .contact-stage');
+  if (animatedStages.length && 'IntersectionObserver' in window) {
+    const pauseObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => entry.target.classList.toggle('is-paused', !entry.isIntersecting));
+    }, { rootMargin: '120px 0px' });
+    animatedStages.forEach((el) => pauseObserver.observe(el));
   }
 
   // =========================================================================

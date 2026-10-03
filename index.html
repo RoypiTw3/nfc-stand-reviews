@@ -137,13 +137,11 @@
   }
   </script>
 
-  <!-- Tipografías: Gloock (display clásica) + Instrument Sans (texto) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Gloock&family=Instrument+Sans:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Instrument+Sans:wght@400;500;600&display=swap"></noscript>
+  <!-- Tipografías propias (Gloock + Instrument Sans, subconjunto latino): sin pasar por Google Fonts -->
+  <link rel="preload" href="media/fonts/gloock-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="media/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="stylesheet" href="style.css?v=103.0">
+  <link rel="stylesheet" href="style.css?v=104.0">
 </head>
 <body>
 
@@ -155,7 +153,7 @@
     <header class="hero" id="hero">
       <nav class="nav" aria-label="Principal">
         <a href="#hero" class="nav-logo" aria-label="TapNFC, inicio">
-          <img src="media/tapnfcs-logo-white.svg" alt="TAP NFCS" width="882" height="386">
+          <img src="media/tapnfcs-logo.webp" alt="TAP NFCS" width="302" height="132">
         </a>
 
         <div class="nav-pill">
@@ -188,7 +186,7 @@
             <div class="obj-body">
               <div class="plaque">
                 <div class="pf pf-front face-review face-art-wrap">
-                  <img draggable="false" class="face-art" src="media/tarjeta-resenas.webp" alt="" width="511" height="811" decoding="async" fetchpriority="high">
+                  <img draggable="false" class="face-art" src="media/tarjeta-resenas.webp" srcset="media/tarjeta-resenas-320.webp 320w, media/tarjeta-resenas.webp 511w" sizes="(min-width: 1440px) 250px, (min-width: 960px) 220px, (min-width: 640px) 155px, 130px" alt="" width="511" height="811" decoding="async" fetchpriority="high">
                 </div>
                 <div class="pf pf-back"></div>
                 <div class="pf pf-left"></div>
@@ -209,7 +207,7 @@
             <div class="obj-body">
               <div class="plaque">
                 <div class="pf pf-front face-menu face-art-wrap">
-                  <img draggable="false" class="face-art" src="media/tarjeta-menu.webp" alt="" width="511" height="810" decoding="async" fetchpriority="high">
+                  <img draggable="false" class="face-art" src="media/tarjeta-menu.webp" srcset="media/tarjeta-menu-320.webp 320w, media/tarjeta-menu.webp 511w" sizes="(min-width: 1440px) 250px, (min-width: 960px) 220px, (min-width: 640px) 155px, 130px" alt="" width="511" height="810" decoding="async" fetchpriority="high">
                 </div>
                 <div class="pf pf-back"></div>
                 <div class="pf pf-left"></div>
@@ -320,8 +318,8 @@
             <div class="obj obj--acrylic">
               <div class="obj-body">
                 <div class="plaque">
-                  <div class="pf pf-front"><img draggable="false" class="face-art" src="media/tarjeta-resenas.webp" alt="" width="511" height="811" loading="lazy" decoding="async"></div>
-                  <div class="pf pf-back"><img draggable="false" class="face-art face-art--mirror" src="media/tarjeta-resenas.webp" alt="" width="511" height="811" loading="lazy" decoding="async"></div>
+                  <div class="pf pf-front"><img draggable="false" class="face-art" src="media/tarjeta-resenas.webp" srcset="media/tarjeta-resenas-320.webp 320w, media/tarjeta-resenas.webp 511w" sizes="155px" alt="" width="511" height="811" loading="lazy" decoding="async"></div>
+                  <div class="pf pf-back"><img draggable="false" class="face-art face-art--mirror" src="media/tarjeta-resenas.webp" srcset="media/tarjeta-resenas-320.webp 320w, media/tarjeta-resenas.webp 511w" sizes="155px" alt="" width="511" height="811" loading="lazy" decoding="async"></div>
                   <div class="pf pf-left"></div>
                   <div class="pf pf-right"></div>
                   <div class="pf pf-top"></div>
@@ -349,7 +347,7 @@
             <div class="obj obj--sticker">
               <div class="obj-body">
                 <div class="plaque">
-                  <div class="pf pf-front"><img draggable="false" class="face-art" src="media/sticker-cuadrado.webp" alt="" width="600" height="600" loading="lazy" decoding="async"></div>
+                  <div class="pf pf-front"><img draggable="false" class="face-art" src="media/sticker-cuadrado.webp" srcset="media/sticker-cuadrado-400.webp 400w, media/sticker-cuadrado.webp 600w" sizes="185px" alt="" width="600" height="600" loading="lazy" decoding="async"></div>
                   <div class="pf pf-back"><span class="liner">Adhesivo</span></div>
                   <div class="pf pf-left"></div>
                   <div class="pf pf-right"></div>
@@ -371,7 +369,7 @@
             <div class="obj obj--card">
               <div class="obj-body">
                 <div class="plaque">
-                  <div class="pf pf-front"><img draggable="false" class="face-art" src="media/tarjeta-review-us.webp" alt="" width="511" height="811" loading="lazy" decoding="async"></div>
+                  <div class="pf pf-front"><img draggable="false" class="face-art" src="media/tarjeta-review-us.webp" srcset="media/tarjeta-review-us-320.webp 320w, media/tarjeta-review-us.webp 511w" sizes="135px" alt="" width="511" height="811" loading="lazy" decoding="async"></div>
                   <div class="pf pf-back"><span class="back-brand">TAP NFCS</span></div>
                   <div class="pf pf-left"></div>
                   <div class="pf pf-right"></div>
@@ -400,7 +398,7 @@
             <div class="obj obj--menucard">
               <div class="obj-body">
                 <div class="plaque">
-                  <div class="pf pf-front"><img draggable="false" class="face-art" src="media/tarjeta-menu.webp" alt="" width="511" height="810" loading="lazy" decoding="async"></div>
+                  <div class="pf pf-front"><img draggable="false" class="face-art" src="media/tarjeta-menu.webp" srcset="media/tarjeta-menu-320.webp 320w, media/tarjeta-menu.webp 511w" sizes="135px" alt="" width="511" height="810" loading="lazy" decoding="async"></div>
                   <div class="pf pf-back"><span class="back-brand">TAP NFCS</span></div>
                   <div class="pf pf-left"></div>
                   <div class="pf pf-right"></div>
@@ -593,7 +591,7 @@
               <div class="obj-body">
                 <div class="plaque">
                   <div class="pf pf-front face-review face-art-wrap">
-                    <img draggable="false" class="face-art" src="media/tarjeta-resenas.webp" alt="" width="511" height="811" decoding="async" loading="lazy">
+                    <img draggable="false" class="face-art" src="media/tarjeta-resenas.webp" srcset="media/tarjeta-resenas-320.webp 320w, media/tarjeta-resenas.webp 511w" sizes="125px" alt="" width="511" height="811" decoding="async" loading="lazy">
                   </div>
                   <div class="pf pf-back"></div>
                   <div class="pf pf-left"></div>
@@ -614,7 +612,7 @@
               <div class="obj-body">
                 <div class="plaque">
                   <div class="pf pf-front face-menu face-art-wrap">
-                    <img draggable="false" class="face-art" src="media/tarjeta-menu.webp" alt="" width="511" height="810" decoding="async" loading="lazy">
+                    <img draggable="false" class="face-art" src="media/tarjeta-menu.webp" srcset="media/tarjeta-menu-320.webp 320w, media/tarjeta-menu.webp 511w" sizes="125px" alt="" width="511" height="810" decoding="async" loading="lazy">
                   </div>
                   <div class="pf pf-back"></div>
                   <div class="pf pf-left"></div>
@@ -681,7 +679,7 @@
 
     <footer class="footer">
       <a href="#hero" class="footer-logo" aria-label="TapNFC, inicio">
-        <img src="media/tapnfcs-logo-white.svg" alt="TAP NFCS" width="882" height="386">
+        <img src="media/tapnfcs-logo.webp" alt="TAP NFCS" width="302" height="132">
       </a>
       <span class="footer-note">Envíos a toda Colombia</span>
       <a href="https://www.instagram.com/tapnfcs" target="_blank" rel="noopener noreferrer" class="footer-ig" aria-label="Instagram oficial @tapnfcs">
@@ -697,6 +695,6 @@
     <span>WhatsApp</span>
   </a>
 
-  <script src="script.js?v=103.0"></script>
+  <script src="script.js?v=104.0"></script>
 </body>
 </html>

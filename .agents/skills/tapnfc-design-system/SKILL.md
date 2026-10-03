@@ -3,7 +3,7 @@ name: tapnfc-design-system
 description: Sistema de diseño vigente de TapNFC (landing de placas NFC para Google Reviews y menús digitales; estilo clásico, limpio y claro, con placas en 3D en el hero). Úsala antes de cambiar estilos, colores, tipografía, textos, imágenes o secciones de index.html, style.css o script.js en este proyecto. Tiene prioridad sobre las reglas genéricas de otras skills de diseño.
 ---
 
-# TapNFC — Sistema de diseño (v102, clásico, limpio y con carácter)
+# TapNFC — Sistema de diseño (v104, clásico, limpio y con carácter)
 
 Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable, cro-landing-page, responsive-patterns, etc.) sugiere algo que la contradice, gana esta.
 
@@ -55,7 +55,7 @@ Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable
 - **Gloock** (serif clásica, un solo peso): la palabra "TAPNFCS" del hero, los títulos de sección (en minúsculas normales, una línea), precios y números de pasos.
 - **Instrument Sans** 400/500/600: todo lo demás.
 - No usar monoespaciadas ni Cormorant (se quitaron en v70).
-- Google Fonts se carga de forma asíncrona (`preload` + `onload` y un `<noscript>`). La palabra del hero aparece cuando Gloock está lista (`.fonts-ready`, con 3 s de tope).
+- Las tipografías están en `media/fonts/` y se precargan (ver Rendimiento). La palabra del hero aparece cuando Gloock está lista (`.fonts-ready`, con 3 s de tope).
 
 ## Textos
 - Muy poco texto. Títulos cortos: "Dos productos", "La colección", "Así funciona", "Preguntas", "Pide tus placas o tu menú".
@@ -103,10 +103,16 @@ Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable
   - Fuente editable: `assets/tarjeta-resenas.html` de esta skill (540 × 857 px = 10 px/mm). Para cambiar el enlace: generar el QR nuevo con `cv2.QRCodeEncoder` (nivel M), reemplazar el `<svg>` dentro de `.qr`, renderizar con Chrome headless a 2x (`--window-size=540,857 --force-device-scale-factor=2`), reducir a 511 × 811 y guardar en WebP; luego verificar con `cv2.QRCodeDetector`.
 - Para poner otro diseño real: exportar el PDF/PNG a WebP (~500 px de ancho), ajustar `--W`/`--H` a la proporción del producto y usar el mismo patrón `face-art`.
 
-## Rendimiento (Lighthouse móvil 100, accesibilidad 100 en v74 — no retroceder)
+## Rendimiento (v104 — no retroceder)
 - Prohibido `backdrop-filter` y `filter: blur()`. Los glows se hacen solo con `radial-gradient`.
-- Imágenes de producto en WebP (`media/<nombre>-480.webp` y `-900.webp`) con `srcset`, `sizes` y `width`/`height`. Los JPG originales quedan solo para `og:image`.
+- **Tipografías propias** en `media/fonts/` (Gloock y Instrument Sans variable 400–600, subconjunto latino) con `@font-face` al inicio de style.css y `<link rel="preload" as="font" crossorigin>`. No volver a Google Fonts: la palabra TAP NFCS (el LCP) espera a Gloock.
+- **Texturas de las placas** con `srcset` (`<nombre>-320.webp 320w` + original 511w; sticker `-400` + 600w) y `sizes` según la escala `--u`. Si se cambia un diseño, regenerar también la versión pequeña y verificar el QR con `cv2.QRCodeDetector` en las dos.
+- **Logo**: `media/tapnfcs-logo.webp` (302 × 132, ya en negro). No usar el SVG viejo (es un PNG de 24 KB embebido) ni `filter: brightness(0)`.
+- **Nada escucha el scroll.** El WhatsApp flotante usa un marcador invisible + IntersectionObserver. No agregar `addEventListener('scroll')` ni leer `scrollY` en cada cuadro.
+- **Giro 3D**: `--ry`/`--rx` están registradas con `@property` (`inherits: false`) y el JS las escribe en cada `.obj-body`, no en el escenario (así no se recalculan las caras). La vuelta de presentación de la colección es una Web Animation sobre `transform` (la mueve el compositor); si el usuario toca a mitad del giro, `stopSpin()` la convierte en estado sin saltos.
+- Las placas que no se ven llevan `.is-paused` (IntersectionObserver) y sus animaciones infinitas se pausan.
 - Animaciones de 0.6 s o menos, solo `transform` y `opacity`; respetar `prefers-reduced-motion`.
+- Para medir el scroll: puppeteer-core con el Chrome instalado, viewport 390×844 @3x, CPU 4x, `--disable-gpu` e `Input.synthesizeScrollGesture`, leyendo `PipelineReporter`, `UpdateLayoutTree`, `Layerize` y `FunctionCall` del trace.
 
 ## Responsive
 - style.css es **mobile-first** desde v70: base de 375px y `@media (min-width: …)` en 480, 640, 768, 900, 960 y 1440. La única excepción es `(min-width: 960px) and (max-height: 760px)` para pantallas bajas.
@@ -119,5 +125,6 @@ Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable
 ## Hosting (v103)
 - Sitio oficial: **https://www.tapnfcs.com** (AWS Amplify, app `tapnfcs` / `d1rmv8smyyi7a1`, us-east-1, rama `main`). Cada push a `origin main` se publica solo.
 - `amplify.yml` copia únicamente `index.html`, `style.css`, `script.js`, `favicon.ico` y `media/` (sin los .mp4) a `dist/`. Si se agrega un archivo nuevo en la raíz, hay que sumarlo ahí.
+- `customHttp.yml` (raíz del repo, Amplify lo lee en cada build): CSS, JS y tipografías con caché de un año `immutable` (por eso **siempre** hay que subir el `?v=`), imágenes WebP con un día + `stale-while-revalidate`, y cabeceras de seguridad básicas (HSTS, nosniff, Referrer-Policy, X-Frame-Options).
 - El DNS está en **Spaceship** (no en Route 53): `www` es un CNAME a CloudFront; la raíz `@` es un CNAME que Spaceship convierte en ALIAS; además está el CNAME `_…acm-validations.aws` del certificado SSL (no borrarlo, renueva el certificado).
 - `https://tapnfcs.com` redirige a `https://www.tapnfcs.com`. Canonical, `og:url`, `og:image`, `twitter:image` y el JSON-LD usan `https://www.tapnfcs.com/`.

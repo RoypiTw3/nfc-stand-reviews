@@ -1,0 +1,32 @@
+customHeaders:
+  # Seguridad básica para todo el sitio
+  - pattern: '**/*'
+    headers:
+      - key: 'Strict-Transport-Security'
+        value: 'max-age=31536000'
+      - key: 'X-Content-Type-Options'
+        value: 'nosniff'
+      - key: 'Referrer-Policy'
+        value: 'strict-origin-when-cross-origin'
+      - key: 'X-Frame-Options'
+        value: 'SAMEORIGIN'
+  # CSS y JS llevan ?v= en index.html: el navegador los guarda un año
+  - pattern: '*.css'
+    headers:
+      - key: 'Cache-Control'
+        value: 'public, max-age=31536000, immutable'
+  - pattern: '*.js'
+    headers:
+      - key: 'Cache-Control'
+        value: 'public, max-age=31536000, immutable'
+  # Tipografías: no cambian
+  - pattern: '/media/fonts/*'
+    headers:
+      - key: 'Cache-Control'
+        value: 'public, max-age=31536000, immutable'
+  # Imágenes: un día en caché y luego se revisan en segundo plano
+  # (si se reemplaza una imagen con el mismo nombre, se ve nueva al día siguiente)
+  - pattern: '/media/*.webp'
+    headers:
+      - key: 'Cache-Control'
+        value: 'public, max-age=86400, stale-while-revalidate=604800'
