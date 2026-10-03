@@ -1,0 +1,17 @@
+version: 1
+frontend:
+  phases:
+    build:
+      commands:
+        # Publicar solo los archivos del sitio (sin .claude/, .agents/ ni archivos de trabajo)
+        - mkdir -p dist
+        - cp index.html style.css script.js favicon.ico dist/
+        - cp -r media dist/media
+        # Los videos de media/ no se usan en la página
+        - rm -f dist/media/*.mp4
+  artifacts:
+    baseDirectory: dist
+    files:
+      - '**/*'
+  cache:
+    paths: []
