@@ -2336,6 +2336,31 @@ a, button, input, select, summary {
   }
 }
 
+/* Celular acostado: la portada cabe en la pantalla (palabra en una línea,
+   placas más pequeñas y el botón un poco más abajo) */
+@media (orientation: landscape) and (max-height: 500px) and (max-width: 959px) {
+  .hero {
+    --u: 0.5;
+    --hero-h: max(340px, 100svh);
+    --floor: calc(165 * var(--vs) + 20 * var(--px) + 6px);
+    --word-lift: 0.8;
+    min-height: max(340px, 100svh);
+  }
+
+  .hero-word {
+    font-size: 24vh;
+    line-height: 0.8;
+  }
+
+  .hero-word span {
+    display: inline;
+  }
+
+  .hero-foot {
+    bottom: 6px;
+  }
+}
+
 /* --------------------------------------------------------------------------
    MOVIMIENTO REDUCIDO
    -------------------------------------------------------------------------- */

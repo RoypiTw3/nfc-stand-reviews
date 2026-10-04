@@ -3,7 +3,7 @@ name: tapnfc-design-system
 description: Sistema de diseño vigente de TapNFC (landing de placas NFC para Google Reviews y menús digitales; estilo clásico, limpio y claro, con placas en 3D en el hero). Úsala antes de cambiar estilos, colores, tipografía, textos, imágenes o secciones de index.html, style.css o script.js en este proyecto. Tiene prioridad sobre las reglas genéricas de otras skills de diseño.
 ---
 
-# TapNFC — Sistema de diseño (v109, clásico, limpio, cercano y con carácter)
+# TapNFC — Sistema de diseño (v111, clásico, limpio, cercano y con carácter)
 
 Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable, cro-landing-page, responsive-patterns, etc.) sugiere algo que la contradice, gana esta.
 
@@ -104,6 +104,7 @@ Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable
   - `script.js` 3.1 pide el video después del `load` (idle), elige vertical si la pantalla es de pie y 720p/1080p según ancho × DPR; no lo carga con reducir movimiento, ahorro de datos o 2G, y lo pausa fuera de pantalla. El video aparece con un fundido de opacidad sobre la imagen.
   - `object-fit: cover; object-position: 50% 100%` (anclado abajo). `--vs` = tamaño en pantalla de un píxel del video (`max(100vw / --scene-w, alto / 1080)`, `--scene-w` 1920 o 810 en pantallas verticales). En el video el borde trasero del mesón está a 338 px del pie y el delantero a 93 px: `--floor: 165 × vs + 20 × px` deja las bases entre los dos en todo tamaño. En escritorio `--px = (91vh − 68px − 165 × vs) / 464`, con tope por ancho.
   - Las sombras de contacto de las bases (`.hero-stage .obj-shadow` y `.obj-body::after`) son más marcadas para que pesen sobre la piedra.
+  - **Celular acostado** (`orientation: landscape` y alto ≤ 500px, ancho < 960px): la portada mide la pantalla (`min-height: max(340px, 100svh)`), palabra en una línea a `24vh`, `--u: 0.5`, piso +6px y botón a 6px del pie, para que todo quepa sin que las bases toquen el botón.
   - La palabra "TAPNFCS" va en **blanco con sombra suave** (`text-shadow: 0 4px 34px rgba(0,0,0,.28)`): en negro no se leía sobre el video (el dueño eligió blanco entre blanco, crema, dorado y negro con velo).
 - La placa del **menú** lleva el diseño real del dueño (`media/tarjeta-menu.webp`, exportado de `tarjeta-menu.pdf` a 240 dpi): `.pf-front.face-art-wrap > img.face-art` cubre toda la cara. Sus medidas siguen la tarjeta real, 54 × 85,7 mm (`--W: 176; --H: 279`), para que el diseño no se deforme.
 - La placa **blanca de reseñas** lleva `media/tarjeta-resenas.webp` (54 × 85,7 mm, `--W: 189; --H: 300`): "Déjanos una reseña en Google", estrellas, barra de 4 colores, QR, íconos Toca / Escanea. **Sin** "Alimentado por ABC RFID" (el dueño pidió quitarlo).
