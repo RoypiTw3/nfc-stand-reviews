@@ -30,3 +30,8 @@ customHeaders:
     headers:
       - key: 'Cache-Control'
         value: 'public, max-age=86400, stale-while-revalidate=604800'
+  # Video de la portada y su imagen: el nombre lleva versión (-v1), no cambian
+  - pattern: '/media/video/*'
+    headers:
+      - key: 'Cache-Control'
+        value: 'public, max-age=31536000, immutable'

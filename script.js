@@ -99,6 +99,60 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
+  // 3.1 VIDEO DEL FONDO DE LA PORTADA (restaurante en bucle)
+  // - Mientras carga se ve la imagen fija (el <picture> de atrás).
+  // - Se pide cuando la página ya cargó, para no frenar lo importante.
+  // - Versión vertical en pantallas de pie; 720p o 1080p según la pantalla.
+  // - No se carga con "reducir movimiento", ahorro de datos o red 2G,
+  //   y se pausa cuando la portada no está en pantalla.
+  // =========================================================================
+  const heroVideo = document.querySelector('.hero-video');
+  const connection = navigator.connection || {};
+  const skipVideo = reduceMotion.matches || connection.saveData || /2g/.test(connection.effectiveType || '');
+
+  if (heroVideo && !skipVideo) {
+    let started = false;
+    let heroVisible = true;
+
+    const pickSource = () => {
+      if (window.matchMedia('(max-aspect-ratio: 1/1)').matches) return 'media/video/restaurante-vertical-v1.mp4';
+      return window.innerWidth * (window.devicePixelRatio || 1) > 1600
+        ? 'media/video/restaurante-1080-v1.mp4'
+        : 'media/video/restaurante-720-v1.mp4';
+    };
+
+    const playIfVisible = () => {
+      if (heroVisible) heroVideo.play().catch(() => { /* sin autoplay: queda la imagen */ });
+    };
+
+    const startVideo = () => {
+      if (started) return;
+      started = true;
+      heroVideo.muted = true;
+      heroVideo.addEventListener('playing', () => heroVideo.classList.add('is-playing'), { once: true });
+      heroVideo.src = pickSource();
+      playIfVisible();
+    };
+
+    const startLater = () => {
+      if ('requestIdleCallback' in window) window.requestIdleCallback(startVideo, { timeout: 2000 });
+      else setTimeout(startVideo, 600);
+    };
+
+    if (document.readyState === 'complete') startLater();
+    else window.addEventListener('load', startLater, { once: true });
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((entries) => {
+        heroVisible = entries[0].isIntersecting;
+        if (!started) return;
+        if (heroVisible) playIfVisible();
+        else heroVideo.pause();
+      }).observe(heroVideo);
+    }
+  }
+
+  // =========================================================================
   // 4. FORMULARIO CORTO → WHATSAPP (+57 315 185 6554)
   // =========================================================================
   const orderForm = document.getElementById('order-form');

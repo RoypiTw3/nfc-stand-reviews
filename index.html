@@ -143,7 +143,7 @@
   <link rel="preload" href="media/fonts/nunito-800-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="media/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="stylesheet" href="style.css?v=106.0">
+  <link rel="stylesheet" href="style.css?v=109.0">
 </head>
 <body>
 
@@ -153,6 +153,16 @@
          HERO: PALABRA CLÁSICA + PLACAS EN 3D
          ========================================== -->
     <header class="hero" id="hero">
+      <!-- Fondo: mesón de mármol de la caja de un restaurante. Primero se ve la
+           imagen; el video (en bucle, sin sonido) se carga cuando la página ya cargó. -->
+      <div class="hero-scene" aria-hidden="true">
+        <picture>
+          <source media="(max-aspect-ratio: 1/1)" srcset="media/video/restaurante-vertical-v1.webp">
+          <img class="hero-scene-media" src="media/video/restaurante-1080-v1.webp" srcset="media/video/restaurante-720-v1.webp 1280w, media/video/restaurante-1080-v1.webp 1920w" sizes="100vw" alt="" width="1920" height="1080" fetchpriority="high" decoding="async">
+        </picture>
+        <video class="hero-scene-media hero-video" muted loop playsinline preload="none" disablepictureinpicture tabindex="-1"></video>
+      </div>
+
       <nav class="nav" aria-label="Principal">
         <a href="#hero" class="nav-logo" aria-label="TapNFC, inicio">
           <img src="media/tapnfcs-logo.webp" alt="TAP NFCS" width="302" height="132">
@@ -697,6 +707,6 @@
     <span>WhatsApp</span>
   </a>
 
-  <script src="script.js?v=106.0"></script>
+  <script src="script.js?v=109.0"></script>
 </body>
 </html>

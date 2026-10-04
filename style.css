@@ -202,7 +202,11 @@ a, button, input, select, summary {
 .hero {
   --u: 0.68;
   --px: calc(var(--u) * 1px);
-  --floor: 168px;
+  --scene-w: 1920;
+  --hero-h: max(620px, 100svh);
+  --vs: max(calc(100vw / var(--scene-w)), calc(var(--hero-h) / 1080));
+  /* Las bases quedan sobre el mesón del video, entre su borde trasero y el delantero */
+  --floor: calc(165 * var(--vs) + 20 * var(--px));
   --word-lift: 0.86;
   --obj-h: calc(346 * var(--px));
   position: relative;
@@ -217,16 +221,54 @@ a, button, input, select, summary {
     linear-gradient(180deg, #F9F6F0 0%, #F3EEE5 100%);
 }
 
-/* Piso del estudio: el horizonte queda justo detrás de las bases */
-.hero::after {
+/* Fondo de la portada: mesón de mármol de un restaurante (imagen + video).
+   Se ancla abajo (object-position) para que el mesón siempre quede al pie.
+   --vs: tamaño en pantalla de un píxel del video (como object-fit: cover).
+   En el video el borde trasero del mesón está a 338 px del pie y el
+   delantero a 93 px (de 1080). */
+.hero-scene {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: #8C7B63;
+}
+
+.hero-scene-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 100%;
+  pointer-events: none;
+}
+
+.hero-video {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.hero-video.is-playing {
+  opacity: 1;
+}
+
+/* Sombras de contacto más marcadas: las bases pesan sobre la piedra */
+.hero-stage .obj-shadow {
+  background: radial-gradient(ellipse at center, rgba(28, 22, 14, 0.5) 0%, rgba(28, 22, 14, 0.24) 30%, rgba(28, 22, 14, 0.08) 50%, transparent 66%);
+}
+
+/* Sombra apretada justo debajo de la base (donde toca el mármol) */
+.hero-stage .obj-body::after {
   content: '';
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: calc(var(--floor) + var(--obj-h) * 0.12);
-  background: linear-gradient(180deg, rgba(196, 170, 130, 0) 0%, rgba(196, 170, 130, 0.16) 22%, rgba(186, 158, 116, 0.26) 100%);
-  z-index: -1;
+  left: calc(var(--wb) * -0.06);
+  width: calc(var(--wb) * 1.12);
+  height: calc(var(--db) * 1.3);
+  top: calc(var(--h) + var(--hb) - var(--db) * 0.65);
+  transform: rotateX(90deg);
+  background: radial-gradient(ellipse at center, rgba(20, 16, 10, 0.55) 0%, rgba(20, 16, 10, 0.28) 45%, transparent 70%);
+  pointer-events: none;
 }
 
 /* Navegación */
@@ -350,7 +392,9 @@ a, button, input, select, summary {
   line-height: 0.82;
   letter-spacing: -0.025em;
   text-align: center;
-  color: var(--ink);
+  /* Blanca con sombra suave: se lee sobre el video del restaurante */
+  color: #FFFFFF;
+  text-shadow: 0 4px 34px rgba(0, 0, 0, 0.28);
   white-space: nowrap;
   user-select: none;
   pointer-events: none;
@@ -2170,18 +2214,11 @@ a, button, input, select, summary {
 }
 
 @media (min-width: 960px) {
-  /* La portada crece con la altura de la pantalla: en monitores grandes la
-     palabra y las placas llenan el espacio en vez de quedar pegadas abajo.
-     - --px sale de la altura (deja ~9% libre bajo el menú), con tope por el
-       ancho para que las placas no se salgan.
-     - --comp: alto de placas + palabra; --lift: si aún sobra espacio (pantallas
-       altas y angostas), sube todo para que quede centrado. */
+  /* La portada crece con la altura de la pantalla: --px reparte el alto que
+     queda entre el menú y el mesón del video (deja ~9% libre bajo el menú),
+     con tope por el ancho para que las placas no se salgan. */
   .hero {
-    --px: clamp(0.85px, min(calc(0.1872vh - 0.333px), 0.125vw), 2.2px);
-    --comp: calc(277 * var(--px) + 0.8 * min(17vw, 189 * var(--px)));
-    --stage-floor: calc(94px + 42 * var(--px));
-    --lift: max(0px, (90vh - 68px - var(--stage-floor) - var(--comp)) / 2);
-    --floor: calc(var(--stage-floor) + var(--lift));
+    --px: clamp(0.85px, min(calc((91vh - 68px - 165 * var(--vs)) / 464), 0.125vw), 2.2px);
     --word-lift: 0.8;
     padding-top: 20px;
   }
@@ -2196,9 +2233,6 @@ a, button, input, select, summary {
     perspective: calc(1308 * var(--px));
   }
 
-  .hero-foot {
-    bottom: calc(28px + var(--lift));
-  }
 
   .hero-word span {
     display: inline;
@@ -2289,6 +2323,13 @@ a, button, input, select, summary {
 }
 
 /* Pantallas bajas: reducir el escenario para que todo quepa */
+/* Pantallas verticales (celulares, tablets de pie): video recortado vertical */
+@media (max-aspect-ratio: 1/1) {
+  .hero {
+    --scene-w: 810;
+  }
+}
+
 @media (min-width: 960px) and (max-height: 760px) {
   .hero {
     --word-lift: 0.74;

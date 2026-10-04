@@ -3,7 +3,7 @@ name: tapnfc-design-system
 description: Sistema de diseño vigente de TapNFC (landing de placas NFC para Google Reviews y menús digitales; estilo clásico, limpio y claro, con placas en 3D en el hero). Úsala antes de cambiar estilos, colores, tipografía, textos, imágenes o secciones de index.html, style.css o script.js en este proyecto. Tiene prioridad sobre las reglas genéricas de otras skills de diseño.
 ---
 
-# TapNFC — Sistema de diseño (v106, clásico, limpio, cercano y con carácter)
+# TapNFC — Sistema de diseño (v109, clásico, limpio, cercano y con carácter)
 
 Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable, cro-landing-page, responsive-patterns, etc.) sugiere algo que la contradice, gana esta.
 
@@ -99,6 +99,12 @@ Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable
 - Caras: `.pf-front/back/left/right/top` y `.bf-*`, con `transform-style: preserve-3d`. La sombra (`.obj-shadow`) es un plano horizontal dentro de `.obj-body`.
 - La inclinación con el mouse escribe `--ry`/`--rx` en `#hero-stage` (solo con puntero fino y sin movimiento reducido). Hay un vaivén suave (`obj-sway`).
 - La palabra se ubica con `--floor` y `--word-lift` para que las placas tapen solo la parte baja de las letras.
+- **Fondo de la portada (v109): video real del restaurante.** El dueño quería las placas "sobre el mesón donde la gente paga" y sintió falso un mármol hecho con CSS. Ahora `.hero-scene` (primer hijo de `#hero`) tiene un `<picture>` con la imagen fija y un `<video muted loop playsinline preload="none">` encima: mesón de mármol blanco enfocado y restaurante desenfocado con gente moviéndose (generado por el dueño en Google Flow, bucle de 10 s, **sin fundidos**: el dueño no los quiere).
+  - Archivos en `media/video/` (no en `media/` raíz: `amplify.yml` borra `media/*.mp4`): `restaurante-1080-v1.mp4` (1 MB), `-720-v1.mp4` (465 KB), `-vertical-v1.mp4` (recorte central 810×1080, 423 KB), cada uno con su `.webp` del primer cuadro. H.264 CRF 25, sin audio, `faststart`. Si cambia el video, subir el sufijo `-v2` (caché de un año).
+  - `script.js` 3.1 pide el video después del `load` (idle), elige vertical si la pantalla es de pie y 720p/1080p según ancho × DPR; no lo carga con reducir movimiento, ahorro de datos o 2G, y lo pausa fuera de pantalla. El video aparece con un fundido de opacidad sobre la imagen.
+  - `object-fit: cover; object-position: 50% 100%` (anclado abajo). `--vs` = tamaño en pantalla de un píxel del video (`max(100vw / --scene-w, alto / 1080)`, `--scene-w` 1920 o 810 en pantallas verticales). En el video el borde trasero del mesón está a 338 px del pie y el delantero a 93 px: `--floor: 165 × vs + 20 × px` deja las bases entre los dos en todo tamaño. En escritorio `--px = (91vh − 68px − 165 × vs) / 464`, con tope por ancho.
+  - Las sombras de contacto de las bases (`.hero-stage .obj-shadow` y `.obj-body::after`) son más marcadas para que pesen sobre la piedra.
+  - La palabra "TAPNFCS" va en **blanco con sombra suave** (`text-shadow: 0 4px 34px rgba(0,0,0,.28)`): en negro no se leía sobre el video (el dueño eligió blanco entre blanco, crema, dorado y negro con velo).
 - La placa del **menú** lleva el diseño real del dueño (`media/tarjeta-menu.webp`, exportado de `tarjeta-menu.pdf` a 240 dpi): `.pf-front.face-art-wrap > img.face-art` cubre toda la cara. Sus medidas siguen la tarjeta real, 54 × 85,7 mm (`--W: 176; --H: 279`), para que el diseño no se deforme.
 - La placa **blanca de reseñas** lleva `media/tarjeta-resenas.webp` (54 × 85,7 mm, `--W: 189; --H: 300`): "Déjanos una reseña en Google", estrellas, barra de 4 colores, QR, íconos Toca / Escanea. **Sin** "Alimentado por ABC RFID" (el dueño pidió quitarlo).
   - El QR apunta a `https://search.google.com/local/writereview?placeid=ChIJ6_rtkoemMI4RSs9DFVEhNOE` y está verificado (se lee incluso desde la placa 3D).
@@ -131,6 +137,6 @@ Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable
 ## Hosting (v103)
 - Sitio oficial: **https://www.tapnfcs.com** (AWS Amplify, app `tapnfcs` / `d1rmv8smyyi7a1`, us-east-1, rama `main`). Cada push a `origin main` se publica solo.
 - `amplify.yml` copia únicamente `index.html`, `style.css`, `script.js`, `favicon.ico` y `media/` (sin los .mp4) a `dist/`. Si se agrega un archivo nuevo en la raíz, hay que sumarlo ahí.
-- `customHttp.yml` (raíz del repo, Amplify lo lee en cada build): CSS, JS y tipografías con caché de un año `immutable` (por eso **siempre** hay que subir el `?v=`), imágenes WebP con un día + `stale-while-revalidate`, y cabeceras de seguridad básicas (HSTS, nosniff, Referrer-Policy, X-Frame-Options).
+- `customHttp.yml` (raíz del repo, Amplify lo lee en cada build): CSS, JS, tipografías y `media/video/*` con caché de un año `immutable` (por eso **siempre** hay que subir el `?v=`, y el sufijo `-vN` de los videos), imágenes WebP de `media/` con un día + `stale-while-revalidate`, y cabeceras de seguridad básicas (HSTS, nosniff, Referrer-Policy, X-Frame-Options).
 - El DNS está en **Spaceship** (no en Route 53): `www` es un CNAME a CloudFront; la raíz `@` es un CNAME que Spaceship convierte en ALIAS; además está el CNAME `_…acm-validations.aws` del certificado SSL (no borrarlo, renueva el certificado).
 - `https://tapnfcs.com` redirige a `https://www.tapnfcs.com`. Canonical, `og:url`, `og:image`, `twitter:image` y el JSON-LD usan `https://www.tapnfcs.com/`.
