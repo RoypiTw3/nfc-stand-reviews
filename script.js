@@ -524,27 +524,33 @@ document.addEventListener('DOMContentLoaded', () => {
       run({ damping: 0.85, response: 0.45 });
     };
 
-    // Vuelta de presentación: la mueve el navegador (Web Animations), así no
-    // le quita fluidez al scroll
+    // Presentación: la mueve el navegador (Web Animations), así no le quita
+    // fluidez al scroll
     const spin = () => {
       if (reduceMotion.matches || drag || spinAnim || !body.animate) return;
       const css = getComputedStyle(body);
       const x = (parseFloat(css.getPropertyValue('--pitch')) || 0) + pitch.x;
       const y = (parseFloat(css.getPropertyValue('--yaw')) || 0) + yaw.x;
+      // Un vistazo: gira un poco hacia un lado y vuelve de frente. Una vuelta
+      // entera mostraba la parte de atrás justo mientras se baja por la página.
       spinAnim = body.animate([
-        { transform: `rotateX(${x}deg) rotateY(${y}deg)` },
-        { transform: `rotateX(${x}deg) rotateY(${y + 360}deg)` }
-      ], { duration: 1800, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
+        { transform: `rotateX(${x}deg) rotateY(${y}deg)`, easing: 'cubic-bezier(0.33, 0, 0.2, 1)' },
+        { transform: `rotateX(${x}deg) rotateY(${y + 26}deg)`, offset: 0.4, easing: 'cubic-bezier(0.32, 0.72, 0, 1)' },
+        { transform: `rotateX(${x}deg) rotateY(${y}deg)` }
+      ], { duration: 1300 });
       spinAnim.onfinish = () => { spinAnim = null; };
     };
 
     // Si lo tocan mientras da la vuelta, sigue desde donde va (sin saltos)
     const stopSpin = () => {
       if (!spinAnim) return;
-      const progress = spinAnim.effect.getComputedTiming().progress || 0;
+      // Seguir desde el ángulo exacto en que va el vistazo (sin saltos)
+      const css = getComputedStyle(body).transform;
       spinAnim.cancel();
       spinAnim = null;
-      yaw.x += progress * 360;
+      const m = css && css !== 'none' ? new DOMMatrixReadOnly(css) : null;
+      const baseYaw = parseFloat(getComputedStyle(body).getPropertyValue('--yaw')) || 0;
+      if (m) yaw.x = (Math.atan2(-m.m13, m.m33) * 180) / Math.PI - baseYaw;
       yaw.v = 0;
       faceYaw = Math.round((yaw.x - tiltYaw) / 180) * 180;
       render();
@@ -641,7 +647,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return { spin };
   });
 
-  // Una vuelta de presentación, escalonada, la primera vez que aparece la fila
+  // Un vistazo de presentación, escalonado, la primera vez que aparece la fila
   const lineup = document.querySelector('.lineup');
   if (lineup && lineupControls.length && 'IntersectionObserver' in window && !reduceMotion.matches) {
     const introObserver = new IntersectionObserver((entries, observer) => {

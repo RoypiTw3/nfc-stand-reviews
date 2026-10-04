@@ -211,7 +211,9 @@ a, button, input, select, summary {
   /* En celular las placas crecen hasta donde deja el ancho */
   --px: clamp(0.62px, 0.19vw, 0.86px);
   --scene-w: 1920;
-  --hero-h: max(620px, 100svh);
+  /* --hero-lock: alto de la pantalla al cargar (lo fija index.html), para que la
+     portada no crezca cuando el navegador del celular esconde su barra */
+  --hero-h: max(620px, var(--hero-lock, 100svh));
   --vs: max(calc(100vw / var(--scene-w)), calc(var(--hero-h) / 1080));
   --nav-h: 58px;
   /* Alto de placas + palabra (dos líneas en celular) */
@@ -225,6 +227,7 @@ a, button, input, select, summary {
   position: relative;
   min-height: max(620px, 100vh);
   min-height: max(620px, 100svh);
+  min-height: var(--hero-h);
   padding: 14px var(--gutter) 0;
   overflow: hidden;
   isolation: isolate;
@@ -2258,7 +2261,7 @@ a, button, input, select, summary {
      queda entre el menú y el mesón del video (deja ~9% libre bajo el menú),
      con tope por el ancho para que las placas no se salgan. */
   .hero {
-    --px: clamp(0.85px, min(calc((91vh - 68px - 165 * var(--vs)) / 464), 0.125vw), 2.2px);
+    --px: clamp(0.85px, min(calc((var(--hero-lock, 100vh) * 0.91 - 68px - 165 * var(--vs)) / 464), 0.125vw), 2.2px);
     --nav-h: 68px;
     --comp: calc(277 * var(--px) + 0.8 * min(17vw, 189 * var(--px)));
     --floor: clamp(calc(165 * var(--vs) + 20 * var(--px)), calc(var(--hero-h) * 0.88 - var(--nav-h) - var(--comp)), calc(300 * var(--vs)));
@@ -2364,10 +2367,10 @@ a, button, input, select, summary {
 @media (orientation: landscape) and (max-height: 500px) and (max-width: 959px) {
   .hero {
     --px: 0.5px;
-    --hero-h: max(340px, 100svh);
+    --hero-h: max(340px, var(--hero-lock, 100svh));
     --floor: calc(165 * var(--vs) + 20 * var(--px) + 6px);
     --word-lift: 0.8;
-    min-height: max(340px, 100svh);
+    min-height: var(--hero-h);
   }
 
   .hero-word {

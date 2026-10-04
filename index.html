@@ -143,7 +143,27 @@
   <link rel="preload" href="media/fonts/nunito-800-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="media/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="stylesheet" href="style.css?v=116.0">
+  <link rel="stylesheet" href="style.css?v=117.0">
+
+  <!-- Alto de la portada fijo desde que carga: en iPhone, Brave y Chrome agrandan
+       la pantalla al esconder su barra de abajo y la portada "crecía" (el video
+       se acercaba y todo saltaba) al empezar a bajar. Solo se recalcula si cambia
+       el ancho (girar el celular) o, en computador, al cambiar el tamaño de la ventana. -->
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var width = 0;
+      var touch = window.matchMedia('(pointer: coarse)').matches;
+      var lock = function () {
+        root.style.setProperty('--hero-lock', window.innerHeight + 'px');
+        width = root.clientWidth;
+      };
+      lock();
+      window.addEventListener('resize', function () {
+        if (!touch || root.clientWidth !== width) lock();
+      });
+    })();
+  </script>
 </head>
 <body>
 
@@ -704,6 +724,6 @@
     <span>WhatsApp</span>
   </a>
 
-  <script src="script.js?v=116.0"></script>
+  <script src="script.js?v=117.0"></script>
 </body>
 </html>
