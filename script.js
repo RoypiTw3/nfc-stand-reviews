@@ -116,7 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const pickSource = () => {
       if (window.matchMedia('(max-aspect-ratio: 1/1)').matches) return 'media/video/restaurante-vertical-v1.mp4';
-      return window.innerWidth * (window.devicePixelRatio || 1) > 1600
+      // 1080p solo en pantallas anchas (computadores, iPad acostado); celulares acostados usan 720p
+      return window.innerWidth >= 1000 && window.innerWidth * (window.devicePixelRatio || 1) > 1600
         ? 'media/video/restaurante-1080-v1.mp4'
         : 'media/video/restaurante-720-v1.mp4';
     };
