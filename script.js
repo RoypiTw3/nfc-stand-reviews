@@ -205,21 +205,15 @@ document.addEventListener('DOMContentLoaded', () => {
     link.addEventListener('click', () => applyNeed(link.getAttribute('data-need')));
   });
 
-  // Productos de la colección → recordar el modelo y bajar al formulario
-  document.querySelectorAll('.product').forEach((card) => {
-    card.addEventListener('click', (e) => {
-      if (e.target.closest('.product-stage')) return;
-      const name = card.querySelector('.product-name')?.textContent.trim() || '';
-      const need = card.getAttribute('data-need') || '';
+  // "Pedir este" del visor → recordar el modelo y bajar al formulario
+  // (el enlace va a #contacto; data-need ya preselecciona la opción)
+  document.querySelectorAll('.viewer-cta').forEach((cta) => {
+    cta.addEventListener('click', () => {
+      const name = cta.getAttribute('data-name') || '';
+      const need = cta.getAttribute('data-need') || '';
       setPickedProduct(name ? { name, need } : null);
-      if (need) applyNeed(need);
-
-      const contact = document.getElementById('contacto');
-      if (contact) {
-        contact.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth' });
-        const firstInput = document.getElementById('local-name');
-        if (firstInput) setTimeout(() => firstInput.focus({ preventScroll: true }), 600);
-      }
+      const firstInput = document.getElementById('local-name');
+      if (firstInput) setTimeout(() => firstInput.focus({ preventScroll: true }), 700);
     });
   });
 
@@ -449,74 +443,97 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // 7.2 COLECCIÓN 3D: ARRASTRAR PARA GIRAR, TOCAR PARA VOLTEAR
-  // - Al soltar, vuelve suave a quedar de frente o de espaldas.
-  // - Con mouse, se inclina un poco siguiendo el cursor.
-  // - La primera vez que aparece la colección, cada producto da una vuelta.
-  //   Esa vuelta la anima el navegador por su cuenta (Web Animations), así
-  //   no le quita fluidez al scroll mientras se baja por la página.
+  // 7.2 COLECCIÓN · MÍRALO DE CERCA
+  // Un producto grande a la vez sobre el mesón. El giro usa física de
+  // resorte, como en iOS:
+  // - arrastrando, el producto sigue al dedo o al mouse 1:1;
+  // - al soltar conserva el impulso y se detiene de frente o de espaldas
+  //   (se calcula a dónde llegaría con ese impulso y se elige la cara más cercana);
+  // - se puede agarrar en cualquier momento, incluso mientras gira;
+  // - tocarlo lo voltea; con mouse se inclina un poco siguiendo el cursor.
+  // El selector cambia de producto: el nuevo entra desde el lado de su
+  // botón y llega girado un poco hacia ese lado.
   // =========================================================================
-  const stages = Array.from(document.querySelectorAll('.product-stage'));
 
-  const stageControls = stages.map((stage) => {
+  // Resorte con los dos parámetros de Apple: amortiguación (1 = sin rebote)
+  // y respuesta en segundos (menos = más rápido)
+  const springStep = (s, target, dt, damping, response) => {
+    const k = (2 * Math.PI / response) ** 2;
+    const c = (4 * Math.PI * damping) / response;
+    s.v += (-k * (s.x - target) - c * s.v) * dt;
+    s.x += s.v * dt;
+  };
+
+  // A dónde llegaría un giro lanzado (proyección de Apple, deceleración 0.998)
+  const projectMomentum = (velocity) => ((velocity / 1000) * 0.998) / (1 - 0.998);
+
+  const viewerItems = Array.from(document.querySelectorAll('.viewer-item'));
+
+  const viewerControls = viewerItems.map((stage) => {
+    const body = stage.querySelector('.obj-body') || stage;
+    const yaw = { x: 0, v: 0 };
+    const pitch = { x: 0, v: 0 };
     let faceYaw = 0;      // 0, 180, 360… (de frente o de espaldas)
     let tiltYaw = 0;      // inclinación por el cursor
     let tiltPitch = 0;
-    let yaw = 0;
-    let pitch = 0;
-    let targetYaw = 0;
-    let targetPitch = 0;
+    let spring = { damping: 1, response: 0.4 };
     let rafId = null;
+    let lastTime = 0;
     let drag = null;
     let spinAnim = null;
 
-    const body = stage.querySelector('.obj-body') || stage;
     const render = () => {
-      body.style.setProperty('--ry', `${yaw.toFixed(2)}deg`);
-      body.style.setProperty('--rx', `${pitch.toFixed(2)}deg`);
+      body.style.setProperty('--ry', `${yaw.x.toFixed(2)}deg`);
+      body.style.setProperty('--rx', `${pitch.x.toFixed(2)}deg`);
     };
 
-    const tick = () => {
-      const k = drag ? 0.35 : 0.12;
-      yaw += (targetYaw - yaw) * k;
-      pitch += (targetPitch - pitch) * k;
-      render();
-      if (drag || Math.abs(targetYaw - yaw) + Math.abs(targetPitch - pitch) > 0.05) {
-        rafId = window.requestAnimationFrame(tick);
-      } else {
-        yaw = targetYaw;
-        pitch = targetPitch;
-        render();
-        rafId = null;
+    const frame = (now) => {
+      const dt = Math.min(0.032, Math.max(0.001, (now - lastTime) / 1000));
+      lastTime = now;
+      if (!drag) {
+        const ty = faceYaw + tiltYaw;
+        springStep(yaw, ty, dt, spring.damping, spring.response);
+        springStep(pitch, tiltPitch, dt, 1, 0.4);
+        const resting = Math.abs(yaw.x - ty) < 0.05 && Math.abs(yaw.v) < 0.5
+          && Math.abs(pitch.x - tiltPitch) < 0.05 && Math.abs(pitch.v) < 0.5;
+        if (resting) {
+          yaw.x = ty; yaw.v = 0;
+          pitch.x = tiltPitch; pitch.v = 0;
+          render();
+          rafId = null;
+          return;
+        }
       }
+      render();
+      rafId = window.requestAnimationFrame(frame);
     };
 
-    const animate = () => {
+    const run = (params) => {
+      if (params) spring = params;
       if (reduceMotion.matches && !drag) {
-        yaw = targetYaw;
-        pitch = targetPitch;
+        yaw.x = faceYaw + tiltYaw; yaw.v = 0;
+        pitch.x = tiltPitch; pitch.v = 0;
         render();
         return;
       }
-      if (!rafId) rafId = window.requestAnimationFrame(tick);
-    };
-
-    const settle = () => {
-      targetYaw = faceYaw + tiltYaw;
-      targetPitch = tiltPitch;
-      animate();
+      if (!rafId) {
+        lastTime = performance.now();
+        rafId = window.requestAnimationFrame(frame);
+      }
     };
 
     const flip = () => {
-      faceYaw += 180;
-      settle();
+      faceYaw = Math.round((yaw.x - tiltYaw) / 180) * 180 + 180;
+      run({ damping: 0.85, response: 0.45 });
     };
 
+    // Vuelta de presentación: la mueve el navegador (Web Animations), así no
+    // le quita fluidez al scroll
     const spin = () => {
       if (reduceMotion.matches || drag || spinAnim || !body.animate) return;
       const css = getComputedStyle(body);
-      const x = (parseFloat(css.getPropertyValue('--pitch')) || 0) + pitch;
-      const y = (parseFloat(css.getPropertyValue('--yaw')) || 0) + yaw;
+      const x = (parseFloat(css.getPropertyValue('--pitch')) || 0) + pitch.x;
+      const y = (parseFloat(css.getPropertyValue('--yaw')) || 0) + yaw.x;
       spinAnim = body.animate([
         { transform: `rotateX(${x}deg) rotateY(${y}deg)` },
         { transform: `rotateX(${x}deg) rotateY(${y + 360}deg)` }
@@ -530,10 +547,23 @@ document.addEventListener('DOMContentLoaded', () => {
       const progress = spinAnim.effect.getComputedTiming().progress || 0;
       spinAnim.cancel();
       spinAnim = null;
-      yaw += progress * 360;
-      targetYaw = yaw;
-      faceYaw = Math.round((yaw - tiltYaw) / 180) * 180;
+      yaw.x += progress * 360;
+      yaw.v = 0;
+      faceYaw = Math.round((yaw.x - tiltYaw) / 180) * 180;
       render();
+    };
+
+    // Llega desde un lado, girado un poco hacia ese lado, y se endereza con un leve rebote
+    const enter = (dir) => {
+      stopSpin();
+      faceYaw = 0;
+      tiltYaw = 0;
+      tiltPitch = 0;
+      pitch.x = 0; pitch.v = 0;
+      yaw.x = reduceMotion.matches ? 0 : dir * 32;
+      yaw.v = 0;
+      render();
+      run({ damping: 0.8, response: 0.5 });
     };
 
     // Evitar que el navegador "agarre" las imágenes del diseño como foto
@@ -543,8 +573,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.button !== 0) return;
       if (e.pointerType === 'mouse') e.preventDefault();
       stopSpin();
-      drag = { x: e.clientX, y: e.clientY, yaw: targetYaw, pitch: targetPitch, moved: false, mouse: e.pointerType === 'mouse' };
+      stage.classList.add('is-pressed');
+      yaw.v = 0;
+      drag = {
+        x: e.clientX, y: e.clientY, yaw: yaw.x, pitch: pitch.x, moved: false,
+        mouse: e.pointerType === 'mouse', history: [{ t: e.timeStamp, a: yaw.x }]
+      };
       try { stage.setPointerCapture(e.pointerId); } catch (err) { /* sin captura */ }
+      run();
     });
 
     stage.addEventListener('pointermove', (e) => {
@@ -554,34 +590,45 @@ document.addEventListener('DOMContentLoaded', () => {
         const rect = stage.getBoundingClientRect();
         tiltYaw = ((e.clientX - rect.left) / rect.width - 0.5) * 30;
         tiltPitch = ((e.clientY - rect.top) / rect.height - 0.5) * -16;
-        settle();
+        run({ damping: 1, response: 0.4 });
         return;
       }
       const dx = e.clientX - drag.x;
       const dy = e.clientY - drag.y;
-      if (!drag.moved && Math.abs(dx) + Math.abs(dy) > 6) {
+      if (!drag.moved && Math.abs(dx) + Math.abs(dy) > 8) {
         drag.moved = true;
         stage.classList.add('is-dragging');
       }
       if (!drag.moved) return;
-      targetYaw = drag.yaw + dx * 0.6;
+      // Sigue al dedo 1:1 desde donde se agarró
+      yaw.x = drag.yaw + dx * 0.6;
       // Con mouse también se inclina arriba/abajo; en táctil solo de lado
       // para no estorbar el scroll de la página.
-      if (drag.mouse) targetPitch = Math.max(-40, Math.min(28, drag.pitch - dy * 0.4));
-      animate();
+      if (drag.mouse) pitch.x = Math.max(-40, Math.min(28, drag.pitch - dy * 0.4));
+      drag.history.push({ t: e.timeStamp, a: yaw.x });
+      while (drag.history.length > 2 && e.timeStamp - drag.history[0].t > 100) drag.history.shift();
     });
 
     const endDrag = (e) => {
       if (!drag) return;
-      const wasMoved = drag.moved;
+      const { moved, history } = drag;
       drag = null;
-      stage.classList.remove('is-dragging');
+      stage.classList.remove('is-dragging', 'is-pressed');
       try { stage.releasePointerCapture(e.pointerId); } catch (err) { /* ya liberado */ }
-      if (wasMoved) {
-        faceYaw = Math.round((targetYaw - tiltYaw) / 180) * 180;
-        settle();
+      if (moved) {
+        // Velocidad de los últimos ~100 ms → impulso al soltar
+        const first = history[0];
+        const lastPoint = history[history.length - 1];
+        const span = (lastPoint.t - first.t) / 1000;
+        const velocity = span > 0.008 ? (lastPoint.a - first.a) / span : 0;
+        const projected = yaw.x + projectMomentum(velocity);
+        faceYaw = Math.round((projected - tiltYaw) / 180) * 180;
+        yaw.v = velocity;
+        run({ damping: 0.8, response: 0.4 });
       } else if (e.type === 'pointerup') {
         flip();
+      } else {
+        run();
       }
     };
 
@@ -592,7 +639,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (drag || spinAnim || e.pointerType !== 'mouse') return;
       tiltYaw = 0;
       tiltPitch = 0;
-      settle();
+      run({ damping: 1, response: 0.4 });
     });
 
     stage.addEventListener('keydown', (e) => {
@@ -603,25 +650,59 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
         e.preventDefault();
         faceYaw += e.key === 'ArrowRight' ? 45 : -45;
-        settle();
+        run({ damping: 0.9, response: 0.4 });
       }
     });
 
-    return { spin };
+    return { spin, enter };
   });
 
-  // Una vuelta de presentación cuando cada producto aparece por primera vez
-  // (se observa cada estudio por separado: en celular la colección es muy alta)
-  if (stageControls.length && 'IntersectionObserver' in window && !reduceMotion.matches) {
+  // Selector de producto (pestañas con flechas, Inicio y Fin)
+  const viewerTabs = Array.from(document.querySelectorAll('.viewer-tab'));
+  const viewerPanels = Array.from(document.querySelectorAll('.viewer-panel'));
+  let viewerActive = 0;
+
+  const selectProduct = (index) => {
+    if (index === viewerActive || !viewerItems[index]) return;
+    const dir = Math.sign(index - viewerActive);
+    viewerActive = index;
+    viewerTabs.forEach((tab, i) => {
+      tab.setAttribute('aria-selected', i === index ? 'true' : 'false');
+      tab.tabIndex = i === index ? 0 : -1;
+    });
+    viewerItems.forEach((item, i) => {
+      item.classList.toggle('is-active', i === index);
+      item.classList.toggle('is-before', i < index);
+      item.classList.toggle('is-after', i > index);
+      item.inert = i !== index;
+    });
+    viewerPanels.forEach((panel, i) => { panel.hidden = i !== index; });
+    viewerControls[index].enter(dir);
+    // Que el botón elegido se vea si la cápsula se desplaza (pantallas angostas)
+    viewerTabs[index].scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  };
+
+  viewerTabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => selectProduct(i));
+    tab.addEventListener('keydown', (e) => {
+      const last = viewerTabs.length - 1;
+      const map = { ArrowRight: Math.min(last, i + 1), ArrowLeft: Math.max(0, i - 1), Home: 0, End: last };
+      if (!(e.key in map)) return;
+      e.preventDefault();
+      selectProduct(map[e.key]);
+      viewerTabs[map[e.key]].focus();
+    });
+  });
+
+  // Una vuelta de presentación la primera vez que el visor aparece
+  const viewerStage = document.querySelector('.viewer-stage');
+  if (viewerStage && viewerControls.length && 'IntersectionObserver' in window && !reduceMotion.matches) {
     const introObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        observer.unobserve(entry.target);
-        const idx = stages.indexOf(entry.target);
-        setTimeout(stageControls[idx].spin, 250 + (idx % 3) * 160);
-      });
-    }, { threshold: 0.55 });
-    stages.forEach((stage) => introObserver.observe(stage));
+      if (!entries[0].isIntersecting) return;
+      observer.disconnect();
+      setTimeout(() => viewerControls[viewerActive].spin(), 300);
+    }, { threshold: 0.6 });
+    introObserver.observe(viewerStage);
   }
 
   // =========================================================================
@@ -629,7 +710,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Las placas flotan y se mecen sin parar; fuera de pantalla se pausan
   // para que el celular no siga dibujándolas mientras se baja por la página.
   // =========================================================================
-  const animatedStages = document.querySelectorAll('#hero-stage, .product-stage, .contact-stage');
+  const animatedStages = document.querySelectorAll('#hero-stage, .viewer-stage, .contact-stage');
   if (animatedStages.length && 'IntersectionObserver' in window) {
     const pauseObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => entry.target.classList.toggle('is-paused', !entry.isIntersecting));
