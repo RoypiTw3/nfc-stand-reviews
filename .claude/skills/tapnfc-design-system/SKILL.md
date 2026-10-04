@@ -3,7 +3,7 @@ name: tapnfc-design-system
 description: Sistema de diseño vigente de TapNFC (landing de placas NFC para Google Reviews y menús digitales; estilo clásico, limpio y claro, con placas en 3D en el hero). Úsala antes de cambiar estilos, colores, tipografía, textos, imágenes o secciones de index.html, style.css o script.js en este proyecto. Tiene prioridad sobre las reglas genéricas de otras skills de diseño.
 ---
 
-# TapNFC — Sistema de diseño (v111, clásico, limpio, cercano y con carácter)
+# TapNFC — Sistema de diseño (v112, clásico, limpio, cercano y con carácter)
 
 Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable, cro-landing-page, responsive-patterns, etc.) sugiere algo que la contradice, gana esta.
 
@@ -121,6 +121,7 @@ Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable
 - **Giro 3D**: `--ry`/`--rx` están registradas con `@property` (`inherits: false`) y el JS las escribe en cada `.obj-body`, no en el escenario (así no se recalculan las caras). La vuelta de presentación de la colección es una Web Animation sobre `transform` (la mueve el compositor); si el usuario toca a mitad del giro, `stopSpin()` la convierte en estado sin saltos.
 - Las placas que no se ven llevan `.is-paused` (IntersectionObserver) y sus animaciones infinitas se pausan.
 - Animaciones de 0.6 s o menos, solo `transform` y `opacity`; respetar `prefers-reduced-motion`.
+- **Pruebas en Safari:** el WebKit de Playwright sirve para revisar video, textos, tamaños y errores, pero **no dibuja bien el 3D**: muestra las caras de atrás incluso en un cubo de manual con `backface-visibility: hidden`. Si ahí las placas salen al revés, no es un error de la página; el 3D se confirma en un iPhone o Safari real.
 - Para medir el scroll: puppeteer-core con el Chrome instalado, viewport 390×844 @3x, CPU 4x, `--disable-gpu` e `Input.synthesizeScrollGesture`, leyendo `PipelineReporter`, `UpdateLayoutTree`, `Layerize` y `FunctionCall` del trace.
 
 ## Siempre en claro (v105)
