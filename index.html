@@ -143,7 +143,7 @@
   <link rel="preload" href="media/fonts/nunito-800-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="media/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="stylesheet" href="style.css?v=115.0">
+  <link rel="stylesheet" href="style.css?v=116.0">
 </head>
 <body>
 
@@ -324,17 +324,17 @@
 
       <h2 class="title title--sub reveal">La colección</h2>
 
-      <!-- Míralo de cerca: un producto grande a la vez, sobre el mesón de mármol
-           de la portada. Se gira con el dedo o el mouse; el selector cambia de producto. -->
-      <div class="viewer reveal">
-        <div class="viewer-stage">
-          <div class="viewer-bg" aria-hidden="true"></div>
-          <div class="viewer-item is-active" id="ver-stand" role="button" tabindex="0" aria-label="Stand NFC Google Reviews en acrílico, en forma de L, con el diseño Déjanos una reseña en Google. Arrastra para girar; toca o presiona Enter para voltear.">
+      <!-- Fila sobre blanco: los 5 productos juntos, sin cajas, sobre la misma línea
+           (como la línea de modelos de Apple). Se giran con el dedo o el mouse;
+           tocar el nombre lleva al formulario con ese modelo elegido. -->
+      <div class="lineup reveal">
+        <article class="lineup-item">
+          <div class="lineup-stage" role="button" tabindex="0" aria-label="Stand NFC Google Reviews en acrílico, en forma de L, con el diseño Déjanos una reseña en Google. Arrastra para girar; toca o presiona Enter para voltear.">
             <div class="obj obj--acrylic">
               <div class="obj-body">
                 <div class="plaque">
-                  <div class="pf pf-front"><img draggable="false" class="face-art" src="media/tarjeta-resenas.webp" srcset="media/tarjeta-resenas-320.webp 320w, media/tarjeta-resenas.webp 511w" sizes="210px" alt="" width="511" height="811" loading="lazy" decoding="async"></div>
-                  <div class="pf pf-back"><img draggable="false" class="face-art face-art--mirror" src="media/tarjeta-resenas.webp" srcset="media/tarjeta-resenas-320.webp 320w, media/tarjeta-resenas.webp 511w" sizes="210px" alt="" width="511" height="811" loading="lazy" decoding="async"></div>
+                  <div class="pf pf-front"><img draggable="false" class="face-art" src="media/tarjeta-resenas.webp" srcset="media/tarjeta-resenas-320.webp 320w, media/tarjeta-resenas.webp 511w" sizes="(min-width: 1100px) 190px, 140px" alt="" width="511" height="811" loading="lazy" decoding="async"></div>
+                  <div class="pf pf-back"><img draggable="false" class="face-art face-art--mirror" src="media/tarjeta-resenas.webp" srcset="media/tarjeta-resenas-320.webp 320w, media/tarjeta-resenas.webp 511w" sizes="(min-width: 1100px) 190px, 140px" alt="" width="511" height="811" loading="lazy" decoding="async"></div>
                   <div class="pf pf-left"></div>
                   <div class="pf pf-right"></div>
                   <div class="pf pf-top"></div>
@@ -350,11 +350,17 @@
               </div>
             </div>
           </div>
-          <div class="viewer-item is-after" id="ver-sticker" role="button" tabindex="0" aria-label="Sticker NFC cuadrado y azul, con el diseño Review us on Google y código QR. Arrastra para girar; toca o presiona Enter para voltear." inert>
+          <a class="lineup-caption" href="#contacto" data-name="Stand NFC Google Reviews" data-need="resenas">
+            <h3 class="lineup-name">Stand NFC Google Reviews</h3>
+            <span class="lineup-price">$50.000</span>
+          </a>
+        </article>
+        <article class="lineup-item">
+          <div class="lineup-stage" role="button" tabindex="0" aria-label="Sticker NFC cuadrado y azul, con el diseño Review us on Google y código QR. Arrastra para girar; toca o presiona Enter para voltear.">
             <div class="obj obj--sticker">
               <div class="obj-body">
                 <div class="plaque">
-                  <div class="pf pf-front"><img draggable="false" class="face-art" src="media/sticker-cuadrado.webp" srcset="media/sticker-cuadrado-400.webp 400w, media/sticker-cuadrado.webp 600w" sizes="250px" alt="" width="600" height="600" loading="lazy" decoding="async"></div>
+                  <div class="pf pf-front"><img draggable="false" class="face-art" src="media/sticker-cuadrado.webp" srcset="media/sticker-cuadrado-400.webp 400w, media/sticker-cuadrado.webp 600w" sizes="(min-width: 1100px) 230px, 165px" alt="" width="600" height="600" loading="lazy" decoding="async"></div>
                   <div class="pf pf-back"><span class="liner">Adhesivo</span></div>
                   <div class="pf pf-left"></div>
                   <div class="pf pf-right"></div>
@@ -364,11 +370,17 @@
               </div>
             </div>
           </div>
-          <div class="viewer-item is-after" id="ver-tarjeta" role="button" tabindex="0" aria-label="Tarjeta NFC con stand de madera. Arrastra para girar; toca o presiona Enter para voltear." inert>
+          <a class="lineup-caption" href="#contacto" data-name="Sticker NFC" data-need="resenas">
+            <h3 class="lineup-name">Sticker NFC</h3>
+            <span class="lineup-price">$50.000</span>
+          </a>
+        </article>
+        <article class="lineup-item">
+          <div class="lineup-stage" role="button" tabindex="0" aria-label="Tarjeta NFC con stand de madera. Arrastra para girar; toca o presiona Enter para voltear.">
             <div class="obj obj--card">
               <div class="obj-body">
                 <div class="plaque">
-                  <div class="pf pf-front"><img draggable="false" class="face-art" src="media/tarjeta-review-us.webp" srcset="media/tarjeta-review-us-320.webp 320w, media/tarjeta-review-us.webp 511w" sizes="180px" alt="" width="511" height="811" loading="lazy" decoding="async"></div>
+                  <div class="pf pf-front"><img draggable="false" class="face-art" src="media/tarjeta-review-us.webp" srcset="media/tarjeta-review-us-320.webp 320w, media/tarjeta-review-us.webp 511w" sizes="(min-width: 1100px) 170px, 125px" alt="" width="511" height="811" loading="lazy" decoding="async"></div>
                   <div class="pf pf-back"><span class="back-brand">TAP NFCS</span></div>
                   <div class="pf pf-left"></div>
                   <div class="pf pf-right"></div>
@@ -385,11 +397,17 @@
               </div>
             </div>
           </div>
-          <div class="viewer-item is-after" id="ver-menu" role="button" tabindex="0" aria-label="Tarjeta NFC negra con el diseño de menú digital. Arrastra para girar; toca o presiona Enter para voltear." inert>
+          <a class="lineup-caption" href="#contacto" data-name="Tarjeta NFC con stand" data-need="resenas">
+            <h3 class="lineup-name">Tarjeta NFC con stand</h3>
+            <span class="lineup-price">$40.000</span>
+          </a>
+        </article>
+        <article class="lineup-item">
+          <div class="lineup-stage" role="button" tabindex="0" aria-label="Tarjeta NFC negra con el diseño de menú digital. Arrastra para girar; toca o presiona Enter para voltear.">
             <div class="obj obj--menucard">
               <div class="obj-body">
                 <div class="plaque">
-                  <div class="pf pf-front"><img draggable="false" class="face-art" src="media/tarjeta-menu.webp" srcset="media/tarjeta-menu-320.webp 320w, media/tarjeta-menu.webp 511w" sizes="180px" alt="" width="511" height="810" loading="lazy" decoding="async"></div>
+                  <div class="pf pf-front"><img draggable="false" class="face-art" src="media/tarjeta-menu.webp" srcset="media/tarjeta-menu-320.webp 320w, media/tarjeta-menu.webp 511w" sizes="(min-width: 1100px) 170px, 125px" alt="" width="511" height="810" loading="lazy" decoding="async"></div>
                   <div class="pf pf-back"><span class="back-brand">TAP NFCS</span></div>
                   <div class="pf pf-left"></div>
                   <div class="pf pf-right"></div>
@@ -399,7 +417,13 @@
               </div>
             </div>
           </div>
-          <div class="viewer-item is-after" id="ver-diseno" role="button" tabindex="0" aria-label="Tarjeta NFC blanca lista para personalizar. Arrastra para girar; toca o presiona Enter para voltear." inert>
+          <a class="lineup-caption" href="#contacto" data-name="Tarjeta NFC" data-need="menu">
+            <h3 class="lineup-name">Tarjeta NFC</h3>
+            <span class="lineup-price">$40.000</span>
+          </a>
+        </article>
+        <article class="lineup-item">
+          <div class="lineup-stage" role="button" tabindex="0" aria-label="Tarjeta NFC blanca lista para personalizar. Arrastra para girar; toca o presiona Enter para voltear.">
             <div class="obj obj--blank">
               <div class="obj-body">
                 <div class="plaque">
@@ -413,58 +437,15 @@
               </div>
             </div>
           </div>
-          <div class="viewer-picker" role="tablist" aria-label="Elige un producto">
-            <button class="viewer-tab" type="button" role="tab" id="tab-ver-stand" aria-controls="panel-ver-stand" aria-selected="true" aria-label="Stand NFC Google Reviews">Stand</button>
-            <button class="viewer-tab" type="button" role="tab" id="tab-ver-sticker" aria-controls="panel-ver-sticker" aria-selected="false" aria-label="Sticker NFC" tabindex="-1">Sticker</button>
-            <button class="viewer-tab" type="button" role="tab" id="tab-ver-tarjeta" aria-controls="panel-ver-tarjeta" aria-selected="false" aria-label="Tarjeta NFC con stand" tabindex="-1">Tarjeta</button>
-            <span class="viewer-sep" aria-hidden="true"></span>
-            <button class="viewer-tab" type="button" role="tab" id="tab-ver-menu" aria-controls="panel-ver-menu" aria-selected="false" aria-label="Tarjeta NFC" tabindex="-1">Menú</button>
-            <span class="viewer-sep" aria-hidden="true"></span>
-            <button class="viewer-tab" type="button" role="tab" id="tab-ver-diseno" aria-controls="panel-ver-diseno" aria-selected="false" aria-label="Tarjeta personalizada" tabindex="-1">Tu diseño</button>
-          </div>
-        </div>
-        <div class="viewer-info">
-          <div class="viewer-panel" role="tabpanel" id="panel-ver-stand" aria-labelledby="tab-ver-stand">
-            <div class="viewer-text">
-              <h3 class="viewer-name">Stand NFC Google Reviews</h3>
-              <p class="viewer-meta"><span class="viewer-price">$50.000</span><span class="viewer-use">Para reseñas en Google</span></p>
-              <p class="viewer-line">Todo en una pieza, con base del mismo acrílico. Para mesas y mostradores.</p>
-            </div>
-            <a class="btn viewer-cta" href="#contacto" data-name="Stand NFC Google Reviews" data-need="resenas">Pedir este</a>
-          </div>
-          <div class="viewer-panel" role="tabpanel" id="panel-ver-sticker" aria-labelledby="tab-ver-sticker" hidden>
-            <div class="viewer-text">
-              <h3 class="viewer-name">Sticker NFC</h3>
-              <p class="viewer-meta"><span class="viewer-price">$50.000</span><span class="viewer-use">Para reseñas en Google</span></p>
-              <p class="viewer-line">Adhesivo cuadrado para pegar en vitrinas, mesas, paredes o la caja.</p>
-            </div>
-            <a class="btn viewer-cta" href="#contacto" data-name="Sticker NFC" data-need="resenas">Pedir este</a>
-          </div>
-          <div class="viewer-panel" role="tabpanel" id="panel-ver-tarjeta" aria-labelledby="tab-ver-tarjeta" hidden>
-            <div class="viewer-text">
-              <h3 class="viewer-name">Tarjeta NFC con stand</h3>
-              <p class="viewer-meta"><span class="viewer-price">$40.000</span><span class="viewer-use">Para reseñas en Google</span></p>
-              <p class="viewer-line">Úsala sola o sobre su base de madera.</p>
-            </div>
-            <a class="btn viewer-cta" href="#contacto" data-name="Tarjeta NFC con stand" data-need="resenas">Pedir este</a>
-          </div>
-          <div class="viewer-panel" role="tabpanel" id="panel-ver-menu" aria-labelledby="tab-ver-menu" hidden>
-            <div class="viewer-text">
-              <h3 class="viewer-name">Tarjeta NFC</h3>
-              <p class="viewer-meta"><span class="viewer-price">$40.000</span><span class="viewer-use">Para tu menú digital</span></p>
-              <p class="viewer-line">Para tu menú digital. Sin stand, va directo en la mesa.</p>
-            </div>
-            <a class="btn viewer-cta" href="#contacto" data-name="Tarjeta NFC" data-need="menu">Pedir este</a>
-          </div>
-          <div class="viewer-panel" role="tabpanel" id="panel-ver-diseno" aria-labelledby="tab-ver-diseno" hidden>
-            <div class="viewer-text">
-              <h3 class="viewer-name">Tarjeta personalizada</h3>
-              <p class="viewer-meta"><span class="viewer-price">$40.000</span><span class="viewer-use">Con el diseño que quieras</span></p>
-              <p class="viewer-line">Hazla con el diseño que quieras.</p>
-            </div>
-            <a class="btn viewer-cta" href="#contacto" data-name="Tarjeta personalizada">Pedir este</a>
-          </div>
-        </div>
+          <a class="lineup-caption" href="#contacto" data-name="Tarjeta personalizada">
+            <h3 class="lineup-name">Tarjeta personalizada</h3>
+            <span class="lineup-price">$40.000</span>
+          </a>
+        </article>
+      </div>
+
+      <div class="lineup-cta reveal">
+        <a class="btn" href="#contacto">Pedir</a>
       </div>
     </section>
 
@@ -723,6 +704,6 @@
     <span>WhatsApp</span>
   </a>
 
-  <script src="script.js?v=115.0"></script>
+  <script src="script.js?v=116.0"></script>
 </body>
 </html>

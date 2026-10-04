@@ -205,12 +205,12 @@ document.addEventListener('DOMContentLoaded', () => {
     link.addEventListener('click', () => applyNeed(link.getAttribute('data-need')));
   });
 
-  // "Pedir este" del visor → recordar el modelo y bajar al formulario
+  // Nombre y precio de la colección → recordar el modelo y bajar al formulario
   // (el enlace va a #contacto; data-need ya preselecciona la opción)
-  document.querySelectorAll('.viewer-cta').forEach((cta) => {
-    cta.addEventListener('click', () => {
-      const name = cta.getAttribute('data-name') || '';
-      const need = cta.getAttribute('data-need') || '';
+  document.querySelectorAll('.lineup-caption').forEach((caption) => {
+    caption.addEventListener('click', () => {
+      const name = caption.getAttribute('data-name') || '';
+      const need = caption.getAttribute('data-need') || '';
       setPickedProduct(name ? { name, need } : null);
       const firstInput = document.getElementById('local-name');
       if (firstInput) setTimeout(() => firstInput.focus({ preventScroll: true }), 700);
@@ -443,16 +443,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // 7.2 COLECCIÓN · MÍRALO DE CERCA
-  // Un producto grande a la vez sobre el mesón. El giro usa física de
-  // resorte, como en iOS:
+  // 7.2 COLECCIÓN · FILA SOBRE BLANCO
+  // Los 5 productos en fila; cada uno se gira con física de resorte, como en iOS:
   // - arrastrando, el producto sigue al dedo o al mouse 1:1;
   // - al soltar conserva el impulso y se detiene de frente o de espaldas
   //   (se calcula a dónde llegaría con ese impulso y se elige la cara más cercana);
   // - se puede agarrar en cualquier momento, incluso mientras gira;
   // - tocarlo lo voltea; con mouse se inclina un poco siguiendo el cursor.
-  // El selector cambia de producto: el nuevo entra desde el lado de su
-  // botón y llega girado un poco hacia ese lado.
   // =========================================================================
 
   // Resorte con los dos parámetros de Apple: amortiguación (1 = sin rebote)
@@ -467,9 +464,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // A dónde llegaría un giro lanzado (proyección de Apple, deceleración 0.998)
   const projectMomentum = (velocity) => ((velocity / 1000) * 0.998) / (1 - 0.998);
 
-  const viewerItems = Array.from(document.querySelectorAll('.viewer-item'));
+  const lineupStages = Array.from(document.querySelectorAll('.lineup-stage'));
 
-  const viewerControls = viewerItems.map((stage) => {
+  const lineupControls = lineupStages.map((stage) => {
     const body = stage.querySelector('.obj-body') || stage;
     const yaw = { x: 0, v: 0 };
     const pitch = { x: 0, v: 0 };
@@ -551,19 +548,6 @@ document.addEventListener('DOMContentLoaded', () => {
       yaw.v = 0;
       faceYaw = Math.round((yaw.x - tiltYaw) / 180) * 180;
       render();
-    };
-
-    // Llega desde un lado, girado un poco hacia ese lado, y se endereza con un leve rebote
-    const enter = (dir) => {
-      stopSpin();
-      faceYaw = 0;
-      tiltYaw = 0;
-      tiltPitch = 0;
-      pitch.x = 0; pitch.v = 0;
-      yaw.x = reduceMotion.matches ? 0 : dir * 32;
-      yaw.v = 0;
-      render();
-      run({ damping: 0.8, response: 0.5 });
     };
 
     // Evitar que el navegador "agarre" las imágenes del diseño como foto
@@ -654,55 +638,18 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    return { spin, enter };
+    return { spin };
   });
 
-  // Selector de producto (pestañas con flechas, Inicio y Fin)
-  const viewerTabs = Array.from(document.querySelectorAll('.viewer-tab'));
-  const viewerPanels = Array.from(document.querySelectorAll('.viewer-panel'));
-  let viewerActive = 0;
-
-  const selectProduct = (index) => {
-    if (index === viewerActive || !viewerItems[index]) return;
-    const dir = Math.sign(index - viewerActive);
-    viewerActive = index;
-    viewerTabs.forEach((tab, i) => {
-      tab.setAttribute('aria-selected', i === index ? 'true' : 'false');
-      tab.tabIndex = i === index ? 0 : -1;
-    });
-    viewerItems.forEach((item, i) => {
-      item.classList.toggle('is-active', i === index);
-      item.classList.toggle('is-before', i < index);
-      item.classList.toggle('is-after', i > index);
-      item.inert = i !== index;
-    });
-    viewerPanels.forEach((panel, i) => { panel.hidden = i !== index; });
-    viewerControls[index].enter(dir);
-    // Que el botón elegido se vea si la cápsula se desplaza (pantallas angostas)
-    viewerTabs[index].scrollIntoView({ block: 'nearest', inline: 'nearest' });
-  };
-
-  viewerTabs.forEach((tab, i) => {
-    tab.addEventListener('click', () => selectProduct(i));
-    tab.addEventListener('keydown', (e) => {
-      const last = viewerTabs.length - 1;
-      const map = { ArrowRight: Math.min(last, i + 1), ArrowLeft: Math.max(0, i - 1), Home: 0, End: last };
-      if (!(e.key in map)) return;
-      e.preventDefault();
-      selectProduct(map[e.key]);
-      viewerTabs[map[e.key]].focus();
-    });
-  });
-
-  // Una vuelta de presentación la primera vez que el visor aparece
-  const viewerStage = document.querySelector('.viewer-stage');
-  if (viewerStage && viewerControls.length && 'IntersectionObserver' in window && !reduceMotion.matches) {
+  // Una vuelta de presentación, escalonada, la primera vez que aparece la fila
+  const lineup = document.querySelector('.lineup');
+  if (lineup && lineupControls.length && 'IntersectionObserver' in window && !reduceMotion.matches) {
     const introObserver = new IntersectionObserver((entries, observer) => {
       if (!entries[0].isIntersecting) return;
       observer.disconnect();
-      setTimeout(() => viewerControls[viewerActive].spin(), 300);
-    }, { threshold: 0.6 });
-    introObserver.observe(viewerStage);
+      lineupControls.forEach((control, i) => setTimeout(control.spin, 250 + i * 140));
+    }, { threshold: 0.35 });
+    introObserver.observe(lineup);
   }
 
   // =========================================================================
@@ -710,7 +657,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Las placas flotan y se mecen sin parar; fuera de pantalla se pausan
   // para que el celular no siga dibujándolas mientras se baja por la página.
   // =========================================================================
-  const animatedStages = document.querySelectorAll('#hero-stage, .viewer-stage, .contact-stage');
+  const animatedStages = document.querySelectorAll('#hero-stage, .lineup, .contact-stage');
   if (animatedStages.length && 'IntersectionObserver' in window) {
     const pauseObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => entry.target.classList.toggle('is-paused', !entry.isIntersecting));
