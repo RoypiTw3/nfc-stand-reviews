@@ -3,7 +3,7 @@ name: tapnfc-design-system
 description: Sistema de diseño vigente de TapNFC (landing de placas NFC para Google Reviews y menús digitales; estilo clásico, limpio y claro, con placas en 3D en el hero). Úsala antes de cambiar estilos, colores, tipografía, textos, imágenes o secciones de index.html, style.css o script.js en este proyecto. Tiene prioridad sobre las reglas genéricas de otras skills de diseño.
 ---
 
-# TapNFC — Sistema de diseño (v105, clásico, limpio y con carácter)
+# TapNFC — Sistema de diseño (v106, clásico, limpio, cercano y con carácter)
 
 Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable, cro-landing-page, responsive-patterns, etc.) sugiere algo que la contradice, gana esta.
 
@@ -14,7 +14,7 @@ Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable
 - Instagram: `@tapnfcs`.
 
 ## Dirección visual
-- Referencia del dueño: landing "MEASURED" — una palabra enorme en serif clásica detrás de un objeto protagonista, menú en cápsula centrado y casi nada de texto.
+- Referencia del dueño: landing "MEASURED" — una palabra enorme detrás de un objeto protagonista, menú en cápsula centrado y casi nada de texto. Desde v106 la palabra va en **Nunito** (redondeada y amigable), no en serif: el dueño sintió que Gloock "no era tan amigable".
 - Tono **claro** (papel crema). El tema oscuro se descartó en v67.
 - **Sin marco ni rebordes**: la página va de borde a borde y el hero ocupa la primera pantalla completa (`100svh`). No volver a poner márgenes ni esquinas redondeadas al lienzo.
 - Debe sentirse **clásico y hecho a mano, no "de IA"**. Por eso están prohibidos:
@@ -52,10 +52,11 @@ Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable
 - Sombras cálidas y suaves: `rgba(41, 31, 13, 0.07–0.22)`.
 
 ## Tipografía (no cambiar sin pedido explícito)
-- **Gloock** (serif clásica, un solo peso): la palabra "TAPNFCS" del hero, los títulos de sección (en minúsculas normales, una línea), precios y números de pasos.
-- **Instrument Sans** 400/500/600: todo lo demás.
+- **Nunito 800** (`--font-display`, elegida por el dueño en v106 entre Fraunces suave, Bricolage Grotesque, Poppins y Nunito): la palabra "TAPNFCS" del hero (`letter-spacing: -0.025em`), los títulos de sección (`.title`, una línea, `-0.02em`) y los números de pasos. Archivo estático de 16 KB (`media/fonts/nunito-800-latin.woff2`, instancia wght=800 hecha con fontTools desde la variable de Google Fonts).
+- **Instrument Sans** 400/500/600: todo lo demás (los precios también, nunca en la display).
+- **Gloock** queda solo para el encabezado "Menú" de la carta de ejemplo (`--font-menu`, `.menu-ui-h`): representa la carta de un restaurante. No se precarga.
 - No usar monoespaciadas ni Cormorant (se quitaron en v70).
-- Las tipografías están en `media/fonts/` y se precargan (ver Rendimiento). La palabra del hero aparece cuando Gloock está lista (`.fonts-ready`, con 3 s de tope).
+- Las tipografías están en `media/fonts/` y se precargan (ver Rendimiento). La palabra del hero aparece cuando Nunito está lista (`.fonts-ready`, con 3 s de tope).
 
 ## Textos
 - Muy poco texto. Títulos cortos: "Dos productos", "La colección", "Así funciona", "Preguntas", "Pide tus placas o tu menú".
@@ -64,7 +65,7 @@ Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable
 - No inventar cifras, testimonios ni promesas de servicio; preguntar antes.
 
 ## Estructura de index.html
-1. **Hero** `#hero`: logo (34px móvil / 42px escritorio, para que pese igual que la cápsula) · menú en cápsula (Productos, Cómo funciona, Preguntas) · botón "Pedir". Palabra "TAPNFCS" en Gloock detrás de **dos placas 3D hechas en CSS** (reseñas: acrílico blanco sobre roble; menú: negro mate sobre nogal). Abajo **solo** el botón "Ver productos", centrado: el dueño pidió quitar la frase y el precio. El H1 existe pero oculto visualmente (`.sr-only`) para SEO y lectores de pantalla. En móvil la palabra va en dos líneas (TAP / NFCS).
+1. **Hero** `#hero`: logo (34px móvil / 42px escritorio, para que pese igual que la cápsula) · menú en cápsula (Productos, Cómo funciona, Preguntas) · botón "Pedir". Palabra "TAPNFCS" en Nunito 800 detrás de **dos placas 3D hechas en CSS** (reseñas: acrílico blanco sobre roble; menú: negro mate sobre nogal). Abajo **solo** el botón "Ver productos", centrado: el dueño pidió quitar la frase y el precio. El H1 existe pero oculto visualmente (`.sr-only`) para SEO y lectores de pantalla. En móvil la palabra va en dos líneas (TAP / NFCS).
 2. **Productos** `#productos`: "Dos productos" — son **dos productos distintos** (reseñas en Google y menú digital); lo único que comparten es la tecnología NFC. No usar frases como "una placa, dos usos". Pantallas `.review-ui` / `.menu-ui` + "La colección".
    - **La colección son 5 productos en 3D** (v99), cada uno en su "estudio" (`.product-stage`, con su propio `--u`). Distribución con flex: 1 por fila en móvil, 2 en tablet (la última centrada) y **los 5 en una sola fila en escritorio** (≥1100px, `flex-wrap: nowrap`, `--u` 0.76–0.82). El dueño no quiere la colección partida en dos renglones en escritorio. En celular no usar carrusel horizontal: chocaría con el gesto de girar cada producto. Orden:
      1. **Stand NFC Google Reviews** — $50.000 (`.obj--acrylic`; nombre elegido por el dueño en v97; rechazó "Placa de acrílico", "Display de mesa" y "Soporte de reseñas Google"): una sola pieza en L, placa inclinada hacia atrás (`rotateX(11deg)` desde abajo) y base plana del mismo acrílico que va hacia atrás; **sin madera**. Diseño `tarjeta-resenas.webp`.
@@ -93,7 +94,8 @@ Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable
 - Se quitaron en v70–v73: carrusel 3D de tarjetas, tabla NFC vs QR, tarjeta destacada de menú, botón "volver arriba", marco del lienzo, frase y precio del hero, sección "Un precio por placa" y el enlace "Precios" del menú.
 
 ## Placas 3D del hero (CSS puro)
-- Cada `.obj` define medidas sin unidad (`--W --H --D` placa, `--WB --HB --DB` base) que se multiplican por `--u` (escala por breakpoint: 0.68 → 0.8 → 1.15 → 1.3; 0.92 en pantallas bajas).
+- Cada `.obj` define medidas sin unidad (`--W --H --D` placa, `--WB --HB --DB` base) que se multiplican por `--px`, un largo que vale `--u × 1px` (escala por breakpoint: 0.68 en móvil, 0.8 desde 640px). `--px` se define en `.hero`, `.product-stage` y `.contact-stage`.
+- **Portada en escritorio (≥960px, v106): crece con la altura de la pantalla.** El dueño vio en su monitor grande (≈2400×1125) mucho espacio vacío arriba. Ahora `--px = clamp(0.85px, min(0.1872vh − 0.333px, 0.125vw), 2.2px)`, la palabra mide `min(17vw, 189 × px)`, la perspectiva `1308 × px` (las placas se ven iguales a cualquier tamaño) y el piso `94px + 42 × px`. Queda ~9–11% libre bajo el menú en todo tamaño (1280×720 a 2560×1300). Si sobra espacio (pantallas altas y angostas), `--lift` sube placas y botón para centrar. No volver a tamaños fijos en px para la portada de escritorio.
 - Caras: `.pf-front/back/left/right/top` y `.bf-*`, con `transform-style: preserve-3d`. La sombra (`.obj-shadow`) es un plano horizontal dentro de `.obj-body`.
 - La inclinación con el mouse escribe `--ry`/`--rx` en `#hero-stage` (solo con puntero fino y sin movimiento reducido). Hay un vaivén suave (`obj-sway`).
 - La palabra se ubica con `--floor` y `--word-lift` para que las placas tapen solo la parte baja de las letras.
@@ -105,7 +107,7 @@ Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable
 
 ## Rendimiento (v104 — no retroceder)
 - Prohibido `backdrop-filter` y `filter: blur()`. Los glows se hacen solo con `radial-gradient`.
-- **Tipografías propias** en `media/fonts/` (Gloock y Instrument Sans variable 400–600, subconjunto latino) con `@font-face` al inicio de style.css y `<link rel="preload" as="font" crossorigin>`. No volver a Google Fonts: la palabra TAP NFCS (el LCP) espera a Gloock.
+- **Tipografías propias** en `media/fonts/` (Nunito 800 estática, Instrument Sans variable 400–600 y Gloock, subconjunto latino) con `@font-face` al inicio de style.css y `<link rel="preload" as="font" crossorigin>`. No volver a Google Fonts: la palabra TAP NFCS (el LCP) espera a Nunito, que es la que se precarga.
 - **Texturas de las placas** con `srcset` (`<nombre>-320.webp 320w` + original 511w; sticker `-400` + 600w) y `sizes` según la escala `--u`. Si se cambia un diseño, regenerar también la versión pequeña y verificar el QR con `cv2.QRCodeDetector` en las dos.
 - **Logo**: `media/tapnfcs-logo.webp` (302 × 132, ya en negro). No usar el SVG viejo (es un PNG de 24 KB embebido) ni `filter: brightness(0)`.
 - **Nada escucha el scroll.** El WhatsApp flotante usa un marcador invisible + IntersectionObserver. No agregar `addEventListener('scroll')` ni leer `scrollY` en cada cuadro.

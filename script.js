@@ -2,12 +2,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   // =========================================================================
-  // 1. TIPOGRAFÍA DEL HERO: mostrar la palabra cuando Gloock esté lista
+  // 1. TIPOGRAFÍA DEL HERO: mostrar la palabra cuando Nunito esté lista
   // =========================================================================
   const markFontsReady = () => document.documentElement.classList.add('fonts-ready');
   if (document.fonts && document.fonts.load) {
     Promise.race([
-      document.fonts.load('400 1em Gloock'),
+      document.fonts.load('800 1em Nunito'),
       new Promise((resolve) => setTimeout(resolve, 3000))
     ]).then(markFontsReady, markFontsReady);
   } else {
