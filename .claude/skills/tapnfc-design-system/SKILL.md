@@ -3,7 +3,7 @@ name: tapnfc-design-system
 description: Sistema de diseño vigente de TapNFC (landing de placas NFC para Google Reviews y menús digitales; estilo clásico, limpio y claro, con placas en 3D en el hero). Úsala antes de cambiar estilos, colores, tipografía, textos, imágenes o secciones de index.html, style.css o script.js en este proyecto. Tiene prioridad sobre las reglas genéricas de otras skills de diseño.
 ---
 
-# TapNFC — Sistema de diseño (v112, clásico, limpio, cercano y con carácter)
+# TapNFC — Sistema de diseño (v113, clásico, limpio, cercano y con carácter)
 
 Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable, cro-landing-page, responsive-patterns, etc.) sugiere algo que la contradice, gana esta.
 
@@ -105,6 +105,8 @@ Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable
   - `object-fit: cover; object-position: 50% 100%` (anclado abajo). `--vs` = tamaño en pantalla de un píxel del video (`max(100vw / --scene-w, alto / 1080)`, `--scene-w` 1920 o 810 en pantallas verticales). En el video el borde trasero del mesón está a 338 px del pie y el delantero a 93 px: `--floor: 165 × vs + 20 × px` deja las bases entre los dos en todo tamaño. En escritorio `--px = (91vh − 68px − 165 × vs) / 464`, con tope por ancho.
   - Las sombras de contacto de las bases (`.hero-stage .obj-shadow` y `.obj-body::after`) son más marcadas para que pesen sobre la piedra.
   - **Celular acostado** (`orientation: landscape` y alto ≤ 500px, ancho < 960px): la portada mide la pantalla (`min-height: max(340px, 100svh)`), palabra en una línea a `24vh`, `--u: 0.5`, piso +6px y botón a 6px del pie, para que todo quepa sin que las bases toquen el botón.
+  - **Menú sobre el video (v113):** logo de la portada en blanco (`media/tapnfcs-logo-blanco.webp` + `drop-shadow` suave) y botón "Pedir" con borde y texto blancos sobre un velo oscuro leve (al pasar el mouse se llena de blanco). El logo del pie sigue negro (`tapnfcs-logo.webp`) porque va sobre crema.
+  - **Celular (v113):** las placas crecen hasta donde deja el ancho (`--px: clamp(0.62px, 0.19vw, 0.86px)`) y el piso es `clamp(165 × vs + 20 × px, 92% del alto − menú − --comp, 300 × vs)`: en celulares altos el escenario sube (sin salirse del mesón) para no dejar tanto espacio bajo el menú. En escritorio el mismo clamp usa 88% del alto, así que la portada aprobada no cambia (solo ayuda en pantallas altas y angostas como el iPad Pro).
   - La palabra "TAPNFCS" va en **blanco con sombra suave** (`text-shadow: 0 4px 34px rgba(0,0,0,.28)`): en negro no se leía sobre el video (el dueño eligió blanco entre blanco, crema, dorado y negro con velo).
 - La placa del **menú** lleva el diseño real del dueño (`media/tarjeta-menu.webp`, exportado de `tarjeta-menu.pdf` a 240 dpi): `.pf-front.face-art-wrap > img.face-art` cubre toda la cara. Sus medidas siguen la tarjeta real, 54 × 85,7 mm (`--W: 176; --H: 279`), para que el diseño no se deforme.
 - La placa **blanca de reseñas** lleva `media/tarjeta-resenas.webp` (54 × 85,7 mm, `--W: 189; --H: 300`): "Déjanos una reseña en Google", estrellas, barra de 4 colores, QR, íconos Toca / Escanea. **Sin** "Alimentado por ABC RFID" (el dueño pidió quitarlo).
@@ -116,7 +118,7 @@ Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable
 - Prohibido `backdrop-filter` y `filter: blur()`. Los glows se hacen solo con `radial-gradient`.
 - **Tipografías propias** en `media/fonts/` (Nunito 800 estática, Instrument Sans variable 400–600 y Gloock, subconjunto latino) con `@font-face` al inicio de style.css y `<link rel="preload" as="font" crossorigin>`. No volver a Google Fonts: la palabra TAP NFCS (el LCP) espera a Nunito, que es la que se precarga.
 - **Texturas de las placas** con `srcset` (`<nombre>-320.webp 320w` + original 511w; sticker `-400` + 600w) y `sizes` según la escala `--u`. Si se cambia un diseño, regenerar también la versión pequeña y verificar el QR con `cv2.QRCodeDetector` en las dos.
-- **Logo**: `media/tapnfcs-logo.webp` (302 × 132, ya en negro). No usar el SVG viejo (es un PNG de 24 KB embebido) ni `filter: brightness(0)`.
+- **Logo**: `media/tapnfcs-logo.webp` (302 × 132, negro, para el pie) y `media/tapnfcs-logo-blanco.webp` (blanco, para la portada sobre el video). No usar el SVG viejo (es un PNG de 24 KB embebido) ni `filter: brightness(0)`.
 - **Nada escucha el scroll.** El WhatsApp flotante usa un marcador invisible + IntersectionObserver. No agregar `addEventListener('scroll')` ni leer `scrollY` en cada cuadro.
 - **Giro 3D**: `--ry`/`--rx` están registradas con `@property` (`inherits: false`) y el JS las escribe en cada `.obj-body`, no en el escenario (así no se recalculan las caras). La vuelta de presentación de la colección es una Web Animation sobre `transform` (la mueve el compositor); si el usuario toca a mitad del giro, `stopSpin()` la convierte en estado sin saltos.
 - Las placas que no se ven llevan `.is-paused` (IntersectionObserver) y sus animaciones infinitas se pausan.

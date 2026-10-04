@@ -201,12 +201,18 @@ a, button, input, select, summary {
    -------------------------------------------------------------------------- */
 .hero {
   --u: 0.68;
-  --px: calc(var(--u) * 1px);
+  /* En celular las placas crecen hasta donde deja el ancho */
+  --px: clamp(0.62px, 0.19vw, 0.86px);
   --scene-w: 1920;
   --hero-h: max(620px, 100svh);
   --vs: max(calc(100vw / var(--scene-w)), calc(var(--hero-h) / 1080));
-  /* Las bases quedan sobre el mesón del video, entre su borde trasero y el delantero */
-  --floor: calc(165 * var(--vs) + 20 * var(--px));
+  --nav-h: 58px;
+  /* Alto de placas + palabra (dos líneas en celular) */
+  --comp: calc(298 * var(--px) + 1.64 * clamp(88px, 30vw, 144px));
+  /* Las bases quedan sobre el mesón del video: como mínimo cerca del borde
+     delantero y como máximo cerca del trasero. Si sobra alto (celulares
+     altos), el escenario sube para no dejar tanto espacio bajo el menú. */
+  --floor: clamp(calc(165 * var(--vs) + 20 * var(--px)), calc(var(--hero-h) * 0.92 - var(--nav-h) - var(--comp)), calc(300 * var(--vs)));
   --word-lift: 0.86;
   --obj-h: calc(346 * var(--px));
   position: relative;
@@ -292,6 +298,8 @@ a, button, input, select, summary {
 .nav-logo img {
   height: 34px;
   width: auto;
+  /* Logo blanco sobre el video, con una sombra suave para separarlo de las luces */
+  filter: drop-shadow(0 1px 6px rgba(0, 0, 0, 0.35));
 }
 
 .nav-pill {
@@ -311,17 +319,21 @@ a, button, input, select, summary {
   align-items: center;
   min-height: 44px;
   padding: 0 18px;
-  border: 1px solid var(--ink);
+  border: 1px solid rgba(255, 255, 255, 0.92);
   border-radius: 999px;
+  background: rgba(22, 21, 15, 0.14);
+  color: #FFFFFF;
   font-size: 0.875rem;
   font-weight: 500;
   text-decoration: none;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .nav-cta:hover {
-  background: var(--ink);
-  color: #FFFFFF;
+  background: #FFFFFF;
+  color: var(--ink);
+  text-shadow: none;
 }
 
 .nav-toggle {
@@ -2219,6 +2231,9 @@ a, button, input, select, summary {
      con tope por el ancho para que las placas no se salgan. */
   .hero {
     --px: clamp(0.85px, min(calc((91vh - 68px - 165 * var(--vs)) / 464), 0.125vw), 2.2px);
+    --nav-h: 68px;
+    --comp: calc(277 * var(--px) + 0.8 * min(17vw, 189 * var(--px)));
+    --floor: clamp(calc(165 * var(--vs) + 20 * var(--px)), calc(var(--hero-h) * 0.88 - var(--nav-h) - var(--comp)), calc(300 * var(--vs)));
     --word-lift: 0.8;
     padding-top: 20px;
   }
@@ -2340,7 +2355,7 @@ a, button, input, select, summary {
    placas más pequeñas y el botón un poco más abajo) */
 @media (orientation: landscape) and (max-height: 500px) and (max-width: 959px) {
   .hero {
-    --u: 0.5;
+    --px: 0.5px;
     --hero-h: max(340px, 100svh);
     --floor: calc(165 * var(--vs) + 20 * var(--px) + 6px);
     --word-lift: 0.8;
