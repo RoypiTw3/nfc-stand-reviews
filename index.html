@@ -144,7 +144,7 @@
   <link rel="preload" href="media/fonts/nunito-800-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="media/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="stylesheet" href="style.css?v=125.0">
+  <link rel="stylesheet" href="style.css?v=126.0">
 
   <!-- Alto de la portada fijo desde que carga: en iPhone, Brave y Chrome agrandan
        la pantalla al esconder su barra de abajo y la portada "crecía" (el video
@@ -181,7 +181,7 @@
     })();
   </script>
   <!-- defer: se pide desde ya y corre cuando la página terminó de leerse -->
-  <script src="script.js?v=125.0" defer></script>
+  <script src="script.js?v=126.0" defer></script>
 </head>
 <body>
 
@@ -343,19 +343,20 @@
 
         <article class="use use--menu reveal">
           <div class="use-visual">
-            <div class="ui-panel menu-ui" aria-hidden="true">
-              <p class="ui-title">Tu negocio</p>
-              <div class="menu-ui-head">
+            <div class="ui-panel menu-ui">
+              <p class="ui-title" aria-hidden="true">Tu negocio</p>
+              <div class="menu-ui-head" aria-hidden="true">
                 <span class="menu-ui-h">Menú</span>
                 <span class="ui-live"><i></i>Actualizado hace 2 min</span>
               </div>
-              <div class="menu-ui-tabs"><span class="is-on">Entradas</span><span>Fuertes</span><span>Bebidas</span><span>Postres</span></div>
-              <ul class="menu-ui-list">
+              <div class="menu-ui-tabs" aria-hidden="true"><span class="is-on">Entradas</span><span>Fuertes</span><span>Bebidas</span><span>Postres</span></div>
+              <ul class="menu-ui-list" aria-hidden="true">
                 <li><span class="menu-ui-item">Ceviche de mango<small>Leche de tigre, ají</small></span><span class="menu-ui-price">$28.000</span></li>
                 <li><span class="menu-ui-item">Patacón con hogao<small>Queso costeño</small></span><span class="menu-ui-price">$22.000</span></li>
                 <li><span class="menu-ui-item">Burrata y tomate<small>Albahaca, aceite de oliva</small></span><span class="menu-ui-price">$34.000</span></li>
                 <li><span class="menu-ui-item">Empanadas de la casa<small>Ají de lulo</small></span><span class="menu-ui-price">$16.000</span></li>
               </ul>
+              <a href="https://demo.tapnfcs.com/" class="menu-ui-try">Ver menú de prueba <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
             </div>
           </div>
           <div class="use-body">

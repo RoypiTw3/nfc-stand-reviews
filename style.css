@@ -1329,6 +1329,53 @@ a, button, input, select, summary {
   font-variant-numeric: tabular-nums;
 }
 
+/* "Ver menú de prueba" dentro de la carta, debajo de los platos (v126, opción B del dueño): se ve sin tener que
+   bajar hasta los botones de la tarjeta, que siguen ahí. Dorado como la luz de la tarjeta */
+.use--menu .menu-ui {
+  display: flex;
+  flex-direction: column;
+}
+
+.use--menu .menu-ui-list {
+  margin-bottom: 16px;
+}
+
+.menu-ui-try {
+  margin-top: auto;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 0 clamp(12px, 4vw, 20px);
+  border-radius: 999px;
+  background: #F5A623;
+  color: var(--ink);
+  font: 600 clamp(13.5px, 4vw, 15px)/1 var(--font-sans);
+  white-space: nowrap;
+  text-decoration: none;
+  box-shadow: 0 6px 18px -6px rgba(245, 166, 35, 0.7);
+  transition: transform 0.15s var(--ease), background-color 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.menu-ui-try svg {
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+
+.menu-ui-try:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .menu-ui-try:hover {
+    background: #F7B33F;
+  }
+}
+
 .use-body {
   padding: 22px 24px 18px;
   border-top: 1px solid rgba(22, 21, 15, 0.06);
