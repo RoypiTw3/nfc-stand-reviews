@@ -18,11 +18,11 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
   <!-- Favicon Oficial TapNFC Blanco (Fondo Transparente) -->
-  <link rel="icon" type="image/svg+xml" href="media/favicon.svg?v=32.0">
-  <link rel="icon" type="image/png" sizes="64x64" href="media/favicon-64.png?v=32.0">
-  <link rel="icon" type="image/png" sizes="32x32" href="media/favicon-32.png?v=32.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="media/apple-touch-icon.png?v=32.0">
-  <link rel="shortcut icon" href="favicon.ico?v=32.0">
+  <link rel="icon" type="image/svg+xml" href="media/favicon.svg?v=40.0">
+  <link rel="icon" type="image/png" sizes="64x64" href="media/favicon-64.png?v=40.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="media/favicon-32.png?v=40.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="media/apple-touch-icon.png?v=40.0">
+  <link rel="shortcut icon" href="favicon.ico?v=40.0">
 
   <!-- Open Graph / Facebook / WhatsApp Preview (1200x900) -->
   <meta property="og:type" content="website">
@@ -54,6 +54,7 @@
         "@id": "https://www.tapnfcs.com/#organization",
         "name": "TapNFC Colombia",
         "url": "https://www.tapnfcs.com/",
+        "logo": "https://www.tapnfcs.com/media/favicon-512.png",
         "sameAs": [
           "https://www.instagram.com/tapnfcs"
         ],
@@ -143,7 +144,7 @@
   <link rel="preload" href="media/fonts/nunito-800-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="media/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="stylesheet" href="style.css?v=117.0">
+  <link rel="stylesheet" href="style.css?v=120.0">
 
   <!-- Alto de la portada fijo desde que carga: en iPhone, Brave y Chrome agrandan
        la pantalla al esconder su barra de abajo y la portada "crecía" (el video
@@ -185,11 +186,13 @@
 
       <nav class="nav" aria-label="Principal">
         <a href="#hero" class="nav-logo" aria-label="TapNFC, inicio">
-          <img src="media/tapnfcs-logo-blanco.webp" alt="TAP NFCS" width="302" height="132">
+          <img class="logo-icon" src="media/tapnfc-icono-blanco.webp" alt="" width="205" height="168">
+          <span class="logo-text" aria-hidden="true"><span>TAP</span><span>NFCS</span></span>
         </a>
 
         <div class="nav-pill">
-          <a href="#productos">Productos</a>
+          <a href="#servicios">Servicios</a>
+          <a href="#coleccion">Productos</a>
           <a href="#proceso">Cómo funciona</a>
           <a href="#faq">Preguntas</a>
         </div>
@@ -203,7 +206,8 @@
       </nav>
 
       <div class="nav-sheet" id="nav-sheet" hidden>
-        <a href="#productos">Productos</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#coleccion">Productos</a>
         <a href="#proceso">Cómo funciona</a>
         <a href="#faq">Preguntas</a>
         <a href="#contacto">Pedir</a>
@@ -259,7 +263,7 @@
       </div>
 
       <div class="hero-foot">
-        <a href="#productos" class="btn">Ver productos</a>
+        <a href="#servicios" class="btn">Ver productos</a>
       </div>
     </header>
 
@@ -267,11 +271,11 @@
     <!-- ==========================================
          PRODUCTOS: DOS USOS + COLECCIÓN
          ========================================== -->
-    <section class="section" id="productos">
-      <h2 class="title reveal">Dos productos</h2>
+    <section class="section" id="servicios">
+      <h2 class="title reveal">Dos servicios</h2>
 
       <div class="uses">
-        <article class="use reveal">
+        <article class="use use--resenas reveal">
           <div class="use-visual">
             <div class="ui-panel review-ui" id="review-demo">
               <p class="ui-title">Tu negocio</p>
@@ -313,11 +317,14 @@
           <div class="use-body">
             <h3>Reseñas en Google</h3>
             <p>Tu cliente toca la placa y llega directo a calificarte.</p>
-            <a href="#contacto" class="link" data-need="resenas">Pedir placas de reseñas <span aria-hidden="true">→</span></a>
+            <div class="use-actions">
+              <a href="#contacto" class="btn" data-need="resenas">Pedir placas</a>
+              <button type="button" class="btn btn--ghost" data-review-try>Probar <span aria-hidden="true">★</span></button>
+            </div>
           </div>
         </article>
 
-        <article class="use reveal">
+        <article class="use use--menu reveal">
           <div class="use-visual">
             <div class="ui-panel menu-ui" aria-hidden="true">
               <p class="ui-title">Tu negocio</p>
@@ -337,12 +344,15 @@
           <div class="use-body">
             <h3>Menú digital</h3>
             <p>Tus clientes ven la carta en su celular y tu equipo cambia lo que quiera, cuando quiera.</p>
-            <a href="#contacto" class="link" data-need="menu">Pedir menú digital <span aria-hidden="true">→</span></a>
+            <div class="use-actions">
+              <a href="https://demo.tapnfcs.com/" class="btn" target="_blank" rel="noopener">Ver menú de prueba</a>
+              <a href="#contacto" class="btn btn--ghost" data-need="menu">Pedir</a>
+            </div>
           </div>
         </article>
       </div>
 
-      <h2 class="title title--sub reveal">La colección</h2>
+      <h2 class="title title--sub reveal" id="coleccion">Productos</h2>
 
       <!-- Fila sobre blanco: los 5 productos juntos, sin cajas, sobre la misma línea
            (como la línea de modelos de Apple). Se giran con el dedo o el mouse;
@@ -708,7 +718,8 @@
 
     <footer class="footer">
       <a href="#hero" class="footer-logo" aria-label="TapNFC, inicio">
-        <img src="media/tapnfcs-logo.webp" alt="TAP NFCS" width="302" height="132">
+        <img class="logo-icon" src="media/tapnfc-icono-negro.webp" alt="" width="205" height="168">
+        <span class="logo-text" aria-hidden="true"><span>TAP</span><span>NFCS</span></span>
       </a>
       <span class="footer-note">Envíos a toda Colombia</span>
       <a href="https://www.instagram.com/tapnfcs" target="_blank" rel="noopener noreferrer" class="footer-ig" aria-label="Instagram oficial @tapnfcs">
@@ -724,6 +735,6 @@
     <span>WhatsApp</span>
   </a>
 
-  <script src="script.js?v=117.0"></script>
+  <script src="script.js?v=120.0"></script>
 </body>
 </html>

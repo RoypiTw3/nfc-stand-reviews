@@ -305,6 +305,43 @@ a, button, input, select, summary {
   min-height: 44px;
 }
 
+/* Logo: ícono de tarjetas NFC + "TAP NFCS" en Nunito (blanco sobre el video) */
+.nav-logo,
+.footer-logo {
+  gap: 8px;
+  text-decoration: none;
+}
+
+.logo-icon {
+  display: block;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+}
+
+.nav-logo {
+  color: #FFFFFF;
+}
+
+.nav-logo .logo-text {
+  font-size: 16px;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+}
+
+.footer-logo {
+  color: var(--ink);
+}
+
+.footer-logo .logo-text {
+  font-size: 13px;
+}
+
 .nav-logo img {
   height: 34px;
   width: auto;
@@ -818,6 +855,7 @@ a, button, input, select, summary {
 }
 
 .title--sub {
+  scroll-margin-top: 24px;
   margin-top: 96px;
   font-size: clamp(2.1rem, 7vw, 3.4rem);
 }
@@ -852,8 +890,27 @@ a, button, input, select, summary {
   border-radius: 28px;
   box-shadow:
     0 1px 2px rgba(41, 31, 13, 0.05),
-    0 26px 60px -18px rgba(41, 31, 13, 0.22);
+    0 26px 60px -18px var(--use-glow, rgba(41, 31, 13, 0.22));
   transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+}
+
+/* Cada servicio con su color: Google (azul y sus 4 colores) y menú (cálido) */
+.use--resenas {
+  --use-glow: rgba(66, 133, 244, 0.36);
+  background: linear-gradient(165deg, #FFFFFF 35%, #EDF2FD 100%);
+}
+
+.use--menu {
+  --use-glow: rgba(217, 72, 31, 0.3);
+  background: linear-gradient(165deg, #FFFFFF 35%, #FCEDE3 100%);
+}
+
+.use--resenas .use-visual {
+  background: radial-gradient(ellipse 70% 90% at 50% 100%, rgba(66, 133, 244, 0.14) 0%, transparent 70%);
+}
+
+.use--menu .use-visual {
+  background: radial-gradient(ellipse 70% 90% at 50% 100%, rgba(217, 72, 31, 0.13) 0%, transparent 70%);
 }
 
 .use-visual {
@@ -1259,9 +1316,40 @@ a, button, input, select, summary {
 }
 
 .use-body h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 5.4vw, 1.9rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+/* Dos botones claros: el principal y uno secundario de borde */
+.use-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1.5px rgba(22, 21, 15, 0.22);
+}
+
+/* "Probar": las estrellas grandes saltan para invitar a calificar */
+.ui-stars--main.is-inviting button svg {
+  animation: star-invite 0.9s var(--ease) both;
+}
+
+.ui-stars--main.is-inviting button:nth-child(2) svg { animation-delay: 0.08s; }
+.ui-stars--main.is-inviting button:nth-child(3) svg { animation-delay: 0.16s; }
+.ui-stars--main.is-inviting button:nth-child(4) svg { animation-delay: 0.24s; }
+.ui-stars--main.is-inviting button:nth-child(5) svg { animation-delay: 0.32s; }
+
+@keyframes star-invite {
+  0%, 100% { transform: scale(1); }
+  40% { transform: scale(1.3) translateY(-3px); }
 }
 
 .use-body p {
@@ -1274,7 +1362,7 @@ a, button, input, select, summary {
     transform: translateY(-6px);
     box-shadow:
       0 1px 2px rgba(41, 31, 13, 0.05),
-      0 40px 80px -20px rgba(41, 31, 13, 0.28);
+      0 40px 80px -20px var(--use-glow, rgba(41, 31, 13, 0.28));
   }
 
   .use:hover .ui-panel {
@@ -2249,6 +2337,10 @@ a, button, input, select, summary {
 
   .nav-logo img {
     height: 42px;
+  }
+
+  .nav-logo .logo-text {
+    font-size: 20px;
   }
 
   .nav-sheet {

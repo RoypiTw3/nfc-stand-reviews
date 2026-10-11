@@ -420,6 +420,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (cancelBtn) cancelBtn.addEventListener('click', () => { touched = true; clearAll(); });
 
+    // "Probar": deja la reseña en blanco y hace saltar las estrellas para que califiquen
+    const tryBtn = document.querySelector('[data-review-try]');
+    if (tryBtn && mainGroupEl) {
+      tryBtn.addEventListener('click', () => {
+        touched = true;
+        if (reviewDemo.classList.contains('is-done') && resetBtn) resetBtn.click();
+        else clearAll();
+        mainGroupEl.classList.remove('is-inviting');
+        void mainGroupEl.offsetWidth;
+        mainGroupEl.classList.add('is-inviting');
+        setTimeout(() => mainGroupEl.classList.remove('is-inviting'), 1400);
+        reviewDemo.scrollIntoView({ block: 'nearest', behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+        const firstStar = mainGroupEl.querySelector('button');
+        if (firstStar) firstStar.focus({ preventScroll: true });
+      });
+    }
+
     if (publishBtn) {
       publishBtn.addEventListener('click', () => {
         if (publishBtn.disabled) return;
