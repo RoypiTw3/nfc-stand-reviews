@@ -144,7 +144,7 @@
   <link rel="preload" href="media/fonts/nunito-800-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="media/fonts/instrument-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="stylesheet" href="style.css?v=123.0">
+  <link rel="stylesheet" href="style.css?v=124.0">
 
   <!-- Alto de la portada fijo desde que carga: en iPhone, Brave y Chrome agrandan
        la pantalla al esconder su barra de abajo y la portada "crecía" (el video
@@ -164,7 +164,23 @@
         if (!touch || root.clientWidth !== width) lock();
       });
     })();
+
+    // La palabra TAP NFCS (lo más grande de la portada) sale cuando Nunito está lista, con 3 s de tope.
+    // Va aquí y no en script.js para no esperar a que llegue ese archivo.
+    (function () {
+      var listo = function () { document.documentElement.classList.add('fonts-ready'); };
+      if (document.fonts && document.fonts.load) {
+        Promise.race([
+          document.fonts.load('800 1em Nunito'),
+          new Promise(function (ok) { setTimeout(ok, 3000); })
+        ]).then(listo, listo);
+      } else {
+        listo();
+      }
+    })();
   </script>
+  <!-- defer: se pide desde ya y corre cuando la página terminó de leerse -->
+  <script src="script.js?v=124.0" defer></script>
 </head>
 <body>
 
@@ -735,6 +751,5 @@
     <span>WhatsApp</span>
   </a>
 
-  <script src="script.js?v=123.0"></script>
 </body>
 </html>

@@ -1,18 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  // =========================================================================
-  // 1. TIPOGRAFÍA DEL HERO: mostrar la palabra cuando Nunito esté lista
-  // =========================================================================
-  const markFontsReady = () => document.documentElement.classList.add('fonts-ready');
-  if (document.fonts && document.fonts.load) {
-    Promise.race([
-      document.fonts.load('800 1em Nunito'),
-      new Promise((resolve) => setTimeout(resolve, 3000))
-    ]).then(markFontsReady, markFontsReady);
-  } else {
-    markFontsReady();
-  }
+  // 1. La palabra del hero espera a Nunito: eso está en el <head> de index.html
 
   // =========================================================================
   // 2. NAVEGACIÓN MÓVIL
