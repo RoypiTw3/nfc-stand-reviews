@@ -9,6 +9,8 @@ frontend:
         - cp -r media dist/media
         # Los videos de media/ no se usan en la página
         - rm -f dist/media/*.mp4
+        # style.css va dentro de index.html: la página se dibuja sin esperar otro archivo
+        - node build/estilos-en-linea.mjs dist
   artifacts:
     baseDirectory: dist
     files:

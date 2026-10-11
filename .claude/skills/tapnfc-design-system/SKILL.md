@@ -3,7 +3,7 @@ name: tapnfc-design-system
 description: Sistema de diseño vigente de TapNFC (landing de placas NFC para Google Reviews y menús digitales; estilo clásico, limpio y claro, con placas en 3D en el hero). Úsala antes de cambiar estilos, colores, tipografía, textos, imágenes o secciones de index.html, style.css o script.js en este proyecto. Tiene prioridad sobre las reglas genéricas de otras skills de diseño.
 ---
 
-# TapNFC — Sistema de diseño (v122, clásico, limpio, cercano y con carácter)
+# TapNFC — Sistema de diseño (v123, clásico, limpio, cercano y con carácter)
 
 Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable, cro-landing-page, responsive-patterns, etc.) sugiere algo que la contradice, gana esta.
 
@@ -24,7 +24,7 @@ Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable
   - títulos en MAYÚSCULAS con segunda línea en cursiva;
   - tarjetas con borde + sombra + degradado para todo. Preferir líneas finas (`--line`) y espacio.
 - Pero **tampoco plano "tipo Zara"** (el dueño lo dijo en v73). El carácter viene de:
-  - textura de papel sutil (`--grain`, SVG de ruido) en el lienzo, el hero y las secciones tintadas;
+  - textura de papel sutil (`--grain`, `media/grano.webp`) en el lienzo, el hero y las secciones tintadas;
   - una **franja oscura** (`.section--dark`, `--night`) en "Así funciona", con números en dorado suave;
   - tarjetas de "Dos servicios" **del mismo tamaño y peso**, elevadas sobre el crema, cada una con **su propio color suave** (v120, opción 1 elegida por el dueño para que "llamen más la atención"): reseñas con degradado blanco → azul muy claro (`.use--resenas`, brillo azul Google) y menú con **luz dorada con halo** (v122, opción C elegida por el dueño: blanco → `#FFF4DC`, borde de luz dorada de 1,5px y halo `--use-halo`, también al pasar el mouse; el durazno anterior se veía apagado sobre el crema); la sombra usa `--use-glow`. Título de cada tarjeta en Nunito 800 y **dos botones** (`.use-actions`: principal + `.btn--ghost`). Una **pantalla limpia en modo oscuro** (`.ui-panel`) **se asoma por encima del borde** (`clip-path` en `.use-visual` + `margin-top` negativo). **Sin franjas de color detrás de las pantallas** (el dueño pidió quitar la línea que se asomaba atrás). Ninguna tarjeta en oscuro: el dueño no quiere que una le robe protagonismo a la otra;
     - Reseñas (`#review-demo.review-ui`): recreación **interactiva** de la ventana "escribir reseña" de Google, con **"Tu negocio"** como título y **"Tu cliente"** como autor (nunca nombres de personas reales). El visitante puede marcar las estrellas generales y las de Comida / Servicio / Ambiente (radiogroups con botones de ≥40px, vista previa al pasar el mouse, flechas del teclado), escribir en el cuadro y pulsar **Publicar**: **no se envía nada**, solo aparece "¡Gracias por tu reseña!" con "Calificar otra vez". Las 5 estrellas grandes se llenan solas al aparecer (como la placa real, "5 estrellas listas"); "Cancelar" limpia todo y "Publicar" se desactiva sin calificación general. La pantalla se ve completa dentro de la tarjeta (sin recorte abajo) para que se pueda usar. Botones: **"Pedir placas"** (al formulario con Reseñas) y **"Probar ★"** (`[data-review-try]`: limpia la ventana, lleva a ella y las 5 estrellas grandes se iluminan en ola, `.is-inviting`).
@@ -46,7 +46,7 @@ Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable
 | `--night` | `#17150F` | franja oscura y tarjeta del menú |
 | `--night-text` / `--night-muted` / `--night-line` | `#F3EEE4` / 62% / 16% | texto y líneas sobre oscuro |
 | `--gold-soft` | `#D9A54A` | números y acentos sobre oscuro |
-| `--grain` | SVG de ruido | textura de papel |
+| `--grain` | `media/grano.webp` (160 px, 8 KB) | textura de papel |
 
 - Nunca usar `#F59E0B` como color de texto sobre crema o blanco.
 - Sombras cálidas y suaves: `rgba(41, 31, 13, 0.07–0.22)`.
@@ -118,8 +118,12 @@ Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable
   - Fuente editable: `assets/tarjeta-resenas.html` de esta skill (540 × 857 px = 10 px/mm). Para cambiar el enlace: generar el QR nuevo con `cv2.QRCodeEncoder` (nivel M), reemplazar el `<svg>` dentro de `.qr`, renderizar con Chrome headless a 2x (`--window-size=540,857 --force-device-scale-factor=2`), reducir a 511 × 811 y guardar en WebP; luego verificar con `cv2.QRCodeDetector`.
 - Para poner otro diseño real: exportar el PDF/PNG a WebP (~500 px de ancho), ajustar `--W`/`--H` a la proporción del producto y usar el mismo patrón `face-art`.
 
-## Rendimiento (v104 — no retroceder)
+## Rendimiento (v104 y v123 — no retroceder)
 - Prohibido `backdrop-filter` y `filter: blur()`. Los glows se hacen solo con `radial-gradient`.
+- **Grano de papel (v123):** es la imagen `media/grano.webp` (160 × 160, WebP sin pérdida, un solo café con 12 niveles de transparencia, 8,5 KB), no un SVG con `feTurbulence`. El filtro SVG cubría toda la página y Safari/iPhone lo volvía a dibujar al bajar (en WebKit, 5 veces más cuadros lentos). La imagen se ve igual (diferencia media < 1/255). No volver a usar filtros SVG como fondo.
+- **style.css va dentro de index.html al publicar (v123):** `amplify.yml` corre `node build/estilos-en-linea.mjs dist`, que cambia `<link rel="stylesheet" href="style.css?v=...">` por `<style>` (sin comentarios). En 4G el CSS llegaba tarde porque bajaba al mismo tiempo que letras e imágenes y la pantalla quedaba en blanco ~1,2 s. En el repositorio todo sigue igual (se sigue subiendo `?v=`). Si el enlace cambia de forma, el script falla y Amplify no publica.
+- **Imágenes `loading="lazy"` (v123):** cuando la página cargó y está quieta, `script.js` las pasa a `eager` (salvo con ahorro de datos), porque el iPhone las pide tan tarde que se veían aparecer al bajar. El logo del pie también es `lazy`.
+- **Aparición al bajar (v123):** `.reveal` empieza un poco antes de entrar a la pantalla (`rootMargin` 6% abajo) y dura 0,45 s, para que nada se vea "llegar tarde".
 - **Tipografías propias** en `media/fonts/` (Nunito 800 estática, Instrument Sans variable 400–600 y Gloock, subconjunto latino) con `@font-face` al inicio de style.css y `<link rel="preload" as="font" crossorigin>`. No volver a Google Fonts: la palabra TAP NFCS (el LCP) espera a Nunito, que es la que se precarga.
 - **Texturas de las placas** con `srcset` (`<nombre>-320.webp 320w` + original 511w; sticker `-400` + 600w) y `sizes` según la escala `--u`. Si se cambia un diseño, regenerar también la versión pequeña y verificar el QR con `cv2.QRCodeDetector` en las dos.
 - **Logo (v118, nuevo logo del dueño):** el ícono de dos tarjetas con ondas NFC (`media/tapnfc-icono-blanco.webp` y `-negro.webp`, 205 × 168, recortados de la imagen original del dueño, 1024 × 1024 negro sobre blanco). En el menú y el pie va **ícono + "TAP / NFCS" en Nunito 800** (texto HTML, dos líneas): blanco con sombra suave sobre el video de la portada, negro (`--ink`) en el pie. Alto del ícono: 34px en celular y 42px en escritorio (menú), 28px en el pie. Íconos de pestaña (v122, el dueño pidió volver al estilo de antes): **símbolo blanco sobre fondo transparente** (`media/favicon.svg` vectorial recortado al símbolo, `favicon-32/64/512.png`, `favicon.ico`); `apple-touch-icon.png` 180 es el símbolo blanco sobre negro. No ponerle cuadro blanco: en la barra oscura de Brave "se veía feo". Enlazados con `?v=41.0`; si cambian, subir esa versión. El JSON-LD `Organization` usa `media/tapnfc-logo-512.png` (símbolo negro sobre blanco), porque Google lo muestra sobre blanco.

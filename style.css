@@ -63,7 +63,9 @@
   --night-muted: rgba(243, 238, 228, 0.62);
   --night-line: rgba(243, 238, 228, 0.16);
   --gold-soft: #D9A54A;
-  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.36 0 0 0 0 0.27 0 0 0 0 0.14 0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* Grano de papel: una imagen pequeña (8 KB) que se repite. Antes era un filtro SVG (feTurbulence) que el
+     iPhone volvía a dibujar al bajar por la página y la hacía ir a saltos */
+  --grain: url("media/grano.webp");
 
   --font-display: 'Nunito', ui-rounded, 'Arial Rounded MT Bold', system-ui, sans-serif;
   --font-menu: 'Gloock', 'Times New Roman', Georgia, serif;
@@ -2243,8 +2245,8 @@ a, button, input, select, summary {
 /* Aparición al hacer scroll */
 .reveal {
   opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+  transform: translateY(14px);
+  transition: opacity 0.45s var(--ease), transform 0.45s var(--ease);
 }
 
 .reveal.is-visible {

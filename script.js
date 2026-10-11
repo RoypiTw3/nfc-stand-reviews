@@ -700,10 +700,26 @@ document.addEventListener('DOMContentLoaded', () => {
           observer.unobserve(entry.target);
         }
       });
-    }, { rootMargin: '0px 0px -40px 0px', threshold: 0.01 });
+    }, { rootMargin: '0px 0px 6% 0px', threshold: 0 });
 
     revealElements.forEach((el) => revealObserver.observe(el));
   } else {
     revealElements.forEach((el) => el.classList.add('is-visible'));
+  }
+
+  // =========================================================================
+  // 9. IMÁGENES DE MÁS ABAJO, LISTAS ANTES DE LLEGAR
+  // Las de "Productos" y "Pide tus placas" cargan solo cuando se acercan
+  // (loading="lazy"), pero el iPhone las pide tan tarde que se veían aparecer
+  // al bajar. Cuando la página ya cargó y está quieta, se piden todas (pesan
+  // poco). Con ahorro de datos se dejan como estaban.
+  // =========================================================================
+  const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+  const saveData = (navigator.connection || {}).saveData;
+  if (lazyImages.length && !saveData) {
+    const loadAll = () => lazyImages.forEach((img) => { img.loading = 'eager'; });
+    const whenIdle = () => ('requestIdleCallback' in window ? window.requestIdleCallback(loadAll, { timeout: 3000 }) : setTimeout(loadAll, 1500));
+    if (document.readyState === 'complete') whenIdle();
+    else window.addEventListener('load', whenIdle, { once: true });
   }
 });
