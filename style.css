@@ -900,9 +900,15 @@ a, button, input, select, summary {
   background: linear-gradient(165deg, #FFFFFF 35%, #EDF2FD 100%);
 }
 
+/* Menú: luz dorada con halo (v122, elegida por el dueño para que llame más la atención) */
 .use--menu {
-  --use-glow: rgba(217, 72, 31, 0.3);
-  background: linear-gradient(165deg, #FFFFFF 35%, #FCEDE3 100%);
+  --use-glow: rgba(245, 166, 35, 0.5);
+  --use-halo: 0 0 0 1.5px rgba(245, 166, 35, 0.55), 0 0 46px 6px rgba(255, 214, 140, 0.55);
+  background: linear-gradient(165deg, #FFFFFF 35%, #FFF4DC 100%);
+  box-shadow:
+    0 1px 2px rgba(41, 31, 13, 0.05),
+    var(--use-halo),
+    0 26px 60px -18px var(--use-glow);
 }
 
 .use--resenas .use-visual {
@@ -910,7 +916,7 @@ a, button, input, select, summary {
 }
 
 .use--menu .use-visual {
-  background: radial-gradient(ellipse 70% 90% at 50% 100%, rgba(217, 72, 31, 0.13) 0%, transparent 70%);
+  background: radial-gradient(ellipse 70% 90% at 50% 100%, rgba(245, 166, 35, 0.22) 0%, transparent 70%);
 }
 
 .use-visual {
@@ -1363,6 +1369,13 @@ a, button, input, select, summary {
     box-shadow:
       0 1px 2px rgba(41, 31, 13, 0.05),
       0 40px 80px -20px var(--use-glow, rgba(41, 31, 13, 0.28));
+  }
+
+  .use--menu:hover {
+    box-shadow:
+      0 1px 2px rgba(41, 31, 13, 0.05),
+      var(--use-halo),
+      0 40px 80px -20px var(--use-glow);
   }
 
   .use:hover .ui-panel {
