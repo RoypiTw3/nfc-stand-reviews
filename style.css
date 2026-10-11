@@ -12,6 +12,17 @@
   src: url('media/fonts/nunito-800-latin.woff2') format('woff2');
 }
 
+/* Solo las 7 letras de la palabra de la portada (T A P N F C S de Nunito 800, 1,2 KB dentro del CSS): la palabra,
+   lo más grande de la portada, sale con el primer dibujo sin esperar a descargar Nunito completa. Si cambia la
+   palabra, regenerar con: pyftsubset media/fonts/nunito-800-latin.woff2 --text="TAPNFCS" --flavor=woff2 */
+@font-face {
+  font-family: 'Nunito Palabra';
+  font-style: normal;
+  font-weight: 800;
+  font-display: block;
+  src: url(data:font/woff2;base64,d09GMgABAAAAAATQAA8AAAAACOQAAAR3AAOaHQAAAAAAAAAAAAAAAAAAAAAAAAAAGhYbgVocMAZgP1NUQVREAFwRCAqFaIRaATYCJAMgCxIABCAFhAQHIBs/ByCeBU7ZLjrOWYuclK9ftCgVjOf51vjdN7PfHbVq1aS5JLxxSCyRT2hEUiYRKlWj5/kf3NYfYQyzFhZoY2Vg1Xw4vWwwKq6q8CoCYsZ9l00ixOU/MMD838/Xe9cELdw6s0yNpugA24R2BlTt7/hmyRtY///BJvqH6QV4PPWfEowDioghEYzaxxXzRHBkImg8nCWsAI2nAroKNLCgSQvypFBYBXIIolMMi2HFIyw8txiGDAo7ax/SftgS2ktffPA9oH13zvvGof2zszMNtF/zPwW0aVu8bnKjtTbeX1QebBJVw+qJCBftHPcBNmgcjxeFzV3ZXklsyjojFcD5bD+5AwYxAjlD8JPKe4HDcFRiv/wfAt3BWAGBfGUcAbZgyuEyMp8BOzJeFZfQCPDsjgrZdDidiQzXLWCgpWTrsgAsnor5ZkE2leUMMGkY/sCgowIEixYr8aVRBRLubIccsNMO28pufWeahhgG08AIfoHsAaC7iFTJIlgbNF8j1eVdl5JEewf1c4b2ccR7sNKe/t0oDsKToxRiEv3gnFQbRasbAtH0NLLoRjgARyxxm9jQv3o7d+00Krp+HXqJhCO+YTm1Y81Av8nu60migwj77SGO4vs10K9GFYwZC6pv5RGHeSHKRAMPQNfvR0V7LYo4DCDpwqMOCfTXB+n2Z3jbNWTR1aJgE5ItJjcOrdtlukdSDy51HAxO3irUANxLOL3ecSAoSTINL4QIRAcR5mgqxOCAbT+KFnh56XIGe8VnpfxPBzHs4COE/7lCR98o5oqH6PbIbXfRY6U/Jgv4k26TC/nQjwpH0pJHqQT+0qzs5Q5J9kU6yQ26pRtm1F/xUzY6nu5onR8Wal2YRRRA+is/7F++vvhHVmi5PnTIcd+Z8Xg9vGT8PWYQ4grrv+P/MUyKf78dD41yxqdM3LkhhP5xXvZB/dEKuTG8Zj9DLcyAzbt9UG/UxBna5bivuZa8FdwvdQvqysoWzKib2sUt5c5v8Hzm6PjEswGOncUVhWjtRxlaIY0lc5bnavLD7hphW8qrtXPUM3Nj7M3jIjxKCB/Xcr1VHk8DxSnr4ex4+yZe6GFt7tXaAo2czEh7XmyEWykOnsul/t5CqOKECvFPO3FVYstve3QAvIGgfsAIV+/OHGXP/3LM+hPwRXtCAvj+Iuf//69SU5YfywAYVEC4tWT3OvA4D3YBRBg2nH9gXz6Belmf1bsLKfIS2P23FsGBMlP6LwTDbmF7jDWFqGrbmHWo0o3gI8Ck2GaUVEz6RKqOuNrcdSMNWA1KHLQtJjFhPKcgDPYCadhssm9tKzQvIQCl2ixCpYqVoJHs8dlxREpUohApWq0qpWgUUiwhSplC+WgkP7VoJShCNUhmStBo1Wq4s2WrWKkZVyuPjXyUyoafplCKVShUhFKFVsNW1YLtzJefF2QmmpBA5EZ/Y7xCxWpVEBByYMMZnz0P0WJEC+IxEX1rkCzchV6lKFVIW+twkCKFtGFoAhXN+d0z/VEqFIjf/YcJVGECbXMbBAA=) format('woff2');
+}
+
 /* Gloock: solo el encabezado "Menú" de la carta de ejemplo (se carga si se usa) */
 @font-face {
   font-family: 'Gloock';
@@ -447,7 +458,7 @@ a, button, input, select, summary {
   right: 0;
   bottom: calc(var(--floor) + var(--obj-h) * var(--word-lift));
   z-index: 1;
-  font-family: var(--font-display);
+  font-family: 'Nunito Palabra', 'Nunito', ui-rounded, 'Arial Rounded MT Bold', system-ui, sans-serif;
   font-size: clamp(5.5rem, 30vw, 9rem);
   font-weight: 800;
   line-height: 0.82;

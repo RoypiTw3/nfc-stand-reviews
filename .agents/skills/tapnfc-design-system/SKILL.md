@@ -3,7 +3,7 @@ name: tapnfc-design-system
 description: Sistema de diseño vigente de TapNFC (landing de placas NFC para Google Reviews y menús digitales; estilo clásico, limpio y claro, con placas en 3D en el hero). Úsala antes de cambiar estilos, colores, tipografía, textos, imágenes o secciones de index.html, style.css o script.js en este proyecto. Tiene prioridad sobre las reglas genéricas de otras skills de diseño.
 ---
 
-# TapNFC — Sistema de diseño (v124, clásico, limpio, cercano y con carácter)
+# TapNFC — Sistema de diseño (v125, clásico, limpio, cercano y con carácter)
 
 Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable, cro-landing-page, responsive-patterns, etc.) sugiere algo que la contradice, gana esta.
 
@@ -123,7 +123,7 @@ Esta skill describe el diseño aprobado por el dueño. Si otra skill (impeccable
 - **Grano de papel (v123):** es la imagen `media/grano.webp` (160 × 160, WebP sin pérdida, un solo café con 12 niveles de transparencia, 8,5 KB), no un SVG con `feTurbulence`. El filtro SVG cubría toda la página y Safari/iPhone lo volvía a dibujar al bajar (en WebKit, 5 veces más cuadros lentos). La imagen se ve igual (diferencia media < 1/255). No volver a usar filtros SVG como fondo.
 - **style.css va dentro de index.html al publicar (v123):** `amplify.yml` corre `node build/estilos-en-linea.mjs dist`, que cambia `<link rel="stylesheet" href="style.css?v=...">` por `<style>` (sin comentarios). En 4G el CSS llegaba tarde porque bajaba al mismo tiempo que letras e imágenes y la pantalla quedaba en blanco ~1,2 s. En el repositorio todo sigue igual (se sigue subiendo `?v=`). Si el enlace cambia de forma, el script falla y Amplify no publica.
 - **Imágenes `loading="lazy"` (v123):** cuando la página cargó y está quieta, `script.js` las pasa a `eager` (salvo con ahorro de datos), porque el iPhone las pide tan tarde que se veían aparecer al bajar. El logo del pie también es `lazy`.
-- **La palabra TAP NFCS (el LCP) y script.js (v124):** la espera a Nunito (`.fonts-ready`) está en el `<script>` del `<head>`, no en script.js, y `script.js` se pide en el `<head>` con `defer`. Con el CSS dentro de la página, script.js al final se descubría tarde y la palabra salía tarde.
+- **La palabra TAP NFCS (el LCP), v124–v125:** usa la familia **`Nunito Palabra`**: solo las 7 letras T A P N F C S de Nunito 800 (1,2 KB, en base64 dentro de style.css, `font-display: block`), así sale con el primer dibujo sin esperar a Nunito completa (se ve idéntica). Si cambia la palabra, regenerar el subconjunto con `pyftsubset media/fonts/nunito-800-latin.woff2 --text="..." --flavor=woff2`. La espera a la letra (`.fonts-ready`) está en el `<script>` del `<head>`, y `script.js` se pide en el `<head>` con `defer`.
 - **Aparición al bajar (v123):** `.reveal` empieza un poco antes de entrar a la pantalla (`rootMargin` 6% abajo) y dura 0,45 s, para que nada se vea "llegar tarde".
 - **Tipografías propias** en `media/fonts/` (Nunito 800 estática, Instrument Sans variable 400–600 y Gloock, subconjunto latino) con `@font-face` al inicio de style.css y `<link rel="preload" as="font" crossorigin>`. No volver a Google Fonts: la palabra TAP NFCS (el LCP) espera a Nunito, que es la que se precarga.
 - **Texturas de las placas** con `srcset` (`<nombre>-320.webp 320w` + original 511w; sticker `-400` + 600w) y `sizes` según la escala `--u`. Si se cambia un diseño, regenerar también la versión pequeña y verificar el QR con `cv2.QRCodeDetector` en las dos.
